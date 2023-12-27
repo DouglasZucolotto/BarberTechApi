@@ -8,9 +8,7 @@
 
         public string? Description { get; set; }
 
-        public Guid PhotoId { get; set; }
-
-        public Photo Photo { get; set; }
+        public string ImageSource { get; set; }
 
         public decimal Price { get; set; }
 
@@ -19,11 +17,11 @@
 
         }
 
-        public Haircut(string name, string description, Photo photo, decimal price)
+        public Haircut(string name, string description, string imageSource, decimal price)
         {
             Name = name;
             Description = description;
-            Photo = photo;
+            ImageSource = imageSource;
             Price = price;
         }
     }

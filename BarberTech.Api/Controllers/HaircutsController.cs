@@ -1,4 +1,5 @@
 ﻿using BarberTech.Application.Commands.Haircuts.Create;
+using BarberTech.Application.Queries.Haircuts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,13 @@ namespace BarberTech.Services.Controllers
         public HaircutsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetHaircutsAsync([FromQuery] GetHaircutsQuery query)
+        {
+            var haircuts = await _mediator.Send(query);
+            return Ok(haircuts);
         }
 
         [HttpPost]

@@ -16,24 +16,12 @@ namespace BarberTech.Application.Commands.Haircuts.Create
 
         public async Task<Nothing> Handle(CreateHaircutCommand request, CancellationToken cancellationToken)
         {
-            var file = await ConvertFormFileToByteArrayAsync(request.File);
-            var photo = new Photo(file);
-
-            var haircut = new Haircut(request.Name, request.Description ?? string.Empty, photo, request.Price);
+            var haircut = new Haircut(request.Name, request.Description, request.ImageSource, request.Price);
 
             _context.Haircuts.Add(haircut);
             await _context.SaveChangesAsync();
 
             return Nothing.Value;
-        }
-
-        private async Task<byte[]> ConvertFormFileToByteArrayAsync(IFormFile formFile)
-        {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                await formFile.CopyToAsync(memoryStream);
-                return memoryStream.ToArray();
-            }
         }
     }
 }
