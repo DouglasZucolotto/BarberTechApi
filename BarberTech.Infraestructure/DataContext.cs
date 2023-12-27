@@ -21,9 +21,12 @@ namespace BarberTech.Infraestructure
 
         public DbSet<Haircut> Haircuts { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new HaircutMapping());
+            modelBuilder.ApplyConfiguration(new PhotoMapping());
         }
     }
 }

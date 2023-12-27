@@ -9,7 +9,7 @@ namespace BarberTech.Infraestructure.Mappings
     {
         public void Configure(EntityTypeBuilder<Haircut> builder)
         {
-            builder.ToTable("haircut");
+            builder.ToTable("haircuts");
 
             builder.HasKey(h => h.Id);
 
@@ -23,16 +23,16 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("name")
                 .IsRequired();
 
-            builder.Property(h => h.Description)
-                .HasColumnName("description");
-
-            builder.Property(h => h.PhotoURL)
-                .HasColumnName("photo_url")
-                .IsRequired();
-
             builder.Property(h => h.Price)
                 .HasColumnName("price")
                 .IsRequired();
+
+            builder.Property(h => h.Description)
+                .HasColumnName("description");
+
+            builder.HasOne(h => h.Photo)
+                .WithOne()
+                .HasForeignKey<Photo>(x => x.Id);
         }
     }
 }

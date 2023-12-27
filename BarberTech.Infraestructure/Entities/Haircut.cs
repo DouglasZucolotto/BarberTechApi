@@ -8,15 +8,15 @@
 
         public string? Description { get; set; }
 
-        public string PhotoURL { get; set; }
+        public Photo Photo { get; set; }
 
         public decimal Price { get; set; }
 
-        public Haircut(string name, string description, string photoURL, decimal price)
+        public Haircut(string name, string description, decimal price)
         {
             Name = name;
             Description = description;
-            PhotoURL = photoURL;
+            //Photo = photo;
             Price = price;
         }
     }
