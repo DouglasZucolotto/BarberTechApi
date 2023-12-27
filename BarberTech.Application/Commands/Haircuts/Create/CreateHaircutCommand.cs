@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace BarberTech.Application.Commands.Haircuts.Create
 {
@@ -10,12 +11,6 @@ namespace BarberTech.Application.Commands.Haircuts.Create
 
         public decimal Price { get; set; }
 
-        //public byte[] File { get; set; }
-
-        //public CreateHaircutCommand WithFile(byte[] file)
-        //{
-        //    File = file;
-        //    return this;
-        //}
+        public IFormFile File { get; set; }
     }
 }

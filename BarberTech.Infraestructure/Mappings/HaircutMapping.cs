@@ -30,9 +30,13 @@ namespace BarberTech.Infraestructure.Mappings
             builder.Property(h => h.Description)
                 .HasColumnName("description");
 
+            builder.Property(h => h.PhotoId)
+                .HasColumnName("photo_id")
+                .IsRequired();
+
             builder.HasOne(h => h.Photo)
                 .WithOne()
-                .HasForeignKey<Photo>(x => x.Id);
+                .HasForeignKey<Haircut>(h => h.PhotoId);
         }
     }
 }

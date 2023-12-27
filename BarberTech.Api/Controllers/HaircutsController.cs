@@ -1,12 +1,11 @@
 ﻿using BarberTech.Application.Commands.Haircuts.Create;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace BarberTech.Services.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/haircuts")]
     public class HaircutsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,11 +16,10 @@ namespace BarberTech.Services.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateHaircutAsync([FromQuery] CreateHaircutCommand query) //, IFormFile file)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateHaircutAsync([FromQuery] CreateHaircutCommand command)
         {
-            //using var fileStream = file.OpenReadStream();
-
-            await _mediator.Send(query);
+            await _mediator.Send(command);
             return NoContent();
         }
     }

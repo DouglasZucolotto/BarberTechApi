@@ -6,9 +6,8 @@
 
         public byte[] File { get; set; }
 
-        public Photo(Guid id, byte[] file)
+        public Photo(byte[] file)
         {
-            Id = id;
             File = file;
         }
     }
