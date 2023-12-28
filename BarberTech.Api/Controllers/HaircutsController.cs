@@ -1,4 +1,6 @@
 ﻿using BarberTech.Application.Commands.Haircuts.Create;
+using BarberTech.Application.Commands.Haircuts.Delete;
+using BarberTech.Application.Commands.Haircuts.Update;
 using BarberTech.Application.Queries.Haircuts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +19,30 @@ namespace BarberTech.Services.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetHaircutsAsync([FromQuery] GetHaircutsQuery query)
+        public async Task<IActionResult> GetAllHaircutsAsync([FromQuery] GetHaircutsQuery query)
         {
             var haircuts = await _mediator.Send(query);
             return Ok(haircuts);
         }
 
         [HttpPost]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateHaircutAsync([FromQuery] CreateHaircutCommand command)
+        public async Task<IActionResult> CreateHaircutAsync([FromBody] CreateHaircutCommand command)
         {
             await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateHaircutAsync([FromRoute] Guid id, [FromBody] UpdateHaircutCommand command)
+        {
+            await _mediator.Send(command.WithId(id));
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id, [FromBody] DeleteHaircutCommand command)
+        {
+            await _mediator.Send(command.WithId(id));
             return NoContent();
         }
     }

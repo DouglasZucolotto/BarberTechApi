@@ -1,7 +1,6 @@
 ﻿using BarberTech.Infraestructure;
 using BarberTech.Infraestructure.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace BarberTech.Application.Commands.Haircuts.Create
 {
