@@ -1,7 +1,7 @@
 ﻿using BarberTech.Infraestructure;
 using MediatR;
 
-namespace BarberTech.Application.Queries.Haircuts
+namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
     public class GetHaircutsQueryHandler : IRequestHandler<GetHaircutsQuery, List<GetHaircutsQueryResponse>>
     {

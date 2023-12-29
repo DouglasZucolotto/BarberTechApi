@@ -1,6 +1,6 @@
-﻿namespace BarberTech.Application.Queries.Haircuts
+﻿namespace BarberTech.Application.Queries.Haircuts.GetById
 {
-    public class GetHaircutsQueryResponse
+    public class GetHaircutByIdQueryResponse
     {
         public Guid Id { get; set; }
 
