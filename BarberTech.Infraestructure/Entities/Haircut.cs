@@ -12,7 +12,7 @@
 
         public decimal Price { get; set; }
 
-        public Haircut()
+        public Haircut(Guid userId, string comment)
         {
 
         }

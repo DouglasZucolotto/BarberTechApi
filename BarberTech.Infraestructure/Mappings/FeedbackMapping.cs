@@ -19,7 +19,7 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasValueGenerator<GuidValueGenerator>()
                 .IsRequired();
 
-            builder.Property(f => f.Id)
+            builder.Property(f => f.UserId)
                 .HasColumnName("user_id")
                 .IsRequired();
 
@@ -30,7 +30,7 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("qnt_stars")
                 .IsRequired();
 
-            builder.Property(f => f.HaircutId)
+            builder.Property(f => f.FeedbackId)
                 .HasColumnName("haircut_id")
                 .IsRequired();
         }

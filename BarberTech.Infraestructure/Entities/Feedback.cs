@@ -10,15 +10,14 @@
 
         public int Qnt_stars { get; set; }
 
-        public Guid HaircutId { get; set; }
+        public Guid FeedbackId { get; set; }
 
-        public Feedback(Guid id, Guid userId, string? comment, int qnt_stars, Guid haircutId)
+        public Feedback(Guid userId, string comment, int qnt_stars, Guid feedbackId)
         {
-            Id = id;
             UserId = userId;
             Comment = comment;
             Qnt_stars = qnt_stars;
-            HaircutId = haircutId;
+            FeedbackId = feedbackId;
         }
     }
 }
