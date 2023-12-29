@@ -4,13 +4,13 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
 {
     public class CreateFeedbackCommand : IRequest<Nothing>
     {
-        public Guid UserId { get; set; }
-
         public string? Comment { get; set; }
 
-        public int Qnt_stars { get; set; }
+        public int QntStars { get; set; }
 
-        public Guid FeedbackId { get; set; }
+        public Guid? HaircutId { get; set; }
+
+        public Guid? BarberId { get; set; } // TODO: Fazer validação de um ou outro
     }
 }
 

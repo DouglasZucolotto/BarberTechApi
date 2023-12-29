@@ -5,7 +5,6 @@ using BarberTech.Application.Queries.Haircuts.GetAll;
 using BarberTech.Application.Queries.Haircuts.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BarberTech.Services.Controllers
 {
@@ -21,14 +20,14 @@ namespace BarberTech.Services.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllHaircutsAsync([FromQuery] GetHaircutsQuery query)
+        public async Task<IActionResult> GetHaircutsAsync([FromQuery] GetHaircutsQuery query)
         {
             var haircuts = await _mediator.Send(query);
             return Ok(haircuts);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, [FromQuery] GetHaircutByIdQuery query)
+        public async Task<IActionResult> GetHaircutByIdAsync([FromRoute] Guid id, [FromQuery] GetHaircutByIdQuery query)
         {
             var haircut = await _mediator.Send(query.WithId(id));
             return Ok(haircut);

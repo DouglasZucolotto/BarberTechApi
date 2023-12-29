@@ -18,8 +18,8 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
 
             if (haircut is null)
             {
+                // TODO: notificator
                 return default;
-                //notificator
             }
 
             return new GetHaircutByIdQueryResponse

@@ -18,8 +18,8 @@ namespace BarberTech.Application.Commands.Haircuts.Update
 
             if (haircut is null)
             {
+                // TODO: notificator
                 return default;
-                // notificator
             }
 
             haircut.Name = request.Name;

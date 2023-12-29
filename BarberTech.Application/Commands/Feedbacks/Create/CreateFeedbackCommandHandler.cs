@@ -15,13 +15,16 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
 
         public async Task<Nothing> Handle(CreateFeedbackCommand request, CancellationToken cancellationToken)
         {
-            var feedback = new Feedback(request.UserId, request.Comment, request.Qnt_stars, request.FeedbackId);
-            {
-                _context.Feedbacks.Add(feedback);
-                await _context.SaveChangesAsync();
+            // TODO: Pegar id usuário logado // remover userTest
 
-                return Nothing.Value;
-            };
+            var userTest = new User(Guid.NewGuid(), "name", "email", "password");
+
+            var feedback = new Feedback(userTest, request.Comment, request.QntStars);
+
+            _context.Feedbacks.Add(feedback);
+            await _context.SaveChangesAsync();
+
+            return Nothing.Value;
         }
     }
 }

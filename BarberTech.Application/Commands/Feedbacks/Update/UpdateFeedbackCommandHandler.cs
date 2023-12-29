@@ -18,13 +18,12 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
 
             if (feedback is null)
             {
-                return Nothing.Value;
+                // TODO: notificator
+                return default;
             }
 
-            feedback.UserId = request.UserId;
             feedback.Comment = request.Comment;
-            feedback.Qnt_stars = request.Qnt_stars;
-            feedback.FeedbackId = request.FeedbackId;
+            feedback.QntStars = request.QntStars;
 
             _context.Feedbacks.Update(feedback);
             await _context.SaveChangesAsync();

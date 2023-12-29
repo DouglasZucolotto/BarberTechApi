@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Commands.Haircuts.Update;
-using BarberTech.Infraestructure;
+﻿using BarberTech.Infraestructure;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Haircuts.Delete
@@ -19,8 +18,8 @@ namespace BarberTech.Application.Commands.Haircuts.Delete
 
             if (haircut is null)
             {
+                // TODO: notificator
                 return default;
-                // notificator
             }
 
             _context.Haircuts.Remove(haircut);

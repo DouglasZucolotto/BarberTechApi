@@ -18,7 +18,8 @@ namespace BarberTech.Application.Commands.Feedbacks.Delete
 
             if (feedback is null)
             {
-                return Nothing.Value;
+                // TODO: notificator
+                return default;
             }
 
             _context.Feedbacks.Remove(feedback);

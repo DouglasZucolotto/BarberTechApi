@@ -14,10 +14,9 @@
 
         public Haircut()
         {
-
         }
 
-        public Haircut(string name, string description, string imageSource, decimal price)
+        public Haircut(string name, string? description, string imageSource, decimal price)
         {
             Name = name;
             Description = description;

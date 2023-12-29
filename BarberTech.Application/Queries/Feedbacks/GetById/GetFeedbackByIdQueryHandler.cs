@@ -1,10 +1,5 @@
 ﻿using BarberTech.Application.Queries.Feedbacks.GetAll;
 using BarberTech.Infraestructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BarberTech.Application.Queries.Feedbacks.GetById
 {
@@ -23,16 +18,15 @@ namespace BarberTech.Application.Queries.Feedbacks.GetById
 
             if (feedback is null)
             {
+                // TODO: notificator
                 return default;
             }
 
             return new GetFeedbackByIdQueryResponse
             {
                 Id = feedback.Id,
-                UserId = feedback.UserId,
                 Comment = feedback.Comment,
-                Qnt_stars = feedback.Qnt_stars,
-                HaircutId = feedback.FeedbackId
+                QntStars = feedback.QntStars
             };
         }
     }

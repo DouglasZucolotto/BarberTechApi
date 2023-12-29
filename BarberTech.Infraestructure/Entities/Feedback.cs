@@ -4,20 +4,43 @@
     {
         public Guid Id { get; set; }
 
-        public Guid UserId { get; set; }
+        public User User { get; set; }
+
+        public Guid UserId => User.Id;
 
         public string? Comment { get; set; }
 
-        public int Qnt_stars { get; set; }
+        public int QntStars { get; set; }
 
-        public Guid FeedbackId { get; set; }
+        public Haircut? Haircut { get; set; }
 
-        public Feedback(Guid userId, string comment, int qnt_stars, Guid feedbackId)
+        public Guid? HaircutId => Haircut?.Id;
+
+        //public Barber? Barber { get; set; }
+
+        //public Guid? BarberId => Barber?.Id;
+
+        public Feedback()
         {
-            UserId = userId;
-            Comment = comment;
-            Qnt_stars = qnt_stars;
-            FeedbackId = feedbackId;
         }
+
+        public Feedback(User user, string? comment, int qntStars)
+        {
+            User = user;
+            Comment = comment;
+            QntStars = qntStars;
+        }
+
+        public Feedback EvaluateHaircut(Haircut haircut)
+        {
+            Haircut = haircut;
+            return this;
+        }
+
+        //public Feedback EvaluateBarber(Barber barber)
+        //{
+        //    Barber = barber;
+        //    return this;
+        //}
     }
 }

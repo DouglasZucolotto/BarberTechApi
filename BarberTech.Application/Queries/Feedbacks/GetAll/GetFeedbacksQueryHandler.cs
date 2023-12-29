@@ -18,10 +18,8 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
                 .Select(feedback => new GetFeedbacksQueryResponse
                 {
                     Id = feedback.Id,
-                    UserId = feedback.UserId,
                     Comment = feedback.Comment,
-                    Qnt_stars = feedback.Qnt_stars,
-                    HaircutId = feedback.FeedbackId
+                    QntStars = feedback.QntStars
                 })
                 .ToList();
 
