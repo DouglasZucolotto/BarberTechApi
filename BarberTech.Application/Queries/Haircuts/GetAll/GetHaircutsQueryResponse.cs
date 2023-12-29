@@ -1,9 +1,9 @@
-﻿using MediatR;
-
-namespace BarberTech.Application.Commands.Haircuts.Create
+﻿namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
-    public class CreateHaircutCommand : IRequest<Nothing>
+    public class GetHaircutsQueryResponse
     {
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
 
         public string? Description { get; set; }
