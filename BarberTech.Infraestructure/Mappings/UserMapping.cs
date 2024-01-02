@@ -19,10 +19,6 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasValueGenerator<GuidValueGenerator>()
                 .IsRequired();
 
-            builder.Property(u => u.Name)
-               .HasColumnName("name")
-               .IsRequired();
-
             builder.Property(u => u.Email)
                .HasColumnName("email")
                .IsRequired();
@@ -30,6 +26,17 @@ namespace BarberTech.Infraestructure.Mappings
             builder.Property(u => u.Password)
                .HasColumnName("password")
                .IsRequired();
+
+            builder.Property(u => u.Name)
+               .HasColumnName("name")
+               .IsRequired();
+
+            builder.Property(u => u.ImageSource)
+               .HasColumnName("image_source")
+               .IsRequired();
+
+            //builder.HasMany(u => u.Feedbacks)
+            //    .WithOne(f => f.User);
         }
     }
 }

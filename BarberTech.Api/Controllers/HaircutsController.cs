@@ -4,6 +4,7 @@ using BarberTech.Application.Commands.Haircuts.Update;
 using BarberTech.Application.Queries.Haircuts.GetAll;
 using BarberTech.Application.Queries.Haircuts.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberTech.Services.Controllers
@@ -19,6 +20,7 @@ namespace BarberTech.Services.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetHaircutsAsync([FromQuery] GetHaircutsQuery query)
         {

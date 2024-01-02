@@ -6,7 +6,7 @@
 
         public User User { get; set; }
 
-        public Guid UserId => User.Id;
+        public Guid UserId { get; set; }
 
         public string? Comment { get; set; }
 

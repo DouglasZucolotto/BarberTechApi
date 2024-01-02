@@ -19,19 +19,16 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasValueGenerator<GuidValueGenerator>()
                 .IsRequired();
 
-            builder.Property(f => f.UserId)
-                .HasColumnName("user_id")
-                .IsRequired();
+            //builder.HasOne(f => f.User)
+            //    .WithMany(u => u.Feedbacks)
+            //    .HasForeignKey(f => f.UserId)
+            //    .IsRequired();
 
             builder.Property(f => f.Comment)
                 .HasColumnName("comment");
 
-            builder.Property(f => f.Qnt_stars)
+            builder.Property(f => f.QntStars)
                 .HasColumnName("qnt_stars")
-                .IsRequired();
-
-            builder.Property(f => f.FeedbackId)
-                .HasColumnName("haircut_id")
                 .IsRequired();
         }
     }

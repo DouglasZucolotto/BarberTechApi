@@ -17,7 +17,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
         {
             // TODO: Pegar id usuário logado // remover userTest
 
-            var userTest = new User(Guid.NewGuid(), "name", "email", "password");
+            var userTest = new User("email", "password", "name", "image");
 
             var feedback = new Feedback(userTest, request.Comment, request.QntStars);
 
