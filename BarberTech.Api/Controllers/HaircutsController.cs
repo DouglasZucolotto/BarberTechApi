@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BarberTech.Services.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/haircuts")]
     public class HaircutsController : ControllerBase
@@ -20,7 +21,6 @@ namespace BarberTech.Services.Controllers
             _mediator = mediator;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetHaircutsAsync([FromQuery] GetHaircutsQuery query)
         {

@@ -2,12 +2,13 @@
 using BarberTech.Application.Commands.Feedbacks.Delete;
 using BarberTech.Application.Commands.Feedbacks.Update;
 using BarberTech.Application.Queries.Feedbacks.GetAll;
-using BarberTech.Application.Queries.Feedbacks.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberTech.Services.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/feedbacks")]
     public class FeedbacksController : Controller
