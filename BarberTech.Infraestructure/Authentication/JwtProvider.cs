@@ -10,18 +10,29 @@ namespace BarberTech.Infraestructure.Authentication
     public sealed class JwtProvider : IJwtProvider
     {
         public readonly JwtOptions _options;
+        public readonly DataContext _context;
 
-        public JwtProvider(IOptions<JwtOptions> options)
+        private const string PermissionsArrayName = "permissions";
+
+        public JwtProvider(IOptions<JwtOptions> options, DataContext context)
         {
             _options = options.Value;
+            _context = context;
         }
 
         public string Generate(User user)
         {
-            var claims = new Claim[] {
+            var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
             };
+
+            var userPermissions = _context.Permissions.Where(p => p.UserId == user.Id).ToList();
+
+            foreach(var permission in userPermissions)
+            {
+                claims.Add(new(PermissionsArrayName, permission.Name));
+            }
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
 

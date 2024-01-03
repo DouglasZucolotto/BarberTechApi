@@ -35,6 +35,9 @@ namespace BarberTech.Infraestructure.Mappings
                .HasColumnName("image_source")
                .IsRequired();
 
+            builder.HasMany(u => u.Permissions)
+                .WithOne(p => p.User);
+
             //builder.HasMany(u => u.Feedbacks)
             //    .WithOne(f => f.User);
         }

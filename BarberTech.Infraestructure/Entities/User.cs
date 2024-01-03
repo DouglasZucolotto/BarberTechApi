@@ -1,4 +1,6 @@
-﻿namespace BarberTech.Infraestructure.Entities
+﻿using Microsoft.VisualBasic;
+
+namespace BarberTech.Infraestructure.Entities
 {
     public class User
     {
@@ -11,6 +13,8 @@
         public string Name { get; set; }
 
         public string ImageSource { get; set; }
+
+        public ICollection<Permission> Permissions { get; set; }
 
         public User(string email, string password, string name, string imageSource)
         {

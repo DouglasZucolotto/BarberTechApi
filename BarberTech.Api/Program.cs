@@ -84,6 +84,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("haircuts:view", policy => policy.RequireClaim("permissions", "haircuts:view"));
+    options.AddPolicy("haircuts:edit", policy => policy.RequireClaim("permissions", "haircuts:edit"));
+});
+
 
 var app = builder.Build();
 

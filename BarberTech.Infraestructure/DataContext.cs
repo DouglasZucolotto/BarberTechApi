@@ -24,11 +24,14 @@ namespace BarberTech.Infraestructure
 
         public DbSet<Feedback> Feedbacks { get; set; }
 
+        public DbSet<Permission> Permissions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new HaircutMapping());
             modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new FeedbackMapping());
+            modelBuilder.ApplyConfiguration(new PermissionMapping());
         }
     }
 }
