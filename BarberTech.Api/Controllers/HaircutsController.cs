@@ -30,9 +30,9 @@ namespace BarberTech.Services.Controllers
 
         [HasPermission(Permissions.Haircuts.View)]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetHaircutByIdAsync([FromRoute] Guid id, [FromQuery] GetHaircutByIdQuery query)
+        public async Task<IActionResult> GetHaircutByIdAsync([FromRoute] Guid id)
         {
-            var haircut = await _mediator.Send(query.WithId(id));
+            var haircut = await _mediator.Send(new GetHaircutByIdQuery(id));
             return Ok(haircut);
         }
 
@@ -54,9 +54,9 @@ namespace BarberTech.Services.Controllers
 
         [HasPermission(Permissions.Haircuts.Edit)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id, [FromBody] DeleteHaircutCommand command)
+        public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id)
         {
-            await _mediator.Send(command.WithId(id));
+            await _mediator.Send(new DeleteHaircutCommand(id));
             return NoContent();
         }
     }

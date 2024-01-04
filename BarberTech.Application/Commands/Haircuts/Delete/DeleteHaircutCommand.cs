@@ -6,10 +6,9 @@ namespace BarberTech.Application.Commands.Haircuts.Delete
     {
         public Guid Id { get; set; }
 
-        public DeleteHaircutCommand WithId(Guid id)
+        public DeleteHaircutCommand (Guid id)
         {
-            Id = id; 
-            return this;
+            Id = id;
         }
     }
 }

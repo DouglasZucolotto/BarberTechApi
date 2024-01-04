@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using System.Text.Json.Serialization;
 
 namespace BarberTech.Application.Commands.Haircuts.Update
 {
     public class UpdateHaircutCommand : IRequest<Nothing>
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
 
         public string Name { get; set; }

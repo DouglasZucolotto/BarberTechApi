@@ -6,10 +6,9 @@ namespace BarberTech.Application.Commands.Feedbacks.Delete
     {
         public Guid Id { get; set; }
 
-        public DeleteFeedbackCommand WithId(Guid id)
+        public DeleteFeedbackCommand(Guid id)
         {
             Id = id;
-            return this;
         }
     }
 }

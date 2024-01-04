@@ -44,6 +44,7 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
+builder.Services.AddTransient<IBarberRepository, BarberRepository>();
 
 builder.Services.Configure<JwtOptions>(
     builder.Configuration.GetSection("JwtOptions"));

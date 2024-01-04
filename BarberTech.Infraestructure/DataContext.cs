@@ -36,8 +36,8 @@ namespace BarberTech.Infraestructure
         public virtual async Task CommitAsync()
         {
             var modifiedEntries = ChangeTracker.Entries()
-                   .Where(e => e.State is EntityState.Added or EntityState.Modified)
-                   .Where(e => e.Entity is Entity);
+                .Where(e => e.State is EntityState.Added or EntityState.Modified)
+                .Where(e => e.Entity is Entity);
 
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -49,6 +49,11 @@ namespace BarberTech.Infraestructure
                 {
                     entity.CreatedAt = DateTime.UtcNow;
                     entity.CreatedBy = userId != null ? Guid.Parse(userId) : Guid.Empty;
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entity.CreatedAt = entity.CreatedAt.ToUniversalTime();
                 }
 
                 entity.ModifiedAt = DateTime.UtcNow;

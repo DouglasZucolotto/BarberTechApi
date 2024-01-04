@@ -25,15 +25,17 @@
             QntStars = qntStars;
         }
 
-        public Feedback EvaluateHaircut(Guid haircutId)
+        public Feedback EvaluateHaircut(Haircut haircut)
         {
-            HaircutId = haircutId;
+            Haircut = haircut;
+            HaircutId = haircut.Id;
             return this;
         }
 
-        public Feedback EvaluateBarber(Guid barberId)
+        public Feedback EvaluateBarber(Barber barber)
         {
-            BarberId = barberId;
+            Barber = barber;
+            BarberId = barber.Id;
             return this;
         }
     }
