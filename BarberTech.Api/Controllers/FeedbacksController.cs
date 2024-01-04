@@ -1,4 +1,5 @@
 ﻿using BarberTech.Application.Commands.Feedbacks.Create;
+using BarberTech.Application.Commands.Feedbacks.Delete;
 using BarberTech.Application.Commands.Feedbacks.Update;
 using BarberTech.Application.Queries.Feedbacks.GetAll;
 using MediatR;
@@ -18,7 +19,7 @@ namespace BarberTech.Services.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllHaircutsAsync([FromQuery] GetFeedbacksQuery query)
+        public async Task<IActionResult> GetAllFeedbacksAsync([FromQuery] GetFeedbacksQuery query)
         {
             var feedbacks = await _mediator.Send(query);
             return Ok(feedbacks);
@@ -32,21 +33,21 @@ namespace BarberTech.Services.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateHaircutAsync([FromBody] CreateFeedbackCommand command)
+        public async Task<IActionResult> CreateFeedbackAsync([FromBody] CreateFeedbackCommand command)
         {
             await _mediator.Send(command);
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateHaircutAsync([FromRoute] Guid id, [FromBody] UpdateFeedbackCommand command)
+        public async Task<IActionResult> UpdateFeedbackAsync([FromRoute] Guid id, [FromBody] UpdateFeedbackCommand command)
         {
             await _mediator.Send(command.WithId(id));
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id, [FromBody] UpdateFeedbackCommand command)
+        public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id, [FromBody] DeleteFeedbackCommand command)
         {
             await _mediator.Send(command.WithId(id));
             return NoContent();

@@ -3,7 +3,10 @@
 namespace BarberTech.Infraestructure.Entities
 {
     public class Establishment
-    {  
+    {
+        private object comment;
+        private object qnt_stars;
+
         public Guid Id { get; set; }
 
         public Guid FeedbackId { get; set; }
@@ -27,6 +30,14 @@ namespace BarberTech.Infraestructure.Entities
             ImageSource = imageSource;
             Description = description;
             BusinessHours = businessHours;
+        }
+
+        public Establishment(Guid id, object comment, object qnt_stars, Guid feedbackId)
+        {
+            Id = id;
+            this.comment = comment;
+            this.qnt_stars = qnt_stars;
+            FeedbackId = feedbackId;
         }
     }
 }

@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Commands\Establishments\Create\CreateEstablishmentCommandHandler.cs~RF2436f34.TMP" />
+    <None Remove="Queries\Establishments\GetAll\GetEstablishmentsQuery.cs~RF21f0a8e.TMP" />
+    <None Remove="Queries\Establishments\GetAll\GetEstablishmentsQueryResponse.cs~RF21c8c6e.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.14" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />

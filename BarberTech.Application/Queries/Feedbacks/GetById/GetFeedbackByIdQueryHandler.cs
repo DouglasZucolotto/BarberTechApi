@@ -1,10 +1,5 @@
 ﻿using BarberTech.Application.Queries.Feedbacks.GetAll;
 using BarberTech.Infraestructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BarberTech.Application.Queries.Feedbacks.GetById
 {
