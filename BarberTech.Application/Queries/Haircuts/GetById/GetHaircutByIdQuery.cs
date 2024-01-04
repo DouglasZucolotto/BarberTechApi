@@ -4,12 +4,11 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
 {
     public class GetHaircutByIdQuery : IRequest<GetHaircutByIdQueryResponse>
     {
-        public Guid Id { get; set; }
-
-        public GetHaircutByIdQuery WithId(Guid id)
+        public GetHaircutByIdQuery(Guid id)
         {
             Id = id;
-            return this;
         }
+
+        public Guid Id { get; set; }
     }
 }
