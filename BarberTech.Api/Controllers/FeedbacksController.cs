@@ -2,13 +2,13 @@
 using BarberTech.Application.Commands.Feedbacks.Delete;
 using BarberTech.Application.Commands.Feedbacks.Update;
 using BarberTech.Application.Queries.Feedbacks.GetAll;
+using BarberTech.Application.Queries.Feedbacks.GetById;
+using BarberTech.Infraestructure.Authentication;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberTech.Services.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/feedbacks")]
     public class FeedbacksController : Controller
@@ -20,13 +20,15 @@ namespace BarberTech.Services.Controllers
             _mediator = mediator;
         }
 
+        [HasPermission(Permissions.Feedbacks.View)]
         [HttpGet]
-        public async Task<IActionResult> GetFeedbacksAsync([FromQuery] GetFeedbacksQuery query)
+        public async Task<IActionResult> GetFeedbacksAsync()
         {
-            var feedbacks = await _mediator.Send(query);
+            var feedbacks = await _mediator.Send(new GetFeedbacksQuery());
             return Ok(feedbacks);
         }
 
+        [HasPermission(Permissions.Feedbacks.View)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFeedbackByIdAsync([FromRoute] Guid id, [FromQuery] GetFeedbackByIdQuery query)
         {
@@ -34,6 +36,7 @@ namespace BarberTech.Services.Controllers
             return Ok(feedback);
         }
 
+        [HasPermission(Permissions.Feedbacks.Edit)]
         [HttpPost]
         public async Task<IActionResult> CreateFeedbackAsync([FromBody] CreateFeedbackCommand command)
         {
@@ -41,6 +44,7 @@ namespace BarberTech.Services.Controllers
             return NoContent();
         }
 
+        [HasPermission(Permissions.Feedbacks.Edit)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFeedbackAsync([FromRoute] Guid id, [FromBody] UpdateFeedbackCommand command)
         {
@@ -48,6 +52,7 @@ namespace BarberTech.Services.Controllers
             return NoContent();
         }
 
+        [HasPermission(Permissions.Feedbacks.Edit)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFeedbackAsync([FromRoute] Guid id, [FromBody] DeleteFeedbackCommand command)
         {

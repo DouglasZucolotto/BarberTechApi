@@ -1,20 +1,20 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Haircuts.Update
 {
     public class UpdateHaircutCommandHandler : IRequestHandler<UpdateHaircutCommand, Nothing>
     {
-        private readonly DataContext _context;
+        private readonly IHaircutRepository _haircutRepository;
 
-        public UpdateHaircutCommandHandler(DataContext context)
+        public UpdateHaircutCommandHandler(IHaircutRepository haircutRepository)
         {
-            _context = context;
+            _haircutRepository = haircutRepository;
         }
 
         public async Task<Nothing> Handle(UpdateHaircutCommand request, CancellationToken cancellationToken)
         {
-            var haircut = _context.Haircuts.FirstOrDefault(h => h.Id == request.Id);
+            var haircut = await _haircutRepository.GetByIdAsync(request.Id);
 
             if (haircut is null)
             {
@@ -27,8 +27,8 @@ namespace BarberTech.Application.Commands.Haircuts.Update
             haircut.Price = request.Price;
             haircut.ImageSource = request.ImageSource;
 
-            _context.Haircuts.Update(haircut);
-            await _context.SaveChangesAsync();
+            _haircutRepository.Update(haircut);
+            await _haircutRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
         }

@@ -1,23 +1,14 @@
-﻿using BarberTech.Infraestructure.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using BarberTech.Domain.Entities;
 
 namespace BarberTech.Infraestructure.Mappings
 {
-    internal sealed class UserMapping : IEntityTypeConfiguration<User>
+    internal sealed class UserMapping : Mapping<User>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("users");
-
-            builder.HasKey(u => u.Id);
-
-            builder.Property(u => u.Id)
-                .HasColumnName("id")
-                .ValueGeneratedOnAdd()
-                .HasValueGenerator<GuidValueGenerator>()
-                .IsRequired();
 
             builder.Property(u => u.Email)
                .HasColumnName("email")
@@ -38,8 +29,10 @@ namespace BarberTech.Infraestructure.Mappings
             builder.HasMany(u => u.Permissions)
                 .WithOne(p => p.User);
 
-            //builder.HasMany(u => u.Feedbacks)
-            //    .WithOne(f => f.User);
+            builder.HasOne(u => u.Barber)
+                .WithOne(b => b.User);
+
+            base.Configure(builder);
         }
     }
 }

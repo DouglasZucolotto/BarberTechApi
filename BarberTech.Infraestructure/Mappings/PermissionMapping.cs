@@ -1,23 +1,14 @@
-﻿using BarberTech.Infraestructure.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using BarberTech.Domain.Entities;
 
 namespace BarberTech.Infraestructure.Mappings
 {
-    internal sealed class PermissionMapping : IEntityTypeConfiguration<Permission>
+    internal sealed class PermissionMapping : Mapping<Permission>
     {
-        public void Configure(EntityTypeBuilder<Permission> builder)
+        public override void Configure(EntityTypeBuilder<Permission> builder)
         {
             builder.ToTable("permissions");
-
-            builder.HasKey(p => p.Id);
-
-            builder.Property(p => p.Id)
-                .HasColumnName("id")
-                .ValueGeneratedOnAdd()
-                .HasValueGenerator<GuidValueGenerator>()
-                .IsRequired();
 
             builder.Property(p => p.Name)
                .HasColumnName("name")
@@ -31,6 +22,8 @@ namespace BarberTech.Infraestructure.Mappings
                 .WithMany(u => u.Permissions)
                 .HasForeignKey(p => p.UserId)
                 .IsRequired();
+
+            base.Configure(builder);
         }
     }
 }

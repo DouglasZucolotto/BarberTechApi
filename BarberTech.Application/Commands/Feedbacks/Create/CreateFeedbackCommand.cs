@@ -10,7 +10,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
 
         public Guid? HaircutId { get; set; }
 
-        public Guid? BarberId { get; set; } // TODO: Fazer validação de um ou outro
+        public Guid? BarberId { get; set; }
     }
 }
 

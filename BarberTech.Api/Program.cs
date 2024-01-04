@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BarberTech.Infraestructure.Repositories;
+using BarberTech.Domain;
+using BarberTech.Domain.Authentication;
+using BarberTech.Domain.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
     typeof(CreateHaircutCommandHandler).Assembly
@@ -34,6 +40,10 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
+builder.Services.AddTransient<IFeedbackRepository, FeedbackRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
 
 builder.Services.Configure<JwtOptions>(
     builder.Configuration.GetSection("JwtOptions"));
@@ -88,6 +98,8 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("haircuts:view", policy => policy.RequireClaim("permissions", "haircuts:view"));
     options.AddPolicy("haircuts:edit", policy => policy.RequireClaim("permissions", "haircuts:edit"));
+    options.AddPolicy("feedbacks:view", policy => policy.RequireClaim("permissions", "feedbacks:view"));
+    options.AddPolicy("feedbacks:edit", policy => policy.RequireClaim("permissions", "feedbacks:edit"));
 });
 
 

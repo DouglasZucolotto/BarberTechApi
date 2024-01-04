@@ -1,28 +1,42 @@
-﻿using BarberTech.Infraestructure.Entities;
-using BarberTech.Infraestructure;
-using MediatR;
+﻿using MediatR;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using BarberTech.Domain.Repositories;
+using BarberTech.Domain.Entities;
 
 namespace BarberTech.Application.Commands.Feedbacks.Create
 {
     public class CreateFeedbackCommandHandler : IRequestHandler<CreateFeedbackCommand, Nothing>
     {
-        private readonly DataContext _context;
+        private readonly IFeedbackRepository _feedbackRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CreateFeedbackCommandHandler(DataContext context)
+        public CreateFeedbackCommandHandler(IFeedbackRepository feedbackRepository, IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
+            _feedbackRepository = feedbackRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Nothing> Handle(CreateFeedbackCommand request, CancellationToken cancellationToken)
         {
-            // TODO: Pegar id usuário logado // remover userTest
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value; // TODO: fazer um context para acessar o usuário logado
 
-            var userTest = new User("email", "password", "name", "image");
+            var userIdParsed = Guid.Parse(userId);
 
-            var feedback = new Feedback(userTest, request.Comment, request.QntStars);
+            var feedback = new Feedback(userIdParsed, request.Comment, request.QntStars);
 
-            _context.Feedbacks.Add(feedback);
-            await _context.SaveChangesAsync();
+            if (request.HaircutId != null)
+            {
+                feedback.EvaluateHaircut(request.HaircutId.Value);
+            }
+
+            if (request.BarberId != null)
+            {
+                feedback.EvaluateBarber(request.BarberId.Value);
+            }
+
+            _feedbackRepository.Add(feedback);
+            await _feedbackRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
         }

@@ -1,6 +1,6 @@
-﻿using BarberTech.Infraestructure.Entities;
+﻿using BarberTech.Domain.Entities;
 
-namespace BarberTech.Infraestructure
+namespace BarberTech.Domain
 {
     public interface IJwtProvider
     {

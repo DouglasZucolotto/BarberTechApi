@@ -1,29 +1,27 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Feedbacks.GetAll
 {
-    public class GetFeedbacksQueryHandler : IRequestHandler<GetFeedbacksQuery, List<GetFeedbacksQueryResponse>>
+    public class GetFeedbacksQueryHandler : IRequestHandler<GetFeedbacksQuery, IEnumerable<GetFeedbacksQueryResponse>>
     {
-        private readonly DataContext _context;
+        private readonly IFeedbackRepository _feedbackRepository;
 
-        public GetFeedbacksQueryHandler(DataContext context)
+        public GetFeedbacksQueryHandler(IFeedbackRepository feedbackRepository)
         {
-            _context = context;
+            _feedbackRepository = feedbackRepository;
         }
 
-        public async Task<List<GetFeedbacksQueryResponse>> Handle(GetFeedbacksQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetFeedbacksQueryResponse>> Handle(GetFeedbacksQuery request, CancellationToken cancellationToken)
         {
-            var feedbacks = _context.Feedbacks
-                .Select(feedback => new GetFeedbacksQueryResponse
-                {
-                    Id = feedback.Id,
-                    Comment = feedback.Comment,
-                    QntStars = feedback.QntStars
-                })
-                .ToList();
+            var feedbacks = await _feedbackRepository.GetAllAsync();
 
-            return feedbacks;
+            return feedbacks.Select(feedback => new GetFeedbacksQueryResponse
+            {
+                Id = feedback.Id,
+                Comment = feedback.Comment,
+                QntStars = feedback.QntStars
+            });
         }
     }
 }

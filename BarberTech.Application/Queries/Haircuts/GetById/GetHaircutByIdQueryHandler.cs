@@ -1,20 +1,20 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Haircuts.GetById
 {
     public class GetHaircutByIdQueryHandler : IRequestHandler<GetHaircutByIdQuery, GetHaircutByIdQueryResponse>
     {
-        private readonly DataContext _context;
+        private readonly IHaircutRepository _haircutRepository;
 
-        public GetHaircutByIdQueryHandler(DataContext context)
+        public GetHaircutByIdQueryHandler(IHaircutRepository haircutRepository)
         {
-            _context = context;
+            _haircutRepository = haircutRepository;
         }
 
         public async Task<GetHaircutByIdQueryResponse> Handle(GetHaircutByIdQuery request, CancellationToken cancellationToken)
         {
-            var haircut = _context.Haircuts.FirstOrDefault(h => h.Id == request.Id);
+            var haircut = await _haircutRepository.GetByIdAsync(request.Id);
 
             if (haircut is null)
             {

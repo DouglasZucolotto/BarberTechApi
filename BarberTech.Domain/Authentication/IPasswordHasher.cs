@@ -1,4 +1,4 @@
-﻿namespace BarberTech.Infraestructure.Authentication
+﻿namespace BarberTech.Domain.Authentication
 {
     public interface IPasswordHasher
     {

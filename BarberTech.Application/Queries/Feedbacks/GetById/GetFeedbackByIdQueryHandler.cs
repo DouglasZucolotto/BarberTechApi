@@ -1,20 +1,21 @@
 ﻿using BarberTech.Application.Queries.Feedbacks.GetAll;
-using BarberTech.Infraestructure;
+using BarberTech.Domain.Repositories;
+using MediatR;
 
 namespace BarberTech.Application.Queries.Feedbacks.GetById
 {
-    public class GetFeedbackByIdQueryHandler
+    public class GetFeedbackByIdQueryHandler : IRequestHandler<GetFeedbackByIdQuery, GetFeedbackByIdQueryResponse>
     {
-        private readonly DataContext _context;
+        private readonly IFeedbackRepository _feedbackRepository;
 
-        public GetFeedbackByIdQueryHandler(DataContext context)
+        public GetFeedbackByIdQueryHandler(IFeedbackRepository feedbackRepository)
         {
-            _context = context;
+            _feedbackRepository = feedbackRepository;
         }
 
         public async Task<GetFeedbackByIdQueryResponse> Handle(GetFeedbackByIdQuery request, CancellationToken cancellationToken)
         {
-            var feedback = _context.Feedbacks.FirstOrDefault(f => f.Id == request.Id);
+            var feedback = await _feedbackRepository.GetByIdAsync(request.Id);
 
             if (feedback is null)
             {

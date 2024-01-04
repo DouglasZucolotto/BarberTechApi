@@ -20,15 +20,15 @@ namespace BarberTech.Services.Controllers
             _mediator = mediator;
         }
 
-        [HasPermission("haircuts:view")]
+        [HasPermission(Permissions.Haircuts.View)]
         [HttpGet]
-        public async Task<IActionResult> GetHaircutsAsync([FromQuery] GetHaircutsQuery query)
+        public async Task<IActionResult> GetHaircutsAsync()
         {
-            var haircuts = await _mediator.Send(query);
+            var haircuts = await _mediator.Send(new GetHaircutsQuery());
             return Ok(haircuts);
         }
 
-        [HasPermission("haircuts:view")]
+        [HasPermission(Permissions.Haircuts.View)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetHaircutByIdAsync([FromRoute] Guid id, [FromQuery] GetHaircutByIdQuery query)
         {
@@ -36,7 +36,7 @@ namespace BarberTech.Services.Controllers
             return Ok(haircut);
         }
 
-        [HasPermission("haircuts:edit")]
+        [HasPermission(Permissions.Haircuts.Edit)]
         [HttpPost]
         public async Task<IActionResult> CreateHaircutAsync([FromBody] CreateHaircutCommand command)
         {
@@ -44,7 +44,7 @@ namespace BarberTech.Services.Controllers
             return NoContent();
         }
 
-        [HasPermission("haircuts:edit")]
+        [HasPermission(Permissions.Haircuts.Edit)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateHaircutAsync([FromRoute] Guid id, [FromBody] UpdateHaircutCommand command)
         {
@@ -52,7 +52,7 @@ namespace BarberTech.Services.Controllers
             return NoContent();
         }
 
-        [HasPermission("haircuts:edit")]
+        [HasPermission(Permissions.Haircuts.Edit)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id, [FromBody] DeleteHaircutCommand command)
         {

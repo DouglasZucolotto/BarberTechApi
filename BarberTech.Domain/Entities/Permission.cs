@@ -1,9 +1,7 @@
-﻿namespace BarberTech.Infraestructure.Entities
+﻿namespace BarberTech.Domain.Entities
 {
-    public class Permission
+    public class Permission : Entity
     {
-        public Guid Id { get; set; }
-
         public Guid UserId { get; set; }
 
         public User User { get; set; }

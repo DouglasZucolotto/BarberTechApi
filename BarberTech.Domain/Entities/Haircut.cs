@@ -1,9 +1,7 @@
-﻿namespace BarberTech.Infraestructure.Entities
+﻿namespace BarberTech.Domain.Entities
 {
-    public class Haircut
+    public class Haircut : Entity
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public string? Description { get; set; }
@@ -12,9 +10,7 @@
 
         public decimal Price { get; set; }
 
-        public Haircut()
-        {
-        }
+        public ICollection<Feedback> Feedbacks { get; set; }
 
         public Haircut(string name, string? description, string imageSource, decimal price)
         {

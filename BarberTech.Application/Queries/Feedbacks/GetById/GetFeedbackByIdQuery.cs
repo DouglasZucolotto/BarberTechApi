@@ -1,9 +1,8 @@
-﻿using BarberTech.Application.Queries.Feedbacks.GetById;
-using MediatR;
+﻿using MediatR;
 
-namespace BarberTech.Application.Queries.Feedbacks.GetAll
+namespace BarberTech.Application.Queries.Feedbacks.GetById
 {
-    public class GetFeedbackByIdQuery : IRequest<List<GetFeedbackByIdQueryResponse>>
+    public class GetFeedbackByIdQuery : IRequest<GetFeedbackByIdQueryResponse>
     {
         public Guid Id { get; set; }
 

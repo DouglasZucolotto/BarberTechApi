@@ -1,20 +1,20 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Feedbacks.Update
 {
     public class UpdateFeedbackCommandHandler : IRequestHandler<UpdateFeedbackCommand, Nothing>
     {
-        private readonly DataContext _context;
+        private readonly IFeedbackRepository _feedbackRepository;
 
-        public UpdateFeedbackCommandHandler(DataContext context)
+        public UpdateFeedbackCommandHandler(IFeedbackRepository feedbackRepository)
         {
-            _context = context;
+            _feedbackRepository = feedbackRepository;
         }
 
         public async Task<Nothing> Handle(UpdateFeedbackCommand request, CancellationToken cancellationToken)
         {
-            var feedback = _context.Feedbacks.FirstOrDefault(f => f.Id == request.Id);
+            var feedback = await _feedbackRepository.GetByIdAsync(request.Id);
 
             if (feedback is null)
             {
@@ -25,8 +25,8 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
             feedback.Comment = request.Comment;
             feedback.QntStars = request.QntStars;
 
-            _context.Feedbacks.Update(feedback);
-            await _context.SaveChangesAsync();
+            _feedbackRepository.Update(feedback);
+            await _feedbackRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
         }

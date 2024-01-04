@@ -1,24 +1,24 @@
-﻿using BarberTech.Infraestructure;
-using BarberTech.Infraestructure.Entities;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
+using BarberTech.Domain.Entities;
 
 namespace BarberTech.Application.Commands.Haircuts.Create
 {
     public class CreateHaircutCommandHandler : IRequestHandler<CreateHaircutCommand, Nothing>
     {
-        private readonly DataContext _context;
+        private readonly IHaircutRepository _haircutRepository;
 
-        public CreateHaircutCommandHandler(DataContext context)
+        public CreateHaircutCommandHandler(IHaircutRepository haircutRepository)
         {
-            _context = context;
+            _haircutRepository = haircutRepository;
         }
 
         public async Task<Nothing> Handle(CreateHaircutCommand request, CancellationToken cancellationToken)
         {
             var haircut = new Haircut(request.Name, request.Description, request.ImageSource, request.Price);
 
-            _context.Haircuts.Add(haircut);
-            await _context.SaveChangesAsync();
+            _haircutRepository.Add(haircut);
+            await _haircutRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
         }

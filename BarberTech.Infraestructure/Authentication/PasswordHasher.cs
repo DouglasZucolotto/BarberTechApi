@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using BarberTech.Domain.Authentication;
+using System.Security.Cryptography;
 
 namespace BarberTech.Infraestructure.Authentication
 {

@@ -1,31 +1,29 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
-    public class GetHaircutsQueryHandler : IRequestHandler<GetHaircutsQuery, List<GetHaircutsQueryResponse>>
+    public class GetHaircutsQueryHandler : IRequestHandler<GetHaircutsQuery, IEnumerable<GetHaircutsQueryResponse>>
     {
-        private readonly DataContext _context;
+        private readonly IHaircutRepository _haircutRepository;
 
-        public GetHaircutsQueryHandler(DataContext context)
+        public GetHaircutsQueryHandler(IHaircutRepository haircutRepository)
         {
-            _context = context;
+            _haircutRepository = haircutRepository;
         }
 
-        public async Task<List<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
         {
-            var haircuts = _context.Haircuts
-                .Select(haircut => new GetHaircutsQueryResponse
-                {
-                    Id = haircut.Id,
-                    Name = haircut.Name,
-                    Description = haircut.Description,
-                    Price = haircut.Price,
-                    ImageSource = haircut.ImageSource
-                })
-                .ToList();
+            var haircuts = await _haircutRepository.GetAllAsync();
 
-            return haircuts;
+            return haircuts.Select(haircut => new GetHaircutsQueryResponse
+            {
+                Id = haircut.Id,
+                Name = haircut.Name,
+                Description = haircut.Description,
+                ImageSource = haircut.ImageSource,
+                Price = haircut.Price,
+            });
         }
     }
 }

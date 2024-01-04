@@ -5,9 +5,11 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberTech.Api", "BarberTech.Api\BarberTech.Api.csproj", "{CC1F4581-2789-4D75-91C5-AC8C853ABE24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberTech.Application", "BarberTech.Application\BarberTech.Application.csproj", "{02919D91-E0FD-4560-8E7D-93F823CFFA52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberTech.Application", "BarberTech.Application\BarberTech.Application.csproj", "{02919D91-E0FD-4560-8E7D-93F823CFFA52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberTech.Infraestructure", "BarberTech.Infraestructure\BarberTech.Infraestructure.csproj", "{2E46BFBA-D894-4E9F-81CF-24033A39BE59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarberTech.Infraestructure", "BarberTech.Infraestructure\BarberTech.Infraestructure.csproj", "{2E46BFBA-D894-4E9F-81CF-24033A39BE59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarberTech.Domain", "BarberTech.Domain\BarberTech.Domain.csproj", "{B91DB513-FD84-4505-99E8-F51F4AD1981F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2E46BFBA-D894-4E9F-81CF-24033A39BE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E46BFBA-D894-4E9F-81CF-24033A39BE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E46BFBA-D894-4E9F-81CF-24033A39BE59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91DB513-FD84-4505-99E8-F51F4AD1981F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91DB513-FD84-4505-99E8-F51F4AD1981F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91DB513-FD84-4505-99E8-F51F4AD1981F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91DB513-FD84-4505-99E8-F51F4AD1981F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
