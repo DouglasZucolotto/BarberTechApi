@@ -3,9 +3,9 @@ using BarberTech.Application.Commands.Haircuts.Delete;
 using BarberTech.Application.Commands.Haircuts.Update;
 using BarberTech.Application.Queries.Haircuts.GetAll;
 using BarberTech.Application.Queries.Haircuts.GetById;
+using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BarberTech.Services.Controllers
 {
@@ -20,20 +20,23 @@ namespace BarberTech.Services.Controllers
             _mediator = mediator;
         }
 
+        [HasPermission(Permissions.Haircuts.View)]
         [HttpGet]
-        public async Task<IActionResult> GetAllHaircutsAsync([FromQuery] GetHaircutsQuery query)
+        public async Task<IActionResult> GetHaircutsAsync()
         {
-            var haircuts = await _mediator.Send(query);
+            var haircuts = await _mediator.Send(new GetHaircutsQuery());
             return Ok(haircuts);
         }
 
+        [HasPermission(Permissions.Haircuts.View)]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, [FromQuery] GetHaircutByIdQuery query)
+        public async Task<IActionResult> GetHaircutByIdAsync([FromRoute] Guid id)
         {
-            var haircut = await _mediator.Send(query.WithId(id));
+            var haircut = await _mediator.Send(new GetHaircutByIdQuery(id));
             return Ok(haircut);
         }
 
+        [HasPermission(Permissions.Haircuts.Edit)]
         [HttpPost]
         public async Task<IActionResult> CreateHaircutAsync([FromBody] CreateHaircutCommand command)
         {
@@ -41,6 +44,7 @@ namespace BarberTech.Services.Controllers
             return NoContent();
         }
 
+        [HasPermission(Permissions.Haircuts.Edit)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateHaircutAsync([FromRoute] Guid id, [FromBody] UpdateHaircutCommand command)
         {
@@ -48,10 +52,11 @@ namespace BarberTech.Services.Controllers
             return NoContent();
         }
 
+        [HasPermission(Permissions.Haircuts.Edit)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id, [FromBody] DeleteHaircutCommand command)
+        public async Task<IActionResult> DeleteHaircutAsync([FromRoute] Guid id)
         {
-            await _mediator.Send(command.WithId(id));
+            await _mediator.Send(new DeleteHaircutCommand(id));
             return NoContent();
         }
     }

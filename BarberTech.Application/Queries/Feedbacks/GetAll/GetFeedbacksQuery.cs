@@ -2,7 +2,7 @@
 
 namespace BarberTech.Application.Queries.Feedbacks.GetAll
 {
-    public class GetFeedbacksQuery : IRequest<List<GetFeedbacksQueryResponse>>
+    public class GetFeedbacksQuery : IRequest<IEnumerable<GetFeedbacksQueryResponse>>
     {
     }
 }
