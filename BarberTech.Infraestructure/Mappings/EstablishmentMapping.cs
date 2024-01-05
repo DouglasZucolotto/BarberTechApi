@@ -1,34 +1,19 @@
-﻿using BarberTech.Infraestructure.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using BarberTech.Domain.Entities;
+using NetTopologySuite.IO;
+using NetTopologySuite;
 
 namespace BarberTech.Infraestructure.Mappings
 {
-    internal sealed class EstablishmentMapping : IEntityTypeConfiguration<Establishment>
+    internal sealed class EstablishmentMapping : Mapping<Establishment>
     {
-        public void Configure(EntityTypeBuilder<Establishment> builder)
+        public override void Configure(EntityTypeBuilder<Establishment> builder)
         {
             builder.ToTable("establishments");
 
-            builder.HasKey(e => e.Id);
-
-            builder.Property(e => e.Id)
-                .HasColumnName("Id")
-                .ValueGeneratedOnAdd()
-                .HasValueGenerator<GuidValueGenerator>()
-                .IsRequired();
-
-            builder.Property(e => e.FeedbackId)
-                .HasColumnName("feedback_id")
-                .IsRequired();
-
             builder.Property(e => e.Address)
                 .HasColumnName("address")
-                .IsRequired();
-
-            builder.Property(e => e.Coordinates)
-                .HasColumnName("coordinates")
                 .IsRequired();
 
             builder.Property(e => e.ImageSource)
@@ -39,7 +24,17 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("description");
 
             builder.Property(e => e.BusinessHours)
-                .HasColumnName("business_hours");
+                .HasColumnName("business_hours")
+                .IsRequired();
+
+            builder.Property(e => e.Coordinates)
+                .HasColumnName("coordinates")
+                .IsRequired();
+
+            builder.HasMany(e => e.Feedbacks)
+                .WithOne(f => f.Establishment);
+
+            base.Configure(builder);
         }
     }
 }

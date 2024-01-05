@@ -7,10 +7,9 @@ namespace BarberTech.Application.Queries.Establishments.GetById
     {
         public Guid Id { get; set; }
 
-        public GetEstablishmentByIdQuery WithId(Guid id)
+        public GetEstablishmentByIdQuery(Guid id)
         {
             Id = id;
-            return this;
         }
     }
 }

@@ -1,33 +1,31 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Establishments.GetAll
 {
-    public class GetEstablishmentsQueryHandler : IRequestHandler<GetEstablishmentsQuery, List<GetEstablishmentsQueryResponse>>
+    public class GetEstablishmentsQueryHandler : IRequestHandler<GetEstablishmentsQuery, IEnumerable<GetEstablishmentsQueryResponse>>
     {
-        private readonly DataContext _context;
+        private readonly IEstablishmentRepository _establishmentRepository;
 
-        public GetEstablishmentsQueryHandler(DataContext context)
+        public GetEstablishmentsQueryHandler(IEstablishmentRepository establishmentRepository)
         {
-            _context = context;
+            _establishmentRepository = establishmentRepository;
         }
 
-        public async Task<List<GetEstablishmentsQueryResponse>> Handle(GetEstablishmentsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetEstablishmentsQueryResponse>> Handle(GetEstablishmentsQuery request, CancellationToken cancellationToken)
         {
-            var establishments = _context.Establishments
+            var establishments = await _establishmentRepository.GetAllAsync();
+
+            return establishments
                 .Select(establishment => new GetEstablishmentsQueryResponse
                 {
                     Id = establishment.Id,
-                    FeedbackId = establishment.FeedbackId,
                     Address = establishment.Address,
                     Coordinates = establishment.Coordinates,
                     ImageSource = establishment.ImageSource,
                     Description = establishment.Description,
                     BusinessHours = establishment.BusinessHours
-                })
-                .ToList();
-
-            return establishments;
+                });
         }
     }
 }

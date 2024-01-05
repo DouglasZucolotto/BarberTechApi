@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Commands.Feedbacks.Update;
-using BarberTech.Infraestructure;
+﻿using BarberTech.Infraestructure;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Establishments.Update
@@ -21,8 +20,6 @@ namespace BarberTech.Application.Commands.Establishments.Update
                 return Nothing.Value;
             }
 
-            establishment.Id = request.Id;
-            establishment.FeedbackId = request.FeedbackId;
             establishment.Address = request.Address;
             establishment.Coordinates = request.Coordinates;
             establishment.ImageSource = request.ImageSource;

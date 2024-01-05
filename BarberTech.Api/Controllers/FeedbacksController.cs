@@ -4,7 +4,6 @@ using BarberTech.Application.Commands.Feedbacks.EvaluateHaircut;
 using BarberTech.Application.Commands.Feedbacks.Update;
 using BarberTech.Application.Queries.Feedbacks.GetAll;
 using BarberTech.Application.Queries.Feedbacks.GetById;
-using BarberTech.Domain.Entities;
 using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

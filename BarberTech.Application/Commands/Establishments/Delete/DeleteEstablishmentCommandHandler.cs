@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Commands.Feedbacks.Delete;
-using BarberTech.Infraestructure;
+﻿using BarberTech.Infraestructure;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Establishments.Delete
