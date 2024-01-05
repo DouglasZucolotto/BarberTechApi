@@ -1,4 +1,4 @@
-﻿using BarberTech.Application.Commands.Feedbacks.Delete;
+using BarberTech.Application.Commands.Feedbacks.Delete;
 using BarberTech.Application.Commands.Feedbacks.EvaluateBarber;
 using BarberTech.Application.Commands.Feedbacks.EvaluateHaircut;
 using BarberTech.Application.Commands.Feedbacks.Update;

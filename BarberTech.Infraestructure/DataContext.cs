@@ -29,6 +29,8 @@ namespace BarberTech.Infraestructure
 
         public DbSet<Feedback> Feedbacks { get; set; }
 
+        public DbSet<Establishment> Establishments { get; set; }
+        
         public DbSet<Permission> Permissions { get; set; }
 
         public DbSet<Barber> Barbers { get; set; }
@@ -68,6 +70,7 @@ namespace BarberTech.Infraestructure
             modelBuilder.ApplyConfiguration(new HaircutMapping());
             modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new FeedbackMapping());
+            modelBuilder.ApplyConfiguration(new EstablishmentMapping());
             modelBuilder.ApplyConfiguration(new PermissionMapping());
             modelBuilder.ApplyConfiguration(new BarberMapping());
         }
