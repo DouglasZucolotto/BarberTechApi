@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Commands.Feedbacks.Create;
-using BarberTech.Infraestructure;
+﻿using BarberTech.Infraestructure;
 using BarberTech.Infraestructure.Entities;
 using MediatR;
 

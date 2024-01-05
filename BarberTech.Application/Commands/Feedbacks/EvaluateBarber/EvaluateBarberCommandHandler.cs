@@ -3,6 +3,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using BarberTech.Domain.Repositories;
 using BarberTech.Domain.Entities;
+using BarberTech.Domain;
+using BarberTech.Domain.Authentication;
 
 namespace BarberTech.Application.Commands.Feedbacks.EvaluateBarber
 {
@@ -10,21 +12,21 @@ namespace BarberTech.Application.Commands.Feedbacks.EvaluateBarber
     {
         private readonly IFeedbackRepository _feedbackRepository;
         private readonly IBarberRepository _barberRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContext _userContext;
 
         public EvaluateBarberCommandHandler(
             IFeedbackRepository feedbackRepository, 
             IBarberRepository barberRepository,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContext userContext)
         {
             _feedbackRepository = feedbackRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _userContext = userContext;
             _barberRepository = barberRepository;
         }
 
         public async Task<Nothing> Handle(EvaluateBarberCommand request, CancellationToken cancellationToken)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value; // TODO: fazer um context para acessar o usuário logado
+            var userId = _userContext.GetUserId();
             
             var barber = await _barberRepository.GetByIdAsync(request.BarberId);
 
@@ -34,7 +36,7 @@ namespace BarberTech.Application.Commands.Feedbacks.EvaluateBarber
                 return default;
             }
 
-            var feedback = new Feedback(Guid.Parse(userId), request.Comment, request.QntStars);
+            var feedback = new Feedback(userId, request.Comment, request.QntStars);
             feedback.EvaluateBarber(barber);
            
             _feedbackRepository.Add(feedback);

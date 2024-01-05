@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 using BarberTech.Domain.Repositories;
 using BarberTech.Domain.Entities;
+using BarberTech.Domain.Authentication;
 
 namespace BarberTech.Application.Commands.Feedbacks.EvaluateHaircut
 {
@@ -10,22 +9,22 @@ namespace BarberTech.Application.Commands.Feedbacks.EvaluateHaircut
     {
         private readonly IFeedbackRepository _feedbackRepository;
         private readonly IHaircutRepository _haircutRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContext _userContext;
 
         public EvaluateHaircutCommandHandler(
             IFeedbackRepository feedbackRepository,
             IHaircutRepository haircutRepository,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContext userContext)
         {
             _feedbackRepository = feedbackRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _userContext = userContext;
             _haircutRepository = haircutRepository;
         }
 
         public async Task<Nothing> Handle(EvaluateHaircutCommand request, CancellationToken cancellationToken)
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value; // TODO: fazer um context para acessar o usuário logado
-            
+            var userId = _userContext.GetUserId();
+
             var haircut = await _haircutRepository.GetByIdAsync(request.HaircutId);
 
             if (haircut == null)
@@ -34,7 +33,7 @@ namespace BarberTech.Application.Commands.Feedbacks.EvaluateHaircut
                 return default;
             }
 
-            var feedback = new Feedback(Guid.Parse(userId), request.Comment, request.QntStars);
+            var feedback = new Feedback(userId, request.Comment, request.QntStars);
             feedback.EvaluateHaircut(haircut);
            
             _feedbackRepository.Add(feedback);

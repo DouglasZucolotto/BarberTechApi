@@ -1,25 +1,31 @@
 ﻿using BarberTech.Domain;
+using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
+using BarberTech.Infraestructure.Entities;
 using BarberTech.Infraestructure.Mappings;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+using Microsoft.Extensions.Options;
 
 namespace BarberTech.Infraestructure
 {
     public class DataContext : DbContext, IUnitOfWork
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly string ConnectionString = "Host=ep-plain-cherry-14588779-pooler.us-east-1.postgres.vercel-storage.com;Port=5432;Database=verceldb;Username=default;Password=nTswuZJGBb09;";
+        private readonly IHttpContext _userContext;
+        private readonly ConnectionOptions _connectionOptions;
 
-        public DataContext(DbContextOptions<DataContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+        public DataContext(
+            DbContextOptions<DataContext> options, 
+            IHttpContext userContext,
+            IOptions<ConnectionOptions> connectionOptions) 
+            : base(options)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _userContext = userContext;
+            _connectionOptions = connectionOptions.Value;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(ConnectionString);
+            optionsBuilder.UseNpgsql(_connectionOptions.Default);
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -41,7 +47,7 @@ namespace BarberTech.Infraestructure
                 .Where(e => e.State is EntityState.Added or EntityState.Modified)
                 .Where(e => e.Entity is Entity);
 
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = _userContext.GetUserId();
 
             foreach (var entry in modifiedEntries)
             {
@@ -50,7 +56,7 @@ namespace BarberTech.Infraestructure
                 if (entry.State == EntityState.Added)
                 {
                     entity.CreatedAt = DateTime.UtcNow;
-                    entity.CreatedBy = userId != null ? Guid.Parse(userId) : Guid.Empty;
+                    entity.CreatedBy = userId;
                 }
 
                 if (entry.State == EntityState.Modified)
@@ -59,7 +65,7 @@ namespace BarberTech.Infraestructure
                 }
 
                 entity.ModifiedAt = DateTime.UtcNow;
-                entity.ModifiedBy = userId != null ? Guid.Parse(userId) : Guid.Empty;
+                entity.ModifiedBy = userId;
             }
 
             await SaveChangesAsync();

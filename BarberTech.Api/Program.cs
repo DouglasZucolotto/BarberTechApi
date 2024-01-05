@@ -19,8 +19,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
     typeof(CreateHaircutCommandHandler).Assembly
 }));
@@ -38,6 +36,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IHttpContext, BarberTech.Infraestructure.Authentication.HttpContext>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
@@ -46,8 +47,8 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
 builder.Services.AddTransient<IBarberRepository, BarberRepository>();
 
-builder.Services.Configure<JwtOptions>(
-    builder.Configuration.GetSection("JwtOptions"));
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));    
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
