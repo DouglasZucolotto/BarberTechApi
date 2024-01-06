@@ -1,6 +1,6 @@
+using BarberTech.Application.Commands.Establishments.Create;
+using BarberTech.Application.Commands.Feedbacks.Create;
 using BarberTech.Application.Commands.Feedbacks.Delete;
-using BarberTech.Application.Commands.Feedbacks.EvaluateBarber;
-using BarberTech.Application.Commands.Feedbacks.EvaluateHaircut;
 using BarberTech.Application.Commands.Feedbacks.Update;
 using BarberTech.Application.Queries.Feedbacks.GetAll;
 using BarberTech.Application.Queries.Feedbacks.GetById;
@@ -38,16 +38,8 @@ namespace BarberTech.Services.Controllers
         }
 
         [HasPermission(Permissions.Feedbacks.Edit)]
-        [HttpPost("haircut")]
-        public async Task<IActionResult> EvaluateHaircutAsync([FromBody] EvaluateHaircutCommand command)
-        {
-            await _mediator.Send(command);
-            return NoContent();
-        }
-
-        [HasPermission(Permissions.Feedbacks.Edit)]
-        [HttpPost("barber")]
-        public async Task<IActionResult> EvaluateBarberAsync([FromBody] EvaluateBarberCommand command)
+        [HttpPost]
+        public async Task<IActionResult> CreateFeedbackAsync([FromBody] CreateFeedbackCommand command)
         {
             await _mediator.Send(command);
             return NoContent();

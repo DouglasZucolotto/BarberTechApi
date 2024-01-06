@@ -14,7 +14,7 @@ namespace BarberTech.Domain.Entities
 
         public string BusinessHours { get; set; }
 
-        public ICollection<Feedback> Feedbacks { get; set; }
+        public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
         public Establishment()
         {
