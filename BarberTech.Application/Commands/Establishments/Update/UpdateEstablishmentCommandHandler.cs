@@ -1,19 +1,20 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Repositories;
+using BarberTech.Infraestructure;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Establishments.Update
 {
     public class UpdateEstablishmentCommandHandler : IRequestHandler<UpdateEstablishmentCommand, Nothing>
     {
-        private readonly DataContext _context;
+        private readonly IEstablishmentRepository _establishmentRepository;
 
-        public UpdateEstablishmentCommandHandler(DataContext context)
+        public UpdateEstablishmentCommandHandler(IEstablishmentRepository establishmentRepository)
         {
-            _context = context;
+            _establishmentRepository = establishmentRepository;
         }
         public async Task<Nothing> Handle(UpdateEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var establishment = _context.Establishments.FirstOrDefault(e => e.Id == request.Id);
+            var establishment = await _establishmentRepository.GetByIdAsync(request.Id);
 
             if (establishment is null)
             {
@@ -26,8 +27,8 @@ namespace BarberTech.Application.Commands.Establishments.Update
             establishment.Description = request.Description;
             establishment.BusinessHours = request.BusinessHours;
 
-            _context.Establishments.Update(establishment);
-            await _context.SaveChangesAsync();
+            _establishmentRepository.Update(establishment);
+            await _establishmentRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
         }
