@@ -1,7 +1,6 @@
 ﻿using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
-using BarberTech.Infraestructure.Entities;
 using BarberTech.Infraestructure.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -25,7 +24,7 @@ namespace BarberTech.Infraestructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(_connectionOptions.Default);
+            optionsBuilder.UseNpgsql(_connectionOptions.Default, x => x.UseNetTopologySuite(geographyAsDefault: true));
             base.OnConfiguring(optionsBuilder);
         }
 

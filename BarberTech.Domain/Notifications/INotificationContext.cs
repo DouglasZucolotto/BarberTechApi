@@ -6,7 +6,7 @@
 
         bool HasNotifications { get; }
 
-        IReadOnlyCollection<Notification> Notifications { get; }
+        IReadOnlyCollection<string> Notifications { get; }
 
         void AddNotFound(string message);
 

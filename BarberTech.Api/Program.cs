@@ -12,20 +12,21 @@ using BarberTech.Domain.Repositories;
 using BarberTech.Domain.Notifications;
 using BarberTech.Infraestructure.Notifications;
 using BarberTech.Api.Filters;
-using Microsoft.Extensions.Options;
+using FluentValidation;
+using MediatR;
+using BarberTech.Application.Commands.Login;
+using BarberTech.Application.Commands.Establishments.Create;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<NotificationFilter>());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
-    typeof(CreateHaircutCommandHandler).Assembly
-}));
 
 builder.Services.AddDbContext<DataContext>();
 
@@ -47,6 +48,7 @@ builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<INotificationContext, NotificationContext>();
 
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
 builder.Services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
@@ -56,10 +58,13 @@ builder.Services.AddTransient<IEstablishmentRepository, EstablishmentRepository>
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
 
-builder.Services.AddMvc(options =>
-{
-    options.Filters.Add<NotificationFilter>();
-});
+//TODO: melhorar
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
+    typeof(CreateHaircutCommandHandler).Assembly
+}));
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEstablishmentCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

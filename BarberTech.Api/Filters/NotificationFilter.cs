@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Notifications;
+﻿using BarberTech.Domain;
+using BarberTech.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 
@@ -20,8 +21,10 @@ namespace BarberTech.Api.Filters
                 context.HttpContext.Response.StatusCode = _notificationContext.ErrorCode;
                 context.HttpContext.Response.ContentType = "application/json";
 
-                var notifications = JsonConvert.SerializeObject(_notificationContext.Notifications);
-                await context.HttpContext.Response.WriteAsync(notifications);
+                var error = new ErrorResponse("An error has occurred", _notificationContext.ErrorCode, _notificationContext.Notifications);
+                var serializedError = JsonConvert.SerializeObject(error);
+
+                await context.HttpContext.Response.WriteAsync(serializedError);
                 return;
             }
 

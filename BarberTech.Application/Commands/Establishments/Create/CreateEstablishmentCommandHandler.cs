@@ -1,6 +1,7 @@
 ﻿using BarberTech.Domain.Entities;
 using BarberTech.Domain.Repositories;
 using MediatR;
+using NetTopologySuite.Geometries;
 
 namespace BarberTech.Application.Commands.Establishments.Create
 {
@@ -15,7 +16,9 @@ namespace BarberTech.Application.Commands.Establishments.Create
 
         public async Task<Nothing> Handle(CreateEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var establishment = new Establishment(request.Address, request.Coordinates, request.Description, request.BusinessHours, request.ImageSource);
+            var point = new Point(request.Longitude, request.Latitude);
+
+            var establishment = new Establishment(request.Address, point, request.Description, request.BusinessHours, request.ImageSource);
 
             _establishmentRepository.Add(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

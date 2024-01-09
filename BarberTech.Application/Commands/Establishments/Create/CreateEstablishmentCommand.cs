@@ -7,7 +7,9 @@ namespace BarberTech.Application.Commands.Establishments.Create
     {
         public string Address { get; set; }
 
-        public Point Coordinates { get; set; }
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
 
         public string ImageSource { get; set; }
 
