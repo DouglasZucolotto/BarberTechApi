@@ -39,6 +39,13 @@ namespace BarberTech.Infraestructure.Mappings
                 .WithMany(b => b.Feedbacks)
                 .HasForeignKey(f => f.BarberId);
 
+            builder.Property(f => f.EstablishmentId)
+                .HasColumnName("establishment_id");
+
+            builder.HasOne(f => f.Establishment)
+                .WithMany(e => e.Feedbacks)
+                .HasForeignKey(f => f.EstablishmentId);
+
             base.Configure(builder);
         }
     }

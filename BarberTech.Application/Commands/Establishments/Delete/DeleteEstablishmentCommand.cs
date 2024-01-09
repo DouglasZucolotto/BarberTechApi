@@ -6,10 +6,9 @@ namespace BarberTech.Application.Commands.Establishments.Delete
     {
         public Guid Id { get; set; }
 
-        public DeleteEstablishmentCommand WithId(Guid id)
+        public DeleteEstablishmentCommand(Guid id)
         {
             Id = id;
-            return this;
         }
     }
 }

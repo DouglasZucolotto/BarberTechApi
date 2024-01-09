@@ -1,4 +1,4 @@
-﻿using BarberTech.Application.Commands.Feedbacks.Delete;
+﻿using BarberTech.Domain.Repositories;
 using BarberTech.Infraestructure;
 using MediatR;
 
@@ -6,24 +6,24 @@ namespace BarberTech.Application.Commands.Establishments.Delete
 {
     public class DeleteEstablishmentCommandHandler : IRequestHandler<DeleteEstablishmentCommand, Nothing>
     {
-        private readonly DataContext _context;
+        private readonly IEstablishmentRepository _establishmentRepository;
 
-        public DeleteEstablishmentCommandHandler(DataContext context)
+        public DeleteEstablishmentCommandHandler(IEstablishmentRepository establishmentRepository)
         {
-            _context = context;
+            _establishmentRepository = establishmentRepository;
         }
 
         public async Task<Nothing> Handle(DeleteEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var establishment = _context.Establishments.FirstOrDefault(e => e.Id == request.Id);
+            var establishment = await _establishmentRepository.GetByIdAsync(request.Id);
 
             if (establishment is null)
             {
                 return Nothing.Value;
             }
 
-            _context.Establishments.Remove(establishment);
-            await _context.SaveChangesAsync();
+            _establishmentRepository.Remove(establishment);
+            await _establishmentRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
         }

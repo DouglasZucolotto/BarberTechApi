@@ -15,5 +15,12 @@
 
             public const string Edit = "haircuts:edit";
         }
+
+        public static class Establishments
+        {
+            public const string View = "establishments:view";
+
+            public const string Edit = "establishments:edit";
+        }
     }
 }

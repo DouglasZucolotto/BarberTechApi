@@ -51,6 +51,7 @@ builder.Services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
 builder.Services.AddTransient<IBarberRepository, BarberRepository>();
+builder.Services.AddTransient<IEstablishmentRepository, EstablishmentRepository>();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
@@ -112,6 +113,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("haircuts:edit", policy => policy.RequireClaim("permissions", "haircuts:edit"));
     options.AddPolicy("feedbacks:view", policy => policy.RequireClaim("permissions", "feedbacks:view"));
     options.AddPolicy("feedbacks:edit", policy => policy.RequireClaim("permissions", "feedbacks:edit"));
+    options.AddPolicy("establishments:view", policy => policy.RequireClaim("permissions", "establishments:view"));
+    options.AddPolicy("establishments:edit", policy => policy.RequireClaim("permissions", "establishments:edit"));
 });
 
 

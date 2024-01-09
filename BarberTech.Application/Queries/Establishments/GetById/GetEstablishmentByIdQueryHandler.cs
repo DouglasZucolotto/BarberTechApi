@@ -23,7 +23,6 @@ namespace BarberTech.Application.Queries.Establishments.GetById
             return new GetEstablishmentByIdQueryResponse
             {
                 Id = establishment.Id,
-                FeedbackId = establishment.FeedbackId,
                 Address = establishment.Address,
                 Coordinates = establishment.Coordinates,
                 ImageSource = establishment.ImageSource,
