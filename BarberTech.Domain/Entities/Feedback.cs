@@ -18,6 +18,10 @@
 
         public Barber? Barber { get; set; }
 
+        public Guid? EstablishmentId { get; set; }
+
+        public Establishment? Establishment { get; set; }
+
         public Feedback(Guid userId, string? comment, int qntStars)
         {
             UserId = userId;
@@ -36,6 +40,13 @@
         {
             Barber = barber;
             BarberId = barber.Id;
+            return this;
+        }
+
+        public Feedback EvaluateEstablishment(Establishment establishment)
+        {
+            Establishment = establishment;
+            EstablishmentId = establishment.Id;
             return this;
         }
     }

@@ -2,7 +2,7 @@
 
 namespace BarberTech.Application.Queries.Establishments.GetAll
 {
-    public class GetEstablishmentsQuery : IRequest<List<GetEstablishmentsQueryResponse>>
+    public class GetEstablishmentsQuery : IRequest<IEnumerable<GetEstablishmentsQueryResponse>>
     {
     }
 }

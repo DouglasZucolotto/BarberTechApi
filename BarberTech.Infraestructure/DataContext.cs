@@ -19,7 +19,8 @@ namespace BarberTech.Infraestructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(ConnectionString);
+            optionsBuilder.UseNpgsql(ConnectionString, x => x.UseNetTopologySuite(geographyAsDefault: true));
+            //optionsBuilder.UseNpgsql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
 

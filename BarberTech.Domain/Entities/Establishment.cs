@@ -1,19 +1,12 @@
-﻿using BarberTech.Infraestructure.Entities;
+﻿using NetTopologySuite.Geometries;
 
-namespace BarberTech.Infraestructure.Entities
+namespace BarberTech.Domain.Entities
 {
-    public class Establishment
+    public class Establishment : Entity
     {
-        private object comment;
-        private object qnt_stars;
-
-        public Guid Id { get; set; }
-
-        public Guid FeedbackId { get; set; }
-
         public string Address { get; set; }
 
-        public string Coordinates { get; set; }
+        public Point Coordinates { get; set; }
 
         public string ImageSource { get; set; }
 
@@ -21,23 +14,19 @@ namespace BarberTech.Infraestructure.Entities
 
         public string BusinessHours { get; set; }
 
-        public Establishment(Guid id, Guid feedbackId, string address, string coordinates, string imageSource, string? description, string businessHours)
+        public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
+
+        public Establishment()
         {
-            Id = id;
-            FeedbackId = feedbackId;
+        }
+
+        public Establishment(string address, Point coordinates, string imageSource, string? description, string businessHours)
+        {
             Address = address;
             Coordinates = coordinates;
             ImageSource = imageSource;
             Description = description;
             BusinessHours = businessHours;
-        }
-
-        public Establishment(Guid id, object comment, object qnt_stars, Guid feedbackId)
-        {
-            Id = id;
-            this.comment = comment;
-            this.qnt_stars = qnt_stars;
-            FeedbackId = feedbackId;
         }
     }
 }

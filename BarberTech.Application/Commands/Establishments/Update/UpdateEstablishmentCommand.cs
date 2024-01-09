@@ -1,16 +1,17 @@
 ﻿using MediatR;
+using NetTopologySuite.Geometries;
+using System.Text.Json.Serialization;
 
 namespace BarberTech.Application.Commands.Establishments.Update
 {
     public class UpdateEstablishmentCommand : IRequest<Nothing>
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
-
-        public Guid FeedbackId { get; set; }
 
         public string Address { get; set; }
 
-        public string Coordinates { get; set; }
+        public Point Coordinates { get; set; }
 
         public string ImageSource { get; set; }
 

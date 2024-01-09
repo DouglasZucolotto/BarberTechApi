@@ -1,28 +1,26 @@
-﻿using BarberTech.Application.Commands.Feedbacks.Create;
-using BarberTech.Infraestructure;
-using BarberTech.Infraestructure.Entities;
+﻿using BarberTech.Domain.Entities;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Establishments.Create
 {
     public class CreateEstablishmentCommandHandler : IRequestHandler<CreateEstablishmentCommand, Nothing>
     {
-        private readonly DataContext _context;
+        private readonly IEstablishmentRepository _establishmentRepository;
 
-        public CreateEstablishmentCommandHandler(DataContext context)
+        public CreateEstablishmentCommandHandler(IEstablishmentRepository establishmentRepository)
         {
-            _context = context;
+            _establishmentRepository = establishmentRepository;
         }
 
         public async Task<Nothing> Handle(CreateEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var establishment = new Establishment(request.Id, request.FeedbackId, request.Address, request.Coordinates, request.Description, request.BusinessHours, request.ImageSource);
-            {
-                _context.Establishments.Add(establishment);
-                await _context.SaveChangesAsync();
+            var establishment = new Establishment(request.Address, request.Coordinates, request.Description, request.BusinessHours, request.ImageSource);
 
-                return Nothing.Value;
-            };
+            _establishmentRepository.Add(establishment);
+            await _establishmentRepository.UnitOfWork.CommitAsync();
+
+            return Nothing.Value;
         }
     }
 }
