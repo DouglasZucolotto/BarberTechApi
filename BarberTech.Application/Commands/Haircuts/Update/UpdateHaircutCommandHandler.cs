@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain.Notifications;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Haircuts.Update
@@ -6,10 +7,12 @@ namespace BarberTech.Application.Commands.Haircuts.Update
     public class UpdateHaircutCommandHandler : IRequestHandler<UpdateHaircutCommand, Nothing>
     {
         private readonly IHaircutRepository _haircutRepository;
+        private readonly INotificationContext _notification;
 
-        public UpdateHaircutCommandHandler(IHaircutRepository haircutRepository)
+        public UpdateHaircutCommandHandler(IHaircutRepository haircutRepository, INotificationContext notification)
         {
             _haircutRepository = haircutRepository;
+            _notification = notification;
         }
 
         public async Task<Nothing> Handle(UpdateHaircutCommand request, CancellationToken cancellationToken)
@@ -18,7 +21,7 @@ namespace BarberTech.Application.Commands.Haircuts.Update
 
             if (haircut is null)
             {
-                // TODO: notificator
+                _notification.AddBadRequest("Haircut does not exists");
                 return default;
             }
 

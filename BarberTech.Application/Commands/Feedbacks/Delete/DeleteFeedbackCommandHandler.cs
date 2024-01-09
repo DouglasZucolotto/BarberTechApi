@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain.Notifications;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Feedbacks.Delete
@@ -6,10 +7,12 @@ namespace BarberTech.Application.Commands.Feedbacks.Delete
     public class DeleteFeedbackCommandHandler : IRequestHandler<DeleteFeedbackCommand, Nothing>
     {
         private readonly IFeedbackRepository _feedbackRepository;
+        private readonly INotificationContext _notification;
 
-        public DeleteFeedbackCommandHandler(IFeedbackRepository feedbackRepository)
+        public DeleteFeedbackCommandHandler(IFeedbackRepository feedbackRepository, INotificationContext notification)
         {
             _feedbackRepository = feedbackRepository;
+            _notification = notification;
         }
 
         public async Task<Nothing> Handle(DeleteFeedbackCommand request, CancellationToken cancellationToken)
@@ -18,7 +21,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Delete
 
             if (feedback is null)
             {
-                // TODO: notificator
+                _notification.AddBadRequest("Feedback does not exists");
                 return default;
             }
 

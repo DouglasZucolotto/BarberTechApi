@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain.Notifications;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Haircuts.Delete
@@ -6,10 +7,12 @@ namespace BarberTech.Application.Commands.Haircuts.Delete
     public class DeleteHaircutCommandHandler : IRequestHandler<DeleteHaircutCommand, Nothing>
     {
         private readonly IHaircutRepository _haircutRepository;
+        private readonly INotificationContext _notification;
 
-        public DeleteHaircutCommandHandler(IHaircutRepository haircutRepository)
+        public DeleteHaircutCommandHandler(IHaircutRepository haircutRepository, INotificationContext notification)
         {
             _haircutRepository = haircutRepository;
+            _notification = notification;
         }
 
         public async Task<Nothing> Handle(DeleteHaircutCommand request, CancellationToken cancellationToken)
@@ -18,7 +21,7 @@ namespace BarberTech.Application.Commands.Haircuts.Delete
 
             if (haircut is null)
             {
-                // TODO: notificator
+                _notification.AddBadRequest("Haircut does not exists");
                 return default;
             }
 

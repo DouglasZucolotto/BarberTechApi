@@ -9,6 +9,10 @@ using BarberTech.Infraestructure.Repositories;
 using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Repositories;
+using BarberTech.Domain.Notifications;
+using BarberTech.Infraestructure.Notifications;
+using BarberTech.Api.Filters;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +45,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IHttpContext, BarberTech.Infraestructure.Authentication.HttpContext>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<INotificationContext, NotificationContext>();
 
 builder.Services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -48,7 +53,12 @@ builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
 builder.Services.AddTransient<IBarberRepository, BarberRepository>();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
-builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));    
+builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
+
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add<NotificationFilter>();
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
