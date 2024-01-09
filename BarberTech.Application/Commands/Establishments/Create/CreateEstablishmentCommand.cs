@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using NetTopologySuite.Geometries;
 
 namespace BarberTech.Application.Commands.Establishments.Create
 {

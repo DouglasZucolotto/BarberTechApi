@@ -7,22 +7,20 @@ namespace BarberTech.Application.Commands.Establishments.Create
         public CreateEstablishmentCommandValidator()
         {
             RuleFor(e => e.Address)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(e => e.Latitude)
-                .NotNull();
+                .NotNull()
+                .Equal(1);
 
             RuleFor(e => e.Longitude)
                 .NotNull();
 
             RuleFor(e => e.ImageSource)
-                .NotNull();
-
-            RuleFor(e => e.Description)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(e => e.BusinessHours)
-                .NotNull();
+                .NotEmpty();
         }
     }
 }
