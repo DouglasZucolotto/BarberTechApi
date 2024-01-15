@@ -21,12 +21,12 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
 
             if (feedback is null)
             {
-                _notification.AddBadRequest("Feedback does not exists");
+                _notification.AddNotFound("Feedback does not exists");
                 return default;
             }
 
-            feedback.Comment = request.Comment;
-            feedback.QntStars = request.QntStars;
+            feedback.Comment = request.Comment ?? feedback.Comment;
+            feedback.QntStars = request.QntStars ?? feedback.QntStars;
 
             _feedbackRepository.Update(feedback);
             await _feedbackRepository.UnitOfWork.CommitAsync();

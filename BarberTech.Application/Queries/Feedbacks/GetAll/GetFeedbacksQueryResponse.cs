@@ -7,6 +7,12 @@
         public string? Comment { get; set; }
 
         public int QntStars { get; set; }
+
+        public Guid EstablishmentId { get; set; }
+
+        public Guid HaircutId { get; set; }
+
+        public Guid BarberId { get; set; }
     }
 }
 

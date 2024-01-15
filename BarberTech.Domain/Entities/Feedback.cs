@@ -10,44 +10,36 @@
 
         public int QntStars { get; set; }
 
-        public Guid? HaircutId { get; set; }
+        public Guid HaircutId { get; set; }
 
-        public Haircut? Haircut { get; set; }
+        public Haircut Haircut { get; set; }
 
-        public Guid? BarberId { get; set; }
+        public Guid BarberId { get; set; }
 
-        public Barber? Barber { get; set; }
+        public Barber Barber { get; set; }
 
-        public Guid? EstablishmentId { get; set; }
+        public Guid EstablishmentId { get; set; }
 
-        public Establishment? Establishment { get; set; }
+        public Establishment Establishment { get; set; }
 
-        public Feedback(Guid userId, string? comment, int qntStars)
+        public Feedback(
+            Guid userId, 
+            string? comment, 
+            int qtdStars, 
+            Guid establishmentId, 
+            Guid haircutId, 
+            Guid barberId)
         {
             UserId = userId;
             Comment = comment;
-            QntStars = qntStars;
+            QntStars = qtdStars;
+            EstablishmentId = establishmentId;
+            HaircutId = haircutId;
+            BarberId = barberId;
         }
 
-        public Feedback EvaluateHaircut(Haircut haircut)
+        public Feedback()
         {
-            Haircut = haircut;
-            HaircutId = haircut.Id;
-            return this;
-        }
-
-        public Feedback EvaluateBarber(Barber barber)
-        {
-            Barber = barber;
-            BarberId = barber.Id;
-            return this;
-        }
-
-        public Feedback EvaluateEstablishment(Establishment establishment)
-        {
-            Establishment = establishment;
-            EstablishmentId = establishment.Id;
-            return this;
         }
     }
 }

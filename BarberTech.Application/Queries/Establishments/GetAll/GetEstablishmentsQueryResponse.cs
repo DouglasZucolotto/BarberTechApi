@@ -1,4 +1,6 @@
-﻿namespace BarberTech.Application.Queries.Establishments.GetAll
+﻿using NetTopologySuite.Geometries;
+
+namespace BarberTech.Application.Queries.Establishments.GetAll
 {
     public class GetEstablishmentsQueryResponse
     {

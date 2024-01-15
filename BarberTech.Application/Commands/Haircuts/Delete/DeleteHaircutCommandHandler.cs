@@ -21,7 +21,7 @@ namespace BarberTech.Application.Commands.Haircuts.Delete
 
             if (haircut is null)
             {
-                _notification.AddBadRequest("Haircut does not exists");
+                _notification.AddNotFound("Haircut does not exists");
                 return default;
             }
 

@@ -20,7 +20,10 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
             {
                 Id = feedback.Id,
                 Comment = feedback.Comment,
-                QntStars = feedback.QntStars
+                QntStars = feedback.QntStars,
+                EstablishmentId = feedback.EstablishmentId,
+                HaircutId = feedback.HaircutId,
+                BarberId = feedback.BarberId,
             });
         }
     }

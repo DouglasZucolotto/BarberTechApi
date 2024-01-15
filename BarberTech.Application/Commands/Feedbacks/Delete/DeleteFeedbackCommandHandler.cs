@@ -21,7 +21,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Delete
 
             if (feedback is null)
             {
-                _notification.AddBadRequest("Feedback does not exists");
+                _notification.AddNotFound("Feedback does not exists");
                 return default;
             }
 

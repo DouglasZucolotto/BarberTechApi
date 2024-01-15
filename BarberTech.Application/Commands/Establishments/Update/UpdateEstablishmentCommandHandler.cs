@@ -1,6 +1,5 @@
 ﻿using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
-using BarberTech.Infraestructure;
 using MediatR;
 using NetTopologySuite.Geometries;
 
@@ -27,13 +26,16 @@ namespace BarberTech.Application.Commands.Establishments.Update
                 return default;
             }
 
-            var coordinates = new Point(request.Longitude, request.Latitude);
+            if (request.Latitude != null && request.Longitude != null)
+            {
+                var coordinates = new Point(request.Longitude.Value, request.Latitude.Value);
+                establishment.Coordinates = coordinates;
+            }
 
-            establishment.Address = request.Address;
-            establishment.Coordinates = coordinates;
-            establishment.ImageSource = request.ImageSource;
-            establishment.Description = request.Description;
-            establishment.BusinessHours = request.BusinessHours;
+            establishment.Address = request.Address ?? establishment.Address;
+            establishment.ImageSource = request.ImageSource ?? establishment.ImageSource;
+            establishment.Description = request.Description ?? establishment.Description;
+            establishment.BusinessHours = request.BusinessHours ?? establishment.BusinessHours;
 
             _establishmentRepository.Update(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

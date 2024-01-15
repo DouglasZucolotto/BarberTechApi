@@ -9,20 +9,13 @@ namespace BarberTech.Application.Commands.Establishments.Update
             RuleFor(e => e.Id)
                 .NotEmpty();
 
-            RuleFor(e => e.Address)
-                .NotEmpty();
-
             RuleFor(e => e.Latitude)
-                .NotNull();
+                .NotNull()
+                .When(e => e.Longitude.HasValue);
 
             RuleFor(e => e.Longitude)
-                .NotNull();
-
-            RuleFor(e => e.ImageSource)
-                .NotEmpty();
-
-            RuleFor(e => e.BusinessHours)
-                .NotEmpty();
+                .NotNull()
+                .When(e => e.Latitude.HasValue);
         }
     }
 }
