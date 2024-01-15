@@ -1,4 +1,3 @@
-using BarberTech.Application.Commands.Haircuts.Create;
 using BarberTech.Infraestructure;
 using BarberTech.Infraestructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,16 +14,17 @@ using BarberTech.Api.Filters;
 using FluentValidation;
 using MediatR;
 using BarberTech.Application.Commands.Login;
-using BarberTech.Application.Commands.Establishments.Create;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services
+    .AddControllers(options => options.Filters.Add<NotificationFilter>())
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
 
-builder.Services.AddControllers(options => options.Filters.Add<NotificationFilter>());
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -58,12 +58,7 @@ builder.Services.AddTransient<IEstablishmentRepository, EstablishmentRepository>
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
 
-//TODO: melhorar
-builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
-    typeof(CreateHaircutCommandHandler).Assembly
-}));
-
-builder.Services.AddValidatorsFromAssemblyContaining<CreateEstablishmentCommandValidator>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -125,7 +120,6 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -10,8 +10,7 @@ namespace BarberTech.Application.Commands.Establishments.Create
                 .NotEmpty();
 
             RuleFor(e => e.Latitude)
-                .NotNull()
-                .Equal(1);
+                .NotNull();
 
             RuleFor(e => e.Longitude)
                 .NotNull();
