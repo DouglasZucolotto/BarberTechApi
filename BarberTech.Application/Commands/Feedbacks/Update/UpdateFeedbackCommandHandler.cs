@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain.Notifications;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Feedbacks.Update
@@ -6,10 +7,12 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
     public class UpdateFeedbackCommandHandler : IRequestHandler<UpdateFeedbackCommand, Nothing>
     {
         private readonly IFeedbackRepository _feedbackRepository;
+        private readonly INotificationContext _notification;
 
-        public UpdateFeedbackCommandHandler(IFeedbackRepository feedbackRepository)
+        public UpdateFeedbackCommandHandler(IFeedbackRepository feedbackRepository, INotificationContext notification)
         {
             _feedbackRepository = feedbackRepository;
+            _notification = notification;
         }
 
         public async Task<Nothing> Handle(UpdateFeedbackCommand request, CancellationToken cancellationToken)
@@ -18,7 +21,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
 
             if (feedback is null)
             {
-                // TODO: notificator
+                _notification.AddBadRequest("Feedback does not exists");
                 return default;
             }
 

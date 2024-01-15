@@ -1,4 +1,3 @@
-using BarberTech.Application.Commands.Haircuts.Create;
 using BarberTech.Infraestructure;
 using BarberTech.Infraestructure.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,21 +8,25 @@ using BarberTech.Infraestructure.Repositories;
 using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Repositories;
+using BarberTech.Domain.Notifications;
+using BarberTech.Infraestructure.Notifications;
+using BarberTech.Api.Filters;
+using FluentValidation;
+using MediatR;
+using BarberTech.Application.Commands.Login;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services
+    .AddControllers(options => options.Filters.Add<NotificationFilter>())
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddHttpContextAccessor();
-
-builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
-    typeof(CreateHaircutCommandHandler).Assembly
-}));
 
 builder.Services.AddDbContext<DataContext>();
 
@@ -38,17 +41,25 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IHttpContext, BarberTech.Infraestructure.Authentication.HttpContext>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<INotificationContext, NotificationContext>();
 
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
 builder.Services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
 builder.Services.AddTransient<IBarberRepository, BarberRepository>();
 builder.Services.AddTransient<IEstablishmentRepository, EstablishmentRepository>();
 
-builder.Services.Configure<JwtOptions>(
-    builder.Configuration.GetSection("JwtOptions"));
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -109,7 +120,6 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
