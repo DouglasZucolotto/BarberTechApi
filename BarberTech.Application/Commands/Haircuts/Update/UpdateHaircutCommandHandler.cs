@@ -21,14 +21,14 @@ namespace BarberTech.Application.Commands.Haircuts.Update
 
             if (haircut is null)
             {
-                _notification.AddBadRequest("Haircut does not exists");
+                _notification.AddNotFound("Haircut does not exists");
                 return default;
             }
 
-            haircut.Name = request.Name;
-            haircut.Description = request.Description;
-            haircut.Price = request.Price;
-            haircut.ImageSource = request.ImageSource;
+            haircut.Name = request.Name ?? haircut.Name;
+            haircut.Description = request.Description ?? haircut.Description;
+            haircut.Price = request.Price ?? haircut.Price;
+            haircut.ImageSource = request.ImageSource ?? haircut.ImageSource;
 
             _haircutRepository.Update(haircut);
             await _haircutRepository.UnitOfWork.CommitAsync();

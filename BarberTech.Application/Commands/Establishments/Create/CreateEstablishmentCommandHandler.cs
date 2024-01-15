@@ -16,9 +16,9 @@ namespace BarberTech.Application.Commands.Establishments.Create
 
         public async Task<Nothing> Handle(CreateEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var point = new Point(request.Longitude, request.Latitude);
+            var coordinates = new Point(request.Longitude, request.Latitude);
 
-            var establishment = new Establishment(request.Address, point, request.Description, request.BusinessHours, request.ImageSource);
+            var establishment = new Establishment(request.Address, coordinates, request.ImageSource, request.Description, request.BusinessHours);
 
             _establishmentRepository.Add(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

@@ -16,7 +16,7 @@ namespace BarberTech.Infraestructure.Authentication
         public Guid GetUserId()
         {
             var userId = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return Guid.Parse(userId);
+            return userId != null ? Guid.Parse(userId) : Guid.Empty;
         }
 
         public bool HasPermission(string permission)

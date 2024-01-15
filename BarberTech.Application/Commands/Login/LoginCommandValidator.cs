@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MediatR;
 
 namespace BarberTech.Application.Commands.Login
 {
@@ -8,7 +7,7 @@ namespace BarberTech.Application.Commands.Login
         public LoginCommandValidator()
         {
             RuleFor(l => l.Email)
-                //.EmailAddress()
+                //.EmailAddress() TODO: futuramente colocar essa verificação
                 .NotEmpty();
 
             RuleFor(l => l.Password)

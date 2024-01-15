@@ -4,20 +4,12 @@ namespace BarberTech.Application.Commands.Login
 {
     public class RegisterCommand : IRequest<Nothing>
     {
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
-        public string ImageSource { get; set; }
-
-        public RegisterCommand(string email, string password, string name, string imageSource)
-        {
-            Email = email;
-            Password = password;
-            Name = name;
-            ImageSource = imageSource;
-        }
+        public string? ImageSource { get; set; }
     }
 }

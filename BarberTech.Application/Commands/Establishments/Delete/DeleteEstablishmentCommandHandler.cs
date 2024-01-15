@@ -1,5 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
-using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Notifications;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Establishments.Delete
@@ -7,10 +7,12 @@ namespace BarberTech.Application.Commands.Establishments.Delete
     public class DeleteEstablishmentCommandHandler : IRequestHandler<DeleteEstablishmentCommand, Nothing>
     {
         private readonly IEstablishmentRepository _establishmentRepository;
+        private readonly INotificationContext _notification;
 
-        public DeleteEstablishmentCommandHandler(IEstablishmentRepository establishmentRepository)
+        public DeleteEstablishmentCommandHandler(IEstablishmentRepository establishmentRepository, INotificationContext notification)
         {
             _establishmentRepository = establishmentRepository;
+            _notification = notification;
         }
 
         public async Task<Nothing> Handle(DeleteEstablishmentCommand request, CancellationToken cancellationToken)
@@ -19,7 +21,8 @@ namespace BarberTech.Application.Commands.Establishments.Delete
 
             if (establishment is null)
             {
-                return Nothing.Value;
+                _notification.AddNotFound("Establishment does not exists");
+                return default;
             }
 
             _establishmentRepository.Remove(establishment);

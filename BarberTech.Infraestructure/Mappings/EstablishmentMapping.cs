@@ -29,6 +29,7 @@ namespace BarberTech.Infraestructure.Mappings
 
             builder.Property(e => e.Coordinates)
                 .HasColumnName("coordinates")
+                .HasColumnType("geometry (point)")
                 .IsRequired();
 
             builder.HasMany(e => e.Feedbacks)

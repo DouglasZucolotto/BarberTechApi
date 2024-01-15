@@ -6,7 +6,7 @@ using MediatR;
 
 namespace BarberTech.Application.Commands.Login
 {
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, string?>
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtProvider _jwtProvider;
@@ -25,7 +25,7 @@ namespace BarberTech.Application.Commands.Login
             _notification = notification;
         }
 
-        public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<string?> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByEmailAsync(request.Email);
 

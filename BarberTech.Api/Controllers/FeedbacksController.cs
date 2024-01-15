@@ -1,4 +1,3 @@
-using BarberTech.Application.Commands.Establishments.Create;
 using BarberTech.Application.Commands.Feedbacks.Create;
 using BarberTech.Application.Commands.Feedbacks.Delete;
 using BarberTech.Application.Commands.Feedbacks.Update;

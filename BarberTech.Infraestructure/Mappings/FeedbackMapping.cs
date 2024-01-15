@@ -11,12 +11,12 @@ namespace BarberTech.Infraestructure.Mappings
             builder.ToTable("feedbacks");
 
             builder.Property(f => f.UserId)
-                .HasColumnName("user_id");
+                .HasColumnName("user_id")
+                .IsRequired();
 
             builder.HasOne(f => f.User)
                 .WithMany(u => u.Feedbacks)
-                .HasForeignKey(f => f.UserId)
-                .IsRequired();
+                .HasForeignKey(f => f.UserId);
 
             builder.Property(f => f.Comment)
                 .HasColumnName("comment");
@@ -26,21 +26,24 @@ namespace BarberTech.Infraestructure.Mappings
                 .IsRequired();
 
             builder.Property(f => f.HaircutId)
-                .HasColumnName("haircut_id");
+                .HasColumnName("haircut_id")
+                .IsRequired();
 
             builder.HasOne(f => f.Haircut)
                 .WithMany(h => h.Feedbacks)
                 .HasForeignKey(f => f.HaircutId);
 
             builder.Property(f => f.BarberId)
-                .HasColumnName("barber_id");
+                .HasColumnName("barber_id")
+                .IsRequired();
 
             builder.HasOne(f => f.Barber)
                 .WithMany(b => b.Feedbacks)
                 .HasForeignKey(f => f.BarberId);
 
             builder.Property(f => f.EstablishmentId)
-                .HasColumnName("establishment_id");
+                .HasColumnName("establishment_id")
+                .IsRequired();
 
             builder.HasOne(f => f.Establishment)
                 .WithMany(e => e.Feedbacks)

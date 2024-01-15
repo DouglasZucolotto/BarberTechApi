@@ -1,25 +1,27 @@
-﻿using BarberTech.Application.Queries.Feedbacks.GetAll;
+﻿using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Feedbacks.GetById
 {
-    public class GetFeedbackByIdQueryHandler : IRequestHandler<GetFeedbackByIdQuery, GetFeedbackByIdQueryResponse>
+    public class GetFeedbackByIdQueryHandler : IRequestHandler<GetFeedbackByIdQuery, GetFeedbackByIdQueryResponse?>
     {
         private readonly IFeedbackRepository _feedbackRepository;
+        private readonly INotificationContext _notification;
 
-        public GetFeedbackByIdQueryHandler(IFeedbackRepository feedbackRepository)
+        public GetFeedbackByIdQueryHandler(IFeedbackRepository feedbackRepository, INotificationContext notification)
         {
             _feedbackRepository = feedbackRepository;
+            _notification = notification;
         }
 
-        public async Task<GetFeedbackByIdQueryResponse> Handle(GetFeedbackByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetFeedbackByIdQueryResponse?> Handle(GetFeedbackByIdQuery request, CancellationToken cancellationToken)
         {
             var feedback = await _feedbackRepository.GetByIdAsync(request.Id);
 
             if (feedback is null)
             {
-                // TODO: notificator
+                _notification.AddNotFound("Feedback does not exists");
                 return default;
             }
 
