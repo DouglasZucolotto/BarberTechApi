@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using NetTopologySuite.Geometries;
 using System.Text.Json.Serialization;
 
 namespace BarberTech.Application.Commands.Establishments.Update
@@ -9,15 +8,17 @@ namespace BarberTech.Application.Commands.Establishments.Update
         [JsonIgnore]
         public Guid Id { get; set; }
 
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
-        public Point Coordinates { get; set; }
+        public double Latitude { get; set; }
 
-        public string ImageSource { get; set; }
+        public double Longitude { get; set; }
+
+        public string ImageSource { get; set; } = string.Empty;
 
         public string? Description { get; set; }
 
-        public string BusinessHours { get; set; }
+        public string BusinessHours { get; set; } = string.Empty;
 
         public UpdateEstablishmentCommand WithId(Guid id)
         {

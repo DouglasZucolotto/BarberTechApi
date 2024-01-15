@@ -14,7 +14,7 @@ using BarberTech.Api.Filters;
 using FluentValidation;
 using MediatR;
 using BarberTech.Application.Commands.Login;
-using System.Reflection;
+using BarberTech.Application.Commands.Haircuts.Create;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +58,9 @@ builder.Services.AddTransient<IEstablishmentRepository, EstablishmentRepository>
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
+    typeof(CreateHaircutCommandHandler).Assembly,
+}));
 builder.Services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

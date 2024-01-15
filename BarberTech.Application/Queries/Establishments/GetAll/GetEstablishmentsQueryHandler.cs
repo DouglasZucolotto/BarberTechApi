@@ -21,7 +21,8 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
                 {
                     Id = establishment.Id,
                     Address = establishment.Address,
-                    Coordinates = establishment.Coordinates,
+                    Latitude = establishment.Coordinates.Y,
+                    Longitude = establishment.Coordinates.X,
                     ImageSource = establishment.ImageSource,
                     Description = establishment.Description,
                     BusinessHours = establishment.BusinessHours

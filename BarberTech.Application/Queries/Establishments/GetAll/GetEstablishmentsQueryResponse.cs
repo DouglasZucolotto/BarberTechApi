@@ -1,19 +1,19 @@
-﻿using NetTopologySuite.Geometries;
-
-namespace BarberTech.Application.Queries.Establishments.GetAll
+﻿namespace BarberTech.Application.Queries.Establishments.GetAll
 {
     public class GetEstablishmentsQueryResponse
     {
         public Guid Id { get; set; }
 
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
-        public Point Coordinates { get; set; }
+        public double Latitude { get; set; }
 
-        public string ImageSource { get; set; }
+        public double Longitude { get; set; }
+
+        public string ImageSource { get; set; } = string.Empty;
 
         public string? Description { get; set; }
 
-        public string BusinessHours { get; set; }
+        public string BusinessHours { get; set; } = string.Empty;
     }
 }

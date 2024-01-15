@@ -1,22 +1,27 @@
-﻿using BarberTech.Infraestructure;
+﻿using BarberTech.Domain.Notifications;
+using BarberTech.Domain.Repositories;
+using MediatR;
 
 namespace BarberTech.Application.Queries.Establishments.GetById
 {
-    public class GetEstablishmentByIdQueryHandler
+    public class GetEstablishmentByIdQueryHandler : IRequestHandler<GetEstablishmentByIdQuery?, GetEstablishmentByIdQueryResponse>
     {
-        private readonly DataContext _context;
+        private readonly IEstablishmentRepository _establishmentRepository;
+        private readonly INotificationContext _notification;
 
-        public GetEstablishmentByIdQueryHandler(DataContext context)
+        public GetEstablishmentByIdQueryHandler(IEstablishmentRepository establishmentRepository, INotificationContext notification)
         {
-            _context = context;
+            _establishmentRepository = establishmentRepository;
+            _notification = notification;
         }
 
         public async Task<GetEstablishmentByIdQueryResponse> Handle(GetEstablishmentByIdQuery request, CancellationToken cancellationToken)
         {
-            var establishment = _context.Establishments.FirstOrDefault(e => e.Id == request.Id);
+            var establishment = await _establishmentRepository.GetByIdAsync(request.Id);
 
             if (establishment is null)
             {
+                _notification.AddNotFound("Establishment does not exists");
                 return default;
             }
 
@@ -24,7 +29,8 @@ namespace BarberTech.Application.Queries.Establishments.GetById
             {
                 Id = establishment.Id,
                 Address = establishment.Address,
-                Coordinates = establishment.Coordinates,
+                Latitude = establishment.Coordinates.Y,
+                Longitude = establishment.Coordinates.X,
                 ImageSource = establishment.ImageSource,
                 Description = establishment.Description,
                 BusinessHours = establishment.BusinessHours
