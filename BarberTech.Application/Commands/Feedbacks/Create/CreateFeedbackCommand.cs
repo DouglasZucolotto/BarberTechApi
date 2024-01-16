@@ -6,7 +6,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
     {
         public string? Comment { get; set; }  
 
-        public int QntStars { get; set; }  
+        public int QntStars { get; set; } // TODO: um pra cada um
 
         public Guid HaircutId { get; set; }
         

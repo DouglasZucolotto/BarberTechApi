@@ -7,7 +7,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
         public CreateFeedbackCommandValidator()
         {
             RuleFor(f => f.QntStars)
-                .ExclusiveBetween(1, 5)
+                .ExclusiveBetween(-1, 6)
                 .NotNull();
 
             RuleFor(f => f.EstablishmentId)

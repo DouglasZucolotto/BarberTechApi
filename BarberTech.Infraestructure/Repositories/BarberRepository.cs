@@ -1,5 +1,6 @@
 ﻿using BarberTech.Domain.Entities;
 using BarberTech.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarberTech.Infraestructure.Repositories
 {
@@ -7,6 +8,15 @@ namespace BarberTech.Infraestructure.Repositories
     {
         public BarberRepository(DataContext context) : base(context)
         {
+        }
+
+        public Task<List<Barber>> GetAllBarbersAsync()
+        {
+            return Query
+                .Include(b => b.User)
+                .Include(b => b.Feedbacks)
+                .Include(b => b.Establishment)
+                .ToListAsync();
         }
     }
 }

@@ -16,6 +16,8 @@ namespace BarberTech.Domain.Entities
 
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
+        public ICollection<Barber> Barbers { get; set; } = new List<Barber>();
+
         public Establishment()
         {
         }
