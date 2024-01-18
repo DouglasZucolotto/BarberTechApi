@@ -1,6 +1,6 @@
-﻿namespace BarberTech.Application.Queries.Barbers.GetAll
+﻿namespace BarberTech.Application.Queries.Barbers.GetById
 {
-    public class GetBarbersQueryResponse
+    public class GetBarberByIdQueryResponse
     {
         public Guid Id { get; set; }
 
@@ -14,6 +14,7 @@
 
         public double FeedbackAverage { get; set; }
 
-        public string EstablishmentAddress { get; set; } = string.Empty; 
+        public string EstablishmentAddress { get; set; } = string.Empty;
     }
 }
+

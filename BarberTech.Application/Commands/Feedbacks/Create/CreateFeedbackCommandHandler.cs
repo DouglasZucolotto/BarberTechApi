@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Authentication;
+﻿using BarberTech.Domain;
+using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;

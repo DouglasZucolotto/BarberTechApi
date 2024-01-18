@@ -16,7 +16,17 @@ namespace BarberTech.Infraestructure.Repositories
                 .Include(b => b.User)
                 .Include(b => b.Feedbacks)
                 .Include(b => b.Establishment)
+                .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public Task<Barber> GetBarberWithUserByIdAsync(Guid id)
+        {
+            return Query
+                .Include(b => b.User)
+                .Include(b => b.Feedbacks)
+                .Include(b => b.Establishment)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }

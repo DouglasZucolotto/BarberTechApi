@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Notifications;
+﻿using BarberTech.Domain;
+using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
 

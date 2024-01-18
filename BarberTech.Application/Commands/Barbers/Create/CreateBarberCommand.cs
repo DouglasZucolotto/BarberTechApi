@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BarberTech.Domain;
+using MediatR;
 
 namespace BarberTech.Application.Commands.Barbers.Create
 {
