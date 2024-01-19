@@ -35,6 +35,9 @@ namespace BarberTech.Infraestructure.Mappings
             builder.HasMany(e => e.Feedbacks)
                 .WithOne(f => f.Establishment);
 
+            builder.HasMany(e => e.Barbers)
+                .WithOne(b => b.Establishment);
+
             base.Configure(builder);
         }
     }
