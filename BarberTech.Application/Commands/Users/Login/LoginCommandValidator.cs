@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BarberTech.Application.Commands.Login
+namespace BarberTech.Application.Commands.Users.Login
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {

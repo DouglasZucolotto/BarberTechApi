@@ -15,6 +15,11 @@ namespace BarberTech.Infraestructure.Repositories
             return Query.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public Task<User?> GetWithPermissionsAsync(Guid id)
+        {
+            return Query.Include(u => u.Permissions).FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         public Task<bool> UserEmailExistsAsync(string email)
         {
             return Query.AnyAsync(u => u.Email == email);

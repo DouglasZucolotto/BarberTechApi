@@ -13,8 +13,8 @@ using BarberTech.Infraestructure.Notifications;
 using BarberTech.Api.Filters;
 using FluentValidation;
 using MediatR;
-using BarberTech.Application.Commands.Login;
 using BarberTech.Application.Commands.Haircuts.Create;
+using BarberTech.Application.Commands.Users.Login;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +54,7 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
 builder.Services.AddTransient<IBarberRepository, BarberRepository>();
 builder.Services.AddTransient<IEstablishmentRepository, EstablishmentRepository>();
+builder.Services.AddTransient<IPermissionRepository, PermissionRepository>();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
@@ -117,6 +118,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("feedbacks:edit", policy => policy.RequireClaim("permissions", "feedbacks:edit"));
     options.AddPolicy("establishments:view", policy => policy.RequireClaim("permissions", "establishments:view"));
     options.AddPolicy("establishments:edit", policy => policy.RequireClaim("permissions", "establishments:edit"));
+    options.AddPolicy("users:view", policy => policy.RequireClaim("permissions", "users:view"));
+    options.AddPolicy("users:edit", policy => policy.RequireClaim("permissions", "users:edit"));
     options.AddPolicy("barbers:view", policy => policy.RequireClaim("permissions", "barbers:view"));
     options.AddPolicy("barbers:edit", policy => policy.RequireClaim("permissions", "barbers:edit"));
 });

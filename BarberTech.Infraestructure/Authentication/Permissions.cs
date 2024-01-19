@@ -23,6 +23,13 @@
             public const string Edit = "establishments:edit";
         }
 
+        public static class Users
+        {
+            public const string View = "users:view";
+
+            public const string Edit = "users:edit";
+        }
+        
         public static class Barbers
         {
             public const string View = "barbers:view";
