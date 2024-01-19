@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace BarberTech.Application.Commands.Login
+namespace BarberTech.Application.Commands.Users.Register
 {
-    public class RegisterCommand : IRequest<Nothing>
+    public class CreateCommand : IRequest<Nothing>
     {
         public string Email { get; set; } = string.Empty;
 

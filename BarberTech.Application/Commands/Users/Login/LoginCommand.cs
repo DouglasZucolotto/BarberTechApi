@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace BarberTech.Application.Commands.Login
+namespace BarberTech.Application.Commands.Users.Login
 {
     public class LoginCommand : IRequest<string>
     {

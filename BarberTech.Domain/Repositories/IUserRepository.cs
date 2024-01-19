@@ -7,5 +7,7 @@ namespace BarberTech.Domain.Repositories
         Task<User?> GetByEmailAsync(string email);
 
         Task<bool> UserEmailExistsAsync(string email);
+
+        Task<User?> GetWithPermissionsAsync(Guid id);
     }
 }

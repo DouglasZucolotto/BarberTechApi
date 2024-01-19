@@ -4,7 +4,7 @@ using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
-namespace BarberTech.Application.Commands.Login
+namespace BarberTech.Application.Commands.Users.Login
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, string?>
     {
@@ -14,8 +14,8 @@ namespace BarberTech.Application.Commands.Login
         private readonly INotificationContext _notification;
 
         public LoginCommandHandler(
-            IUserRepository userRepository, 
-            IJwtProvider jwtProvider, 
+            IUserRepository userRepository,
+            IJwtProvider jwtProvider,
             IPasswordHasher passwordHasher,
             INotificationContext notification)
         {

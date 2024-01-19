@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace BarberTech.Application.Commands.Login
+namespace BarberTech.Application.Commands.Users.Register
 {
-    public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+    public class CreateCommandValidator : AbstractValidator<CreateCommand>
     {
-        public RegisterCommandValidator()
+        public CreateCommandValidator()
         {
             RuleFor(r => r.Email)
                 //.EmailAddress() TODO: futuramente colocar essa verificação

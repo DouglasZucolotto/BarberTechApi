@@ -23,5 +23,13 @@
             Name = name;
             ImageSource = imageSource;
         }
+
+        public void RemovePermissions()
+        {
+            foreach (var permission in Permissions.ToList())
+            {
+                Permissions.Remove(permission);
+            }
+        }
     }
 }
