@@ -1,4 +1,4 @@
-﻿namespace BarberTech.Application
+﻿namespace BarberTech.Domain
 {
     public readonly struct Nothing
     {

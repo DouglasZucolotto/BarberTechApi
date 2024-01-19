@@ -117,6 +117,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("feedbacks:edit", policy => policy.RequireClaim("permissions", "feedbacks:edit"));
     options.AddPolicy("establishments:view", policy => policy.RequireClaim("permissions", "establishments:view"));
     options.AddPolicy("establishments:edit", policy => policy.RequireClaim("permissions", "establishments:edit"));
+    options.AddPolicy("barbers:view", policy => policy.RequireClaim("permissions", "barbers:view"));
+    options.AddPolicy("barbers:edit", policy => policy.RequireClaim("permissions", "barbers:edit"));
 });
 
 

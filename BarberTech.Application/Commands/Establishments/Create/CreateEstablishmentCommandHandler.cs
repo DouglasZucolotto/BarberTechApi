@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Entities;
+﻿using BarberTech.Domain;
+using BarberTech.Domain.Entities;
 using BarberTech.Domain.Repositories;
 using MediatR;
 using NetTopologySuite.Geometries;

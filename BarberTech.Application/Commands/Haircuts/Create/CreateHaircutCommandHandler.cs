@@ -1,6 +1,7 @@
 ﻿using BarberTech.Domain.Repositories;
 using MediatR;
 using BarberTech.Domain.Entities;
+using BarberTech.Domain;
 
 namespace BarberTech.Application.Commands.Haircuts.Create
 {
