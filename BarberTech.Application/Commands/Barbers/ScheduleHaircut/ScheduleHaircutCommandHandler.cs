@@ -28,7 +28,7 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
         public async Task<Nothing> Handle(ScheduleHaircutCommand request, CancellationToken cancellationToken)
         {
-            var establishment = await _establishmentRepository.GetByIdAsync(request.EstablishmentId);
+            var establishment = await _establishmentRepository.GetByIdWithBarbersAsync(request.EstablishmentId);
 
             if (establishment is null)
             {
@@ -46,7 +46,11 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
             var userId = _httpContext.GetUserId();
 
-            var eventSchedule = new EventSchedule(userId, barber.Id, request.Name, establishment.Id, request.Date, request.Time);
+            //TODO: parsear certo
+            var teste1 = DateTime.Parse(request.Date);
+            var teste2 = TimeSpan.Parse(request.Time);
+
+            var eventSchedule = new EventSchedule(userId, barber.Id, request.Name, establishment.Id, teste1, teste2);
 
             _eventScheduleRepository.Add(eventSchedule);
             await _eventScheduleRepository.UnitOfWork.CommitAsync();

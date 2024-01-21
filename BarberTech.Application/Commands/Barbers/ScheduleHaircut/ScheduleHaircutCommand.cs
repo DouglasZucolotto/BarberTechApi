@@ -13,9 +13,9 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
         public Guid EstablishmentId { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
-        public TimeSpan Time { get; set; }
+        public string Time { get; set; }
 
         public ScheduleHaircutCommand WithId(Guid barberId)
         {
