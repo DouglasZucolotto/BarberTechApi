@@ -59,5 +59,13 @@ namespace BarberTech.Api.Controllers
             await _mediator.Send(new DeleteBarberCommand(id));
             return NoContent();
         }
+
+        [HasPermission(Permissions.Barbers.Edit)]
+        [HttpPost("{id}")]
+        public async Task<IActionResult> ScheduleHaircutAsync([FromRoute] Guid id, [FromBody] ScheduleHaircutCommand command)
+        {
+            await _mediator.Send(command.WithId(id));
+            return NoContent();
+        }
     }
 }
