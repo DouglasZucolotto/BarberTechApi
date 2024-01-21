@@ -1,5 +1,6 @@
 ﻿using BarberTech.Application.Commands.Barbers.Create;
 using BarberTech.Application.Commands.Barbers.Delete;
+using BarberTech.Application.Commands.Barbers.ScheduleHaircut;
 using BarberTech.Application.Commands.Barbers.Update;
 using BarberTech.Application.Queries.Barbers.GetAll;
 using BarberTech.Application.Queries.Barbers.GetById;
@@ -61,7 +62,7 @@ namespace BarberTech.Api.Controllers
         }
 
         [HasPermission(Permissions.Barbers.Edit)]
-        [HttpPost("{id}")]
+        [HttpPost("{id}/schedule-haircut")]
         public async Task<IActionResult> ScheduleHaircutAsync([FromRoute] Guid id, [FromBody] ScheduleHaircutCommand command)
         {
             await _mediator.Send(command.WithId(id));

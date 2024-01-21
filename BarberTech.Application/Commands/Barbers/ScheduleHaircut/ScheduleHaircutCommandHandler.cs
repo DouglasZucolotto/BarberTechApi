@@ -1,5 +1,6 @@
 ﻿using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
+using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -45,10 +46,10 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
             var userId = _httpContext.GetUserId();
 
-            var eventSchedule = new EventSchedule(userId, request.Name, establishment, barber, request.Date, request.Time);
+            var eventSchedule = new EventSchedule(userId, barber.Id, request.Name, establishment.Id, request.Date, request.Time);
 
             _eventScheduleRepository.Add(eventSchedule);
-            await _barberRepository.UnitOfWork.CommitAsync();
+            await _eventScheduleRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
         }

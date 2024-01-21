@@ -40,6 +40,9 @@ namespace BarberTech.Infraestructure
 
         public DbSet<Barber> Barbers { get; set; }
 
+        public DbSet<EventSchedule> EventSchedules { get; set; }
+
+
         public virtual async Task CommitAsync()
         {
             var modifiedEntries = ChangeTracker.Entries()
@@ -78,6 +81,7 @@ namespace BarberTech.Infraestructure
             modelBuilder.ApplyConfiguration(new EstablishmentMapping());
             modelBuilder.ApplyConfiguration(new PermissionMapping());
             modelBuilder.ApplyConfiguration(new BarberMapping());
+            modelBuilder.ApplyConfiguration(new EventScheduleMapping());
         }
     }
 }

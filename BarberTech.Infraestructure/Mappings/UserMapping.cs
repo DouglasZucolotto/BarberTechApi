@@ -31,6 +31,9 @@ namespace BarberTech.Infraestructure.Mappings
             builder.HasOne(u => u.Barber)
                 .WithOne(b => b.User);
 
+            builder.HasOne(u => u.EventSchedule)
+                .WithOne(es => es.User);
+
             base.Configure(builder);
         }
     }

@@ -18,6 +18,8 @@ namespace BarberTech.Domain.Entities
 
         public ICollection<Barber> Barbers { get; set; } = new List<Barber>();
 
+        public ICollection<EventSchedule> EventSchedules { get; set; } = new List<EventSchedule>();
+
         public Establishment()
         {
         }

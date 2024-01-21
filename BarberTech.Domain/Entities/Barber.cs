@@ -16,6 +16,8 @@
 
         public ICollection<Feedback> Feedbacks { get; set; }
 
+        public ICollection<EventSchedule> EventSchedules { get; set; }
+
         public double GetFeedbackAverage()
         {
             if (Feedbacks.Count == 0)
