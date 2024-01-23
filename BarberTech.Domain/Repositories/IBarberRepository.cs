@@ -7,5 +7,8 @@ namespace BarberTech.Domain.Repositories
         public Task<List<Barber>> GetAllBarbersAsync();
 
         public Task<Barber> GetBarberWithUserByIdAsync(Guid id);
+
+        public Task<List<DateTime>> GetAvailableTimesAsync(Guid barberId);
+
     }
 }
