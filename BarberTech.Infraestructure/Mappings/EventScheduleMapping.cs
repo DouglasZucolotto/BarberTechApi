@@ -8,7 +8,7 @@ namespace BarberTech.Infraestructure.Mappings
     {
         public override void Configure(EntityTypeBuilder<EventSchedule> builder)
         {
-            builder.ToTable("event_schedule");
+            builder.ToTable("event_schedules");
 
             builder.Property(es => es.UserId)
                 .HasColumnName("user_id")
@@ -38,12 +38,8 @@ namespace BarberTech.Infraestructure.Mappings
                .HasColumnName("name")
                .IsRequired();
 
-            builder.Property(es => es.Date)
-              .HasColumnName("date")
-              .IsRequired();
-
-            builder.Property(es => es.Time)
-              .HasColumnName("time")
+            builder.Property(es => es.DateTime)
+              .HasColumnName("date_time")
               .IsRequired();
 
             base.Configure(builder);

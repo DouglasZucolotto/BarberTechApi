@@ -16,18 +16,15 @@
 
         public Establishment Establishment { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime DateTime { get; set; }
 
-        public TimeSpan Time { get; set; }
-
-        public EventSchedule(Guid userId, Guid barberId, string? name, Guid establishmentId, DateTime date, TimeSpan time)
+        public EventSchedule(Guid userId, Guid barberId, string name, Guid establishmentId, DateTime dateTime)
         {
             UserId = userId;
             BarberId = barberId;
             Name = name;
             EstablishmentId = establishmentId;
-            Date = date;
-            Time = time;
+            DateTime = dateTime;
         }
     }
 }

@@ -4,6 +4,7 @@ using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
+using System.Globalization;
 
 namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 {
@@ -44,18 +45,37 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
                 return default;
             }
 
+            var dateTime = ConverterToDateTime(request.DateTime);
+
+            if (dateTime is null)
+            {
+                _notification.AddBadRequest("Could not convert dateTime values");
+                return default;
+            }
+
             var userId = _httpContext.GetUserId();
+            //TODO: pegar o usuario inteiro e passar request.Name ?? user.Name
 
-            //TODO: parsear certo
-            var teste1 = DateTime.Parse(request.Date);
-            var teste2 = TimeSpan.Parse(request.Time);
-
-            var eventSchedule = new EventSchedule(userId, barber.Id, request.Name, establishment.Id, teste1, teste2);
+            var eventSchedule = new EventSchedule(userId, barber.Id, request.Name, establishment.Id, dateTime.Value);
 
             _eventScheduleRepository.Add(eventSchedule);
             await _eventScheduleRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
+        }
+
+        private DateTime? ConverterToDateTime(string dateTime)
+        {
+            var dateTimeFormat = "dd/MM/yyyy HH:mm";
+
+            var formatSuccess = DateTime.TryParseExact(
+                dateTime, 
+                dateTimeFormat, 
+                CultureInfo.InvariantCulture, 
+                DateTimeStyles.None, 
+                out var dateTimeFormatted);
+
+            return formatSuccess ? dateTimeFormatted.ToUniversalTime() : null;
         }
     }
 }
