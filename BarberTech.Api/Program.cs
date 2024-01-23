@@ -15,6 +15,7 @@ using FluentValidation;
 using MediatR;
 using BarberTech.Application.Commands.Haircuts.Create;
 using BarberTech.Application.Commands.Users.Login;
+using BarberTech.Application.Commands.Barbers.ScheduleHaircut;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,12 +56,14 @@ builder.Services.AddTransient<IHaircutRepository, HaircutRepository>();
 builder.Services.AddTransient<IBarberRepository, BarberRepository>();
 builder.Services.AddTransient<IEstablishmentRepository, EstablishmentRepository>();
 builder.Services.AddTransient<IPermissionRepository, PermissionRepository>();
+builder.Services.AddTransient<IEventScheduleRepository, EventScheduleRepository>();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionString"));
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
     typeof(CreateHaircutCommandHandler).Assembly,
+    typeof(ScheduleHaircutCommandHandler).Assembly,
 }));
 builder.Services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
 

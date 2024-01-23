@@ -16,6 +16,8 @@
 
         public Barber Barber { get; set; }
 
+        public EventSchedule EventSchedule { get; set; }
+
         public User(string email, string password, string name, string? imageSource)
         {
             Email = email;
