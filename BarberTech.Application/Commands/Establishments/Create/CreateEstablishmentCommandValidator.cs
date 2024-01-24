@@ -18,7 +18,17 @@ namespace BarberTech.Application.Commands.Establishments.Create
             RuleFor(e => e.ImageSource)
                 .NotEmpty();
 
-            RuleFor(e => e.BusinessHours)
+            //TODO: fazer regex
+            RuleFor(e => e.OpenTime)
+                .NotEmpty();
+
+            RuleFor(e => e.LunchTime)
+                .NotEmpty();
+
+            RuleFor(e => e.WorkInterval)
+                .NotEmpty();
+
+            RuleFor(e => e.LunchInterval)
                 .NotEmpty();
         }
     }

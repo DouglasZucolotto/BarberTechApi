@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain.Entities;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Establishments.GetAll
@@ -16,6 +17,7 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
         {
             var establishments = await _establishmentRepository.GetAllAsync();
 
+
             return establishments
                 .Select(establishment => new GetEstablishmentsQueryResponse
                 {
@@ -25,7 +27,7 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
                     Longitude = establishment.Coordinates.X,
                     ImageSource = establishment.ImageSource,
                     Description = establishment.Description,
-                    BusinessHours = establishment.BusinessHours
+                    BusinessTime = establishment.GetBusinessTime(),
                 });
         }
     }

@@ -14,7 +14,7 @@
 
         public string? Description { get; set; }
 
-        public string BusinessHours { get; set; } = string.Empty;
+        public string BusinessTime { get; set; } = string.Empty;
     }
 }
 

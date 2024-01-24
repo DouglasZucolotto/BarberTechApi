@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BarberTech.Application.Queries.Barbers.GetAll;
+using FluentValidation;
 
 namespace BarberTech.Application.Queries.Barbers.AvailableTimes
 {
-    internal class GetAvailableTimesQueryValidator
+    public class GetAvailableTimesQueryValidator : AbstractValidator<GetAvailableTimesQuery>
     {
+        public GetAvailableTimesQueryValidator()
+        {
+        }
     }
 }

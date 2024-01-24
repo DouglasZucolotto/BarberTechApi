@@ -33,7 +33,7 @@ namespace BarberTech.Application.Queries.Establishments.GetById
                 Longitude = establishment.Coordinates.X,
                 ImageSource = establishment.ImageSource,
                 Description = establishment.Description,
-                BusinessHours = establishment.BusinessHours
+                BusinessTime = establishment.GetBusinessTime()
             };
         }
     }

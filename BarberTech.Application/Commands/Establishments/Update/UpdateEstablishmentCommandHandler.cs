@@ -36,7 +36,8 @@ namespace BarberTech.Application.Commands.Establishments.Update
             establishment.Address = request.Address ?? establishment.Address;
             establishment.ImageSource = request.ImageSource ?? establishment.ImageSource;
             establishment.Description = request.Description ?? establishment.Description;
-            establishment.BusinessHours = request.BusinessHours ?? establishment.BusinessHours;
+
+            //TODO: colocar os outros campos de time etc
 
             _establishmentRepository.Update(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

@@ -66,6 +66,7 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
         private DateTime? ConverterToDateTime(string dateTime)
         {
+            //Todo: não ta convertendo para horario normal
             var dateTimeFormat = "dd/MM/yyyy HH:mm";
 
             var formatSuccess = DateTime.TryParseExact(
