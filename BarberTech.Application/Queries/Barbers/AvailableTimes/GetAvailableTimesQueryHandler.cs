@@ -17,7 +17,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
 
         public async Task<IEnumerable<string>> Handle(GetAvailableTimesQuery request, CancellationToken cancellationToken)
         {
-            var barber = await _barberRepository.GetBarberByIdWithEventSchedulesAsync(request.BarberId);
+            var barber = await _barberRepository.GetBarberByIdWithEventSchedulesAsync(request.Id);
 
             if (barber == null)
             {
@@ -25,31 +25,8 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
                 return default;
             }
 
-
-            //pega o mes e retorna os dias disponiveis (novo endpoint)
-
-            // EventSchedule - (talvez n precise da fk establishment)
-
-
-
-            //Passar por request
-            var requestDate = new DateTime(2024, 01, 01);
-
-            var events = barber.EventSchedules.Where(es => es.DateTime.Date == requestDate);
-            var establishment = barber.Establishment;
-            var availableTimes = new List<TimeSpan>();
-            var closeTime = establishment.OpenTime.Add(establishment.WorkInterval + establishment.LunchInterval);
-
-            for (var time = establishment.OpenTime; time < closeTime; time += TimeSpan.FromMinutes(30)) 
-            {
-                var isLunchInterval = time >= establishment.LunchTime && time < establishment.LunchTime.Add(establishment.LunchInterval);
-                var anyEvent = events.Any(e => e.DateTime.TimeOfDay == time);
-
-                if (!anyEvent && !isLunchInterval)
-                {
-                    availableTimes.Add(time);
-                }
-            }
+            var requestDate = DateTime.Parse(request.Date);
+            var availableTimes = barber.GetAvailableTimesByDateTime(requestDate);
 
             return availableTimes.Select(time => time.ToString());
         }

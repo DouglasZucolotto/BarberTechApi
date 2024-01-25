@@ -11,19 +11,20 @@
         public Barber Barber { get; set; }
 
         public string Name { get; set; }
-
-        public Guid EstablishmentId { get; set; }
-
-        public Establishment Establishment { get; set; }
-
+        
         public DateTime DateTime { get; set; }
 
-        public EventSchedule(Guid userId, Guid barberId, string name, Guid establishmentId, DateTime dateTime)
+        public EventSchedule()
         {
-            UserId = userId;
-            BarberId = barberId;
+        }
+
+        public EventSchedule(User user, Barber barber, string name, DateTime dateTime)
+        {
+            User = user;
+            UserId = user.Id;
+            Barber = barber;
+            BarberId = barber.Id;
             Name = name;
-            EstablishmentId = establishmentId;
             DateTime = dateTime;
         }
     }

@@ -14,9 +14,9 @@
 
         public ICollection<Feedback> Feedbacks { get; set; }
 
-        public Barber Barber { get; set; }
+        public ICollection<EventSchedule> EventSchedules { get; set; }
 
-        public EventSchedule EventSchedule { get; set; }
+        public Barber Barber { get; set; }
 
         public User(string email, string password, string name, string? imageSource)
         {

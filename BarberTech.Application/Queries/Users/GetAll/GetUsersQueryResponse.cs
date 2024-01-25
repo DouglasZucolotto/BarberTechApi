@@ -1,4 +1,6 @@
-﻿namespace BarberTech.Application.Queries.Users.GetAll
+﻿using BarberTech.Application.Queries.Users.Dtos;
+
+namespace BarberTech.Application.Queries.Users.GetAll
 {
     public class GetUsersQueryResponse
     {
@@ -9,5 +11,7 @@
         public string Name { get; set; } = string.Empty;
 
         public string? ImageSource { get; set; }
+
+        public IEnumerable<EventScheduleDto> EventSchedules { get; set; } = Enumerable.Empty<EventScheduleDto>();
     }
 }

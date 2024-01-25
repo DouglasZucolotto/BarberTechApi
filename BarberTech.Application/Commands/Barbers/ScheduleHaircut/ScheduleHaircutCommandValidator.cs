@@ -6,16 +6,13 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
     {
         public ScheduleHaircutCommandValidator()
         {
-            RuleFor(sh => sh.BarberId)
-                .NotEmpty();
-
-            RuleFor(sh => sh.EstablishmentId)
+            RuleFor(sh => sh.Id)
                 .NotEmpty();
 
             RuleFor(sh => sh.DateTime)
                 .NotEmpty()
                 .Matches(@"^\d{2}/\d{2}/\d{4} \d{2}:\d{2}$")
-                .WithMessage("A data deve estar no formato dd/MM/yyyy HH:mm");
+                .WithMessage("A data deve estar no formato dd/mm/yyyy hh:mm");
         }
     }
 }

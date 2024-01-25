@@ -1,4 +1,4 @@
-﻿using BarberTech.Application.Queries.Users.GetAll;
+﻿using BarberTech.Application.Queries.Users.Dtos;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -18,7 +18,7 @@ namespace BarberTech.Application.Queries.Users.GetById
 
         public async Task<GetUserByIdQueryResponse?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.Id);
+            var user = await _userRepository.GetWithEventSchedulesAsync(request.Id);
 
             if (user is null)
             {
@@ -32,6 +32,12 @@ namespace BarberTech.Application.Queries.Users.GetById
                 Name = user.Name,
                 Email = user.Email,
                 ImageSource = user.ImageSource,
+                EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
+                {
+                    Id = es.Id,
+                    Name = es.Name,
+                    DateTime = es.DateTime,
+                })
             };
         }
     }

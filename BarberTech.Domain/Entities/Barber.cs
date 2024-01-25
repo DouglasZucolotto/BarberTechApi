@@ -18,6 +18,18 @@
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
+        public Barber(Guid userId, Establishment establishment, string contact, string? about)
+        {
+            UserId = userId;
+            Establishment = establishment;
+            Contact = contact;
+            About = about;
+        }
+
+        public Barber()
+        {
+        }
+
         public double GetFeedbackAverage()
         {
             if (Feedbacks.Count == 0)
@@ -31,16 +43,27 @@
             return Math.Round(average, 2);
         }
 
-        public Barber(Guid userId, Establishment establishment, string contact, string? about)
+        public IEnumerable<TimeSpan> GetAvailableTimesByDateTime(DateTime dateTime)
         {
-            UserId = userId;
-            Establishment = establishment;
-            Contact = contact;
-            About = about;
-        }
+            var eventTimes = EventSchedules
+                .Where(es => es.DateTime.Date == dateTime)
+                .Select(es => es.DateTime.ToLocalTime());
 
-        public Barber()
-        {
+            var closeTime = Establishment.OpenTime.Add(Establishment.WorkInterval + Establishment.LunchInterval);
+            var availableTimes = new List<TimeSpan>();
+
+            for (var time = Establishment.OpenTime; time < closeTime; time += TimeSpan.FromMinutes(30))
+            {
+                var isLunchInterval = time >= Establishment.LunchTime && time < Establishment.LunchTime.Add(Establishment.LunchInterval);
+                var anyEvent = eventTimes.Any(e => e.TimeOfDay == time);
+
+                if (!anyEvent && !isLunchInterval)
+                {
+                    availableTimes.Add(time);
+                }
+            }
+
+            return availableTimes;
         }
     }
 }

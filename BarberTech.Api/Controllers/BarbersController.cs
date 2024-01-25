@@ -1,7 +1,9 @@
-﻿using BarberTech.Application.Commands.Barbers.Create;
+﻿using BarberTech.Application.Commands.Barbers.CancelSchedule;
+using BarberTech.Application.Commands.Barbers.Create;
 using BarberTech.Application.Commands.Barbers.Delete;
 using BarberTech.Application.Commands.Barbers.ScheduleHaircut;
 using BarberTech.Application.Commands.Barbers.Update;
+using BarberTech.Application.Queries.Barbers.AvailableDates;
 using BarberTech.Application.Queries.Barbers.AvailableTimes;
 using BarberTech.Application.Queries.Barbers.GetAll;
 using BarberTech.Application.Queries.Barbers.GetById;
@@ -39,10 +41,18 @@ namespace BarberTech.Api.Controllers
         }
 
         [HasPermission(Permissions.Barbers.View)]
-        [HttpGet("{id}/avaliable-times")]
-        public async Task<IActionResult> GetAvailableTimesAsync([FromRoute] Guid id)
+        [HttpGet("{id}/avaliable-dates")]
+        public async Task<IActionResult> GetAvailableDatesAsync([FromRoute] Guid id)
         {
-            var times = await _mediator.Send(new GetAvailableTimesQuery(id));
+            var dates = await _mediator.Send(new GetAvailableDatesQuery(id));
+            return Ok(dates);
+        }
+
+        [HasPermission(Permissions.Barbers.View)]
+        [HttpGet("{id}/avaliable-times")]
+        public async Task<IActionResult> GetAvailableTimesAsync([FromRoute] Guid id, [FromQuery] GetAvailableTimesQuery query)
+        {
+            var times = await _mediator.Send(query.WithId(id));
             return Ok(times);
         }
 
@@ -67,6 +77,14 @@ namespace BarberTech.Api.Controllers
         public async Task<IActionResult> DeleteBarberAsync([FromRoute] Guid id)
         {
             await _mediator.Send(new DeleteBarberCommand(id));
+            return NoContent();
+        }
+
+        [HasPermission(Permissions.Barbers.Edit)]
+        [HttpDelete("{id}/cancel-schedule")]
+        public async Task<IActionResult> CandelScheduleAsync([FromRoute] Guid id, [FromBody] CancelScheduleCommand command)
+        {
+            await _mediator.Send(command.WithId(id));
             return NoContent();
         }
 

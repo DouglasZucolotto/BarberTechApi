@@ -15,8 +15,8 @@ namespace BarberTech.Infraestructure.Mappings
                 .IsRequired();
 
             builder.HasOne(es => es.User)
-                .WithOne(u => u.EventSchedule)
-                .HasForeignKey<EventSchedule>(es => es.UserId);
+                .WithMany(u => u.EventSchedules)
+                .HasForeignKey(es => es.UserId);
 
             builder.Property(es => es.BarberId)
                 .HasColumnName("barber_id")
@@ -25,14 +25,6 @@ namespace BarberTech.Infraestructure.Mappings
             builder.HasOne(es => es.Barber)
                 .WithMany(b => b.EventSchedules)
                 .HasForeignKey(es => es.BarberId);
-
-            builder.Property(es => es.EstablishmentId)
-               .HasColumnName("establishment_id")
-               .IsRequired();
-
-            builder.HasOne(es => es.Establishment)
-                .WithMany(e => e.EventSchedules)
-                .HasForeignKey(es => es.EstablishmentId);
 
             builder.Property(es => es.Name)
                .HasColumnName("name")
