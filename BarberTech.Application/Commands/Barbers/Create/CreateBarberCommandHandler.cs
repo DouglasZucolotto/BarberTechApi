@@ -28,8 +28,13 @@ namespace BarberTech.Application.Commands.Barbers.Create
 
         public async Task<Nothing> Handle(CreateBarberCommand request, CancellationToken cancellationToken)
         {
-            // TODO: verificar se o usuário existe pra todos / talvez fazer isso dentro do método
-            var userId = _httpContext.GetUserId();
+            var user = await _httpContext.GetUserAsync();
+
+            if (user is null)
+            {
+                _notification.AddNotFound("User does not exists");
+                return default;
+            }
 
             var establishment = await _establishmentRepository.GetByIdAsync(request.EstablishmentId);
 
@@ -39,7 +44,7 @@ namespace BarberTech.Application.Commands.Barbers.Create
                 return default;
             }
 
-            var barber = new Barber(userId, establishment, request.Contact, request.About);
+            var barber = new Barber(user, establishment, request.Contact, request.About);
 
             _barberRepository.Add(barber);
             await _barberRepository.UnitOfWork.CommitAsync();

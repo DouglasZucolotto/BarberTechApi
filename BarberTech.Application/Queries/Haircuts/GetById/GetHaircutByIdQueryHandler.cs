@@ -33,16 +33,13 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
                 Description = haircut.Description,
                 ImageSource = haircut.ImageSource,
                 Price = haircut.Price,
-                QtdStars = haircut.GetFeedbacksAverage(),
+                QntStars = haircut.GetFeedbacksAverage(),
                 Feedbacks = haircut.Feedbacks.Select(f => new FeedbackDto
                 {
                     QntStars = f.QntStars,
                     Comment = f.Comment,
                     At = f.CreatedAt,
-                    User = new UserDto
-                    {
-                        Name = f.User.Name,
-                    }
+                    UserName = f.User.Name
                 })
             };
         }

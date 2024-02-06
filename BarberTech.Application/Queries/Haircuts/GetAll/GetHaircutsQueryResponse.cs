@@ -16,6 +16,6 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
 
         public IEnumerable<FeedbackDto> Feedbacks { get; set; } = Enumerable.Empty<FeedbackDto>();
 
-        public double QtdStars { get; set; }
+        public double QntStars { get; set; }
     }
 }

@@ -23,7 +23,6 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                     Id = barber.Id,
                     Name = barber.User.Name,
                     About = barber.About,
-                    Photo = barber.User.ImageSource,
                     Contact = barber.Contact,
                     FeedbackAverage = barber.GetFeedbackAverage(),
                     EstablishmentAddress = barber.Establishment.Address,

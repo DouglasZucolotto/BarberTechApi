@@ -6,7 +6,7 @@
 
         public string? Comment { get; set; }
 
-        public UserDto User { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         public DateTime At { get; set; }
     }

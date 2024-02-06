@@ -1,8 +1,6 @@
 using BarberTech.Application.Commands.Feedbacks.Create;
 using BarberTech.Application.Commands.Feedbacks.Delete;
 using BarberTech.Application.Commands.Feedbacks.Update;
-using BarberTech.Application.Queries.Feedbacks.GetAll;
-using BarberTech.Application.Queries.Feedbacks.GetById;
 using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,22 +16,6 @@ namespace BarberTech.Services.Controllers
         public FeedbacksController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HasPermission(Permissions.Feedbacks.View)]
-        [HttpGet]
-        public async Task<IActionResult> GetFeedbacksAsync()
-        {
-            var feedbacks = await _mediator.Send(new GetFeedbacksQuery());
-            return Ok(feedbacks);
-        }
-
-        [HasPermission(Permissions.Feedbacks.View)]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetFeedbackByIdAsync([FromRoute] Guid id)
-        {
-            var feedback = await _mediator.Send(new GetFeedbackByIdQuery(id));
-            return Ok(feedback);
         }
 
         [HasPermission(Permissions.Feedbacks.Edit)]
