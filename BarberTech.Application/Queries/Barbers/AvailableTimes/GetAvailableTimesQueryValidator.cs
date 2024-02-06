@@ -12,7 +12,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
             RuleFor(at => at.Date)
                 .NotEmpty()
                 .Matches(@"^\d{2}/\d{2}/\d{4}")
-                .WithMessage("A data deve estar no formato dd/mm/yyyy");
+                .WithMessage("The date must be in the format dd/mm/yyyy");
         }
     }
 }

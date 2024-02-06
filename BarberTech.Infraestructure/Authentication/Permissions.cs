@@ -36,5 +36,10 @@
 
             public const string Edit = "barbers:edit";
         }
+
+        public static class EventSchedules
+        {
+            public const string Edit = "schedules:edit";
+        }
     }
 }

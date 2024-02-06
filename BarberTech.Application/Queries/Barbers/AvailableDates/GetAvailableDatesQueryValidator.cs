@@ -6,7 +6,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableDates
     {
         public GetAvailableDatesQueryValidator()
         {
-            RuleFor(at => at.Id)
+            RuleFor(ad => ad.Id)
                 .NotEmpty();
         }
     }

@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BarberTech.Application.Queries.Barbers.AvailableTimes
 {
-    public class GetAvailableTimesQuery : IRequest<IEnumerable<string>>
+    public class GetAvailableTimesQuery : IRequest<IEnumerable<string>?>
     {
         public Guid Id { get; set; }
 

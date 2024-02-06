@@ -1,4 +1,6 @@
-﻿namespace BarberTech.Domain.Entities
+﻿using BarberTech.Domain.Entities.Enums;
+
+namespace BarberTech.Domain.Entities
 {
     public class Barber : Entity
     {
@@ -10,6 +12,8 @@
 
         public string Contact { get; set; }
 
+        public string ImageSource { get; set; }
+
         public Guid EstablishmentId { get; set; }
 
         public Establishment Establishment { get; set; }
@@ -18,12 +22,18 @@
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
-        public Barber(User user, Establishment establishment, string contact, string? about)
+        public Barber(
+            User user, 
+            Establishment establishment, 
+            string contact, 
+            string? about, 
+            string imageSource)
         {
             User = user;
             Establishment = establishment;
             Contact = contact;
             About = about;
+            ImageSource = imageSource;
         }
 
         public Barber()
@@ -43,7 +53,7 @@
         public IEnumerable<TimeSpan> GetAvailableTimesByDateTime(DateTime dateTime)
         {
             var eventTimes = EventSchedules
-                .Where(es => es.DateTime.Date == dateTime)
+                .Where(es => es.DateTime.Date == dateTime.Date && es.EventStatus == EventStatus.Active)
                 .Select(es => es.DateTime.ToLocalTime());
 
             var closeTime = Establishment.OpenTime.Add(Establishment.WorkInterval + Establishment.LunchInterval);

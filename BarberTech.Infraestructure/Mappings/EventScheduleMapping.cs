@@ -34,6 +34,10 @@ namespace BarberTech.Infraestructure.Mappings
               .HasColumnName("date_time")
               .IsRequired();
 
+            builder.Property(es => es.EventStatus)
+              .HasColumnName("event_status")
+              .IsRequired();
+
             base.Configure(builder);
         }
     }

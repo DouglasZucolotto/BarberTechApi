@@ -4,7 +4,7 @@ using MediatR;
 
 namespace BarberTech.Application.Queries.Barbers.AvailableTimes
 {
-    public class GetAvailableTimesQueryHandler : IRequestHandler<GetAvailableTimesQuery, IEnumerable<string>>
+    public class GetAvailableTimesQueryHandler : IRequestHandler<GetAvailableTimesQuery, IEnumerable<string>?>
     {
         private readonly IBarberRepository _barberRepository;
         private readonly INotificationContext _notification;
@@ -15,7 +15,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
             _notification = notification;
         }
 
-        public async Task<IEnumerable<string>> Handle(GetAvailableTimesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<string>?> Handle(GetAvailableTimesQuery request, CancellationToken cancellationToken)
         {
             var barber = await _barberRepository.GetBarberByIdWithEventSchedulesAsync(request.Id);
 

@@ -1,4 +1,4 @@
-﻿namespace BarberTech.Application.Queries.Users.Dtos
+﻿namespace BarberTech.Application.Queries.Barbers.Dtos
 {
     public class EventScheduleDto
     {

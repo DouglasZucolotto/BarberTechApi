@@ -7,7 +7,7 @@ using MediatR;
 
 namespace BarberTech.Application.Commands.Users.Register
 {
-    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Nothing>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, User?>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
@@ -23,7 +23,7 @@ namespace BarberTech.Application.Commands.Users.Register
             _notification = notification;
         }
 
-        public async Task<Nothing> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<User?> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var emailExists = await _userRepository.UserEmailExistsAsync(request.Email);
 
@@ -40,7 +40,7 @@ namespace BarberTech.Application.Commands.Users.Register
             _userRepository.Add(user);
             await _userRepository.UnitOfWork.CommitAsync();
 
-            return Nothing.Value;
+            return user;
         }
     }
 }

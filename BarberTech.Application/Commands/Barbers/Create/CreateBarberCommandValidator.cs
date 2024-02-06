@@ -11,6 +11,9 @@ namespace BarberTech.Application.Commands.Barbers.Create
 
             RuleFor(b => b.Contact)
                 .NotEmpty();
+
+            RuleFor(b => b.ImageSource)
+                .NotEmpty();
         }
     }
 }

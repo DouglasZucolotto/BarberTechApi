@@ -1,4 +1,5 @@
 ﻿using BarberTech.Domain.Entities;
+using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,8 @@ namespace BarberTech.Infraestructure.Repositories
         public Task<List<User>> GetAllWithEventSchedulesAsync()
         {
             return Query
-                .Include(u => u.EventSchedules)
+                .Include(u => u.EventSchedules
+                    .Where(es => es.EventStatus != EventStatus.Canceled))
                 .Include(u => u.Barber)
                     .ThenInclude(b => b.Establishment)
                 .ToListAsync();
@@ -22,7 +24,8 @@ namespace BarberTech.Infraestructure.Repositories
         public Task<User?> GetByIdWithEventSchedulesAsync(Guid id)
         {
             return Query
-                .Include(u => u.EventSchedules)
+                .Include(u => u.EventSchedules
+                    .Where(es => es.EventStatus != EventStatus.Canceled))
                 .Include(u => u.Barber)
                     .ThenInclude(b => b.Establishment)
                 .FirstOrDefaultAsync(u => u.Id == id);

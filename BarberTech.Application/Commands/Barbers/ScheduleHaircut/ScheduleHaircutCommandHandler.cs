@@ -4,7 +4,6 @@ using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
-using System.Globalization;
 
 namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 {
@@ -29,15 +28,13 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
         public async Task<Nothing> Handle(ScheduleHaircutCommand request, CancellationToken cancellationToken)
         {
-            var barber = await _barberRepository.GetBarberWithUserByIdAsync(request.Id);
+            var barber = await _barberRepository.GetBarberByIdWithEventSchedulesAsync(request.Id);
 
             if (barber is null)
             {
                 _notification.AddNotFound("Barber does not exists");
                 return default;
             }
-
-            var dateTime = DateTime.Parse(request.DateTime).ToUniversalTime();
 
             var user = await _httpContext.GetUserAsync();
 
@@ -46,8 +43,21 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
                 _notification.AddNotFound("User does not exists");
                 return default;
             }
+            
+            var dateTime = DateTime.Parse(request.DateTime);
+            var availableTimes = barber.GetAvailableTimesByDateTime(dateTime);
+            var time = request.DateTime.Split(' ')[1];
+            var isTimeAvailable = availableTimes.Any(at => at.ToString(@"hh\:mm").Equals(time));
 
-            var eventSchedule = new EventSchedule(user, barber, request.Name ?? user.Name, dateTime);
+            if (!isTimeAvailable)
+            {
+                _notification.AddBadRequest("Time is not available");
+                return default;
+            }
+
+            var dateTimeUniversal = DateTime.Parse(request.DateTime).ToUniversalTime();
+
+            var eventSchedule = new EventSchedule(user, barber, request.Name ?? user.Name, dateTimeUniversal);
 
             _eventScheduleRepository.Add(eventSchedule);
             await _eventScheduleRepository.UnitOfWork.CommitAsync();

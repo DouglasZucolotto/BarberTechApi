@@ -36,6 +36,7 @@ namespace BarberTech.Application.Queries.Users.GetById
                     Id = es.Id,
                     Name = es.Name,
                     DateTime = es.DateTime,
+                    Status = es.EventStatus.ToString(),
                 })
             };
         }

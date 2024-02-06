@@ -63,16 +63,29 @@ namespace BarberTech.Infraestructure
                     entity.CreatedBy = userIdConverted;
                 }
 
-                if (entry.State == EntityState.Modified)
-                {
-                    entity.CreatedAt = entity.CreatedAt.ToUniversalTime();
-                }
-
                 entity.ModifiedAt = DateTime.UtcNow;
                 entity.ModifiedBy = userIdConverted;
+
+                ConvertDatesToUtc(entity);
             }
 
             await SaveChangesAsync();
+        }
+
+        private void ConvertDatesToUtc(Entity entity)
+        {
+            var properties = entity.GetType().GetProperties()
+                .Where(prop => prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?));
+
+            foreach (var prop in properties)
+            {
+                var value = (DateTime?)prop.GetValue(entity);
+
+                if (value != null)
+                {
+                    prop.SetValue(entity, value.Value.ToUniversalTime());
+                }
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

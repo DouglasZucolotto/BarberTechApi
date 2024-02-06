@@ -15,6 +15,13 @@ namespace BarberTech.Application.Commands.Users.Update
 
         public string? Name { get; set; }
 
+        public UpdateUserCommand(string? email, string? password, string? name)
+        {
+            Email = email;
+            Password = password;
+            Name = name;
+        }
+
         public UpdateUserCommand WithId(Guid id)
         {
             Id = id;

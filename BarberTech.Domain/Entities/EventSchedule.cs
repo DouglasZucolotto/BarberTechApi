@@ -1,4 +1,6 @@
-﻿namespace BarberTech.Domain.Entities
+﻿using BarberTech.Domain.Entities.Enums;
+
+namespace BarberTech.Domain.Entities
 {
     public class EventSchedule : Entity
     {
@@ -14,6 +16,8 @@
         
         public DateTime DateTime { get; set; }
 
+        public EventStatus EventStatus { get; set; }
+
         public EventSchedule()
         {
         }
@@ -26,6 +30,7 @@
             BarberId = barber.Id;
             Name = name;
             DateTime = dateTime;
+            EventStatus = EventStatus.Active;
         }
     }
 }
