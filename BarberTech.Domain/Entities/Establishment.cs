@@ -8,6 +8,8 @@ namespace BarberTech.Domain.Entities
 
         public Point Coordinates { get; set; }
 
+        public string ImageSource { get; set; }
+
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
         public ICollection<Barber> Barbers { get; set; } = new List<Barber>();
@@ -41,7 +43,8 @@ namespace BarberTech.Domain.Entities
 
         public Establishment(
             string address, 
-            Point coordinates, 
+            Point coordinates,
+            string imageSource,
             TimeSpan openTime,
             TimeSpan lunchTime,
             TimeSpan workInterval,
@@ -49,6 +52,7 @@ namespace BarberTech.Domain.Entities
         {
             Address = address;
             Coordinates = coordinates;
+            ImageSource = imageSource;
             OpenTime = openTime;
             LunchTime = lunchTime;
             WorkInterval = workInterval;

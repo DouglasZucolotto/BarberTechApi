@@ -21,7 +21,8 @@ namespace BarberTech.Application.Commands.Establishments.Create
 
             var establishment = new Establishment(
                 request.Address, 
-                coordinates, 
+                coordinates,
+                request.ImageSource,
                 TimeSpan.Parse(request.OpenTime),
                 TimeSpan.Parse(request.LunchTime),
                 TimeSpan.Parse(request.WorkInterval),

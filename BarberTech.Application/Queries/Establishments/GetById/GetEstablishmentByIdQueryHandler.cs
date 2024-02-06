@@ -29,6 +29,7 @@ namespace BarberTech.Application.Queries.Establishments.GetById
             {
                 Id = establishment.Id,
                 Address = establishment.Address,
+                ImageSource = establishment.ImageSource,
                 Latitude = establishment.Coordinates.Y,
                 Longitude = establishment.Coordinates.X,
                 BusinessTime = establishment.GetBusinessTime(),

@@ -54,6 +54,7 @@ namespace BarberTech.Application.Commands.Establishments.Update
             }
 
             establishment.Address = request.Address ?? establishment.Address;
+            establishment.ImageSource = request.ImageSource ?? establishment.ImageSource;
 
             _establishmentRepository.Update(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

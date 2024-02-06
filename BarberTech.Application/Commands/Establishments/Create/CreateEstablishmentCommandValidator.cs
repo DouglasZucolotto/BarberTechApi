@@ -9,6 +9,9 @@ namespace BarberTech.Application.Commands.Establishments.Create
             RuleFor(e => e.Address)
                 .NotEmpty();
 
+            RuleFor(e => e.ImageSource)
+                .NotEmpty();
+
             RuleFor(e => e.Latitude)
                 .InclusiveBetween(-90, 90).WithMessage("Latitude must be between -90 and 90 degrees.")
                 .NotNull();

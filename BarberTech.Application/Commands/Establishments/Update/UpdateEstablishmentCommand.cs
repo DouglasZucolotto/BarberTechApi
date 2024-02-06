@@ -11,6 +11,8 @@ namespace BarberTech.Application.Commands.Establishments.Update
 
         public string? Address { get; set; }
 
+        public string? ImageSource { get; set; }
+
         public double? Latitude { get; set; }
 
         public double? Longitude { get; set; }
