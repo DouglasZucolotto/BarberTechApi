@@ -12,6 +12,6 @@ namespace BarberTech.Domain.Repositories
 
         Task<List<User>> GetAllWithEventSchedulesAsync();
 
-        Task<User?> GetWithEventSchedulesAsync(Guid id);
+        Task<User?> GetByIdWithEventSchedulesAsync(Guid id);
     }
 }

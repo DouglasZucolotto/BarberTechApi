@@ -18,9 +18,8 @@
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
-        public Barber(Guid userId, Establishment establishment, string contact, string? about)
+        public Barber(Establishment establishment, string contact, string? about)
         {
-            UserId = userId;
             Establishment = establishment;
             Contact = contact;
             About = about;

@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Notifications;
+﻿using BarberTech.Application.Queries.Haircuts.Dtos;
+using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
@@ -17,7 +18,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
 
         public async Task<GetHaircutByIdQueryResponse?> Handle(GetHaircutByIdQuery request, CancellationToken cancellationToken)
         {
-            var haircut = await _haircutRepository.GetByIdAsync(request.Id);
+            var haircut = await _haircutRepository.GetByIdWithFeedbacksAsync(request.Id);
 
             if (haircut is null)
             {
@@ -27,11 +28,22 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
 
             return new GetHaircutByIdQueryResponse
             {
-                Id= haircut.Id,
+                Id = haircut.Id,
                 Name = haircut.Name,
                 Description = haircut.Description,
                 ImageSource = haircut.ImageSource,
-                Price = haircut.Price
+                Price = haircut.Price,
+                QtdStars = haircut.GetFeedbacksAverage(),
+                Feedbacks = haircut.Feedbacks.Select(f => new FeedbackDto
+                {
+                    QntStars = f.QntStars,
+                    Comment = f.Comment,
+                    At = f.CreatedAt,
+                    User = new UserDto
+                    {
+                        Name = f.User.Name,
+                    }
+                })
             };
         }
     }

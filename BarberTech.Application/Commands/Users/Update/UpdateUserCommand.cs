@@ -8,13 +8,12 @@ namespace BarberTech.Application.Commands.Users.Update
     {
         [JsonIgnore]
         public Guid Id { get; set; }
-        public string Email { get; set; } = string.Empty;
 
-        public string Password { get; set; } = string.Empty;
+        public string? Email { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string? Password { get; set; }
 
-        public string? ImageSource { get; set; }
+        public string? Name { get; set; }
 
         public UpdateUserCommand WithId(Guid id)
         {

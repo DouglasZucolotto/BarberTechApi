@@ -12,17 +12,25 @@ namespace BarberTech.Infraestructure.Repositories
 
         public Task<List<User>> GetAllWithEventSchedulesAsync()
         {
-            return Query.Include(x => x.EventSchedules).ToListAsync();
+            return Query
+                .Include(u => u.EventSchedules)
+                .Include(u => u.Barber)
+                    .ThenInclude(b => b.Establishment)
+                .ToListAsync();
+        }
+
+        public Task<User?> GetByIdWithEventSchedulesAsync(Guid id)
+        {
+            return Query
+                .Include(u => u.EventSchedules)
+                .Include(u => u.Barber)
+                    .ThenInclude(b => b.Establishment)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public Task<User?> GetByEmailAsync(string email)
         {
             return Query.FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-        public Task<User?> GetWithEventSchedulesAsync(Guid id)
-        {
-            return Query.Include(x => x.EventSchedules).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public Task<User?> GetWithPermissionsAsync(Guid id)

@@ -1,4 +1,5 @@
 ﻿using BarberTech.Domain;
+using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -9,10 +10,12 @@ namespace BarberTech.Application.Commands.Users.Update
     {
         private readonly IUserRepository _userRepository;
         private readonly INotificationContext _notification;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public UpdateUserCommandHandler(IUserRepository userRepository, INotificationContext notification)
+        public UpdateUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, INotificationContext notification)
         {
             _userRepository = userRepository;
+            _passwordHasher = passwordHasher;
             _notification = notification;
         }
 
@@ -28,8 +31,11 @@ namespace BarberTech.Application.Commands.Users.Update
 
             user.Name = request.Name ?? user.Name;
             user.Email = request.Email ?? user.Email;
-            user.Password = request.Password ?? user.Password;
-            user.ImageSource = request.ImageSource ?? user.ImageSource;
+
+            if (request.Password != null)
+            {
+                user.Password = _passwordHasher.Generate(request.Password);
+            }
 
             _userRepository.Update(user);
             await _userRepository.UnitOfWork.CommitAsync();

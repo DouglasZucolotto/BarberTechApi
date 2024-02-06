@@ -22,9 +22,6 @@ namespace BarberTech.Infraestructure.Mappings
                .HasColumnName("name")
                .IsRequired();
 
-            builder.Property(u => u.ImageSource)
-               .HasColumnName("image_source");
-
             builder.HasMany(u => u.Permissions)
                 .WithOne(p => p.User);
 

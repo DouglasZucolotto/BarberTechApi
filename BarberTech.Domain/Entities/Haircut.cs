@@ -19,5 +19,14 @@
             ImageSource = imageSource;
             Price = price;
         }
+
+        public double GetFeedbacksAverage()
+        {
+            if (Feedbacks.Count == 0) 
+            { 
+                return 0; 
+            }
+            return Feedbacks.Average(f => f.QntStars);
+        }
     }
 }

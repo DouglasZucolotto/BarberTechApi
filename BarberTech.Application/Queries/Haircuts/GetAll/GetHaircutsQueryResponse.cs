@@ -1,4 +1,6 @@
-﻿namespace BarberTech.Application.Queries.Haircuts.GetAll
+﻿using BarberTech.Application.Queries.Haircuts.Dtos;
+
+namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
     public class GetHaircutsQueryResponse
     {
@@ -11,5 +13,9 @@
         public decimal Price { get; set; }
 
         public string ImageSource { get; set; } = string.Empty;
+
+        public IEnumerable<FeedbackDto> Feedbacks { get; set; } = Enumerable.Empty<FeedbackDto>();
+
+        public double QtdStars { get; set; }
     }
 }

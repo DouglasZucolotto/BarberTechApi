@@ -8,8 +8,6 @@
 
         public string Name { get; set; }
 
-        public string? ImageSource { get; set; }
-
         public ICollection<Permission> Permissions { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; }
@@ -18,12 +16,11 @@
 
         public Barber Barber { get; set; }
 
-        public User(string email, string password, string name, string? imageSource)
+        public User(string email, string password, string name)
         {
             Email = email;
             Password = password;
             Name = name;
-            ImageSource = imageSource;
         }
 
         public void RemovePermissions()
