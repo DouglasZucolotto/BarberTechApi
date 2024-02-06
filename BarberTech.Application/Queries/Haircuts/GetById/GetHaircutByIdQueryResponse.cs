@@ -1,6 +1,4 @@
-﻿using BarberTech.Application.Queries.Haircuts.Dtos;
-
-namespace BarberTech.Application.Queries.Haircuts.GetById
+﻿namespace BarberTech.Application.Queries.Haircuts.GetById
 {
     public class GetHaircutByIdQueryResponse
     {
@@ -13,8 +11,6 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
         public decimal Price { get; set; }
 
         public string ImageSource { get; set; } = string.Empty;
-
-        public IEnumerable<FeedbackDto> Feedbacks { get; set; } = Enumerable.Empty<FeedbackDto>();
 
         public double QntStars { get; set; }
     }

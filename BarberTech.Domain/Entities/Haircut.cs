@@ -26,6 +26,7 @@
             { 
                 return 0; 
             }
+
             return Feedbacks.Average(f => f.QntStars);
         }
     }

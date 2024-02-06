@@ -12,7 +12,7 @@
 
         public string Contact { get; set; } = string.Empty;
 
-        public double FeedbackAverage { get; set; }
+        public double QntStars { get; set; }
 
         public string EstablishmentAddress { get; set; } = string.Empty;
     }

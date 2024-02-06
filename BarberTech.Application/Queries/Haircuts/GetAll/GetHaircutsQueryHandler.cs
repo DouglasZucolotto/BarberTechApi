@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Queries.Haircuts.Dtos;
-using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Haircuts.GetAll
@@ -25,13 +24,6 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
                 ImageSource = haircut.ImageSource,
                 Price = haircut.Price,
                 QntStars = haircut.GetFeedbacksAverage(),
-                Feedbacks = haircut.Feedbacks.Select(f => new FeedbackDto
-                {
-                    QntStars = f.QntStars,
-                    Comment = f.Comment,
-                    At = f.CreatedAt,
-                    UserName = f.User.Name
-                })
             });
         }
     }

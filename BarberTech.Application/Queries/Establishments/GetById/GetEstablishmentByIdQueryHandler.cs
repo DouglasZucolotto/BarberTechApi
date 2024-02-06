@@ -31,9 +31,8 @@ namespace BarberTech.Application.Queries.Establishments.GetById
                 Address = establishment.Address,
                 Latitude = establishment.Coordinates.Y,
                 Longitude = establishment.Coordinates.X,
-                ImageSource = establishment.ImageSource,
-                Description = establishment.Description,
-                BusinessTime = establishment.GetBusinessTime()
+                BusinessTime = establishment.GetBusinessTime(),
+                QntStars = establishment.GetFeedbacksAverage(),
             };
         }
     }

@@ -30,17 +30,14 @@
         {
         }
 
-        public double GetFeedbackAverage()
+        public double GetFeedbacksAverage()
         {
             if (Feedbacks.Count == 0)
             {
                 return 0;
             }
 
-            double allStars = Feedbacks.Sum(f => f.QntStars);
-            var average = allStars / Feedbacks.Count;
-
-            return Math.Round(average, 2);
+            return Feedbacks.Average(f => f.QntStars);
         }
 
         public IEnumerable<TimeSpan> GetAvailableTimesByDateTime(DateTime dateTime)

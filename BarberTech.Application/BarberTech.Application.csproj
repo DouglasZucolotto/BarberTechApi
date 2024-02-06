@@ -26,4 +26,8 @@
     <ProjectReference Include="..\BarberTech.Infraestructure\BarberTech.Infraestructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\Haircuts\Dtos\" />
+  </ItemGroup>
+
 </Project>

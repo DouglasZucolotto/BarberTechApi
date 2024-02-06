@@ -24,7 +24,7 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                     Name = barber.User.Name,
                     About = barber.About,
                     Contact = barber.Contact,
-                    FeedbackAverage = barber.GetFeedbackAverage(),
+                    QntStars = barber.GetFeedbacksAverage(),
                     EstablishmentAddress = barber.Establishment.Address,
                 });
         }

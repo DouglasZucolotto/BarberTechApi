@@ -1,5 +1,4 @@
-﻿using BarberTech.Domain.Entities;
-using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Establishments.GetAll
@@ -17,7 +16,6 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
         {
             var establishments = await _establishmentRepository.GetAllAsync();
 
-
             return establishments
                 .Select(establishment => new GetEstablishmentsQueryResponse
                 {
@@ -25,9 +23,8 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
                     Address = establishment.Address,
                     Latitude = establishment.Coordinates.Y,
                     Longitude = establishment.Coordinates.X,
-                    ImageSource = establishment.ImageSource,
-                    Description = establishment.Description,
                     BusinessTime = establishment.GetBusinessTime(),
+                    QntStars = establishment.GetFeedbacksAverage(),
                 });
         }
     }

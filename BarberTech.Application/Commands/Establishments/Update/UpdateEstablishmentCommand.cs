@@ -15,11 +15,13 @@ namespace BarberTech.Application.Commands.Establishments.Update
 
         public double? Longitude { get; set; }
 
-        public string? ImageSource { get; set; }
+        public string? OpenTime { get; set; }
 
-        public string? Description { get; set; }
+        public string? LunchTime { get; set; }
 
-        public string? BusinessHours { get; set; }
+        public string? WorkInterval { get; set; }
+
+        public string? LunchInterval { get; set; }
 
         public UpdateEstablishmentCommand WithId(Guid id)
         {

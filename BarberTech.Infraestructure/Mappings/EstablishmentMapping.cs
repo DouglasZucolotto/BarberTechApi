@@ -16,13 +16,6 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("address")
                 .IsRequired();
 
-            builder.Property(e => e.ImageSource)
-                .HasColumnName("image_source")
-                .IsRequired();
-
-            builder.Property(e => e.Description)
-                .HasColumnName("description");
-
             builder.Property(e => e.Coordinates)
                 .HasColumnName("coordinates")
                 .HasColumnType("geometry (point)")

@@ -8,10 +8,6 @@ namespace BarberTech.Domain.Entities
 
         public Point Coordinates { get; set; }
 
-        public string ImageSource { get; set; }
-
-        public string? Description { get; set; }
-
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
         public ICollection<Barber> Barbers { get; set; } = new List<Barber>();
@@ -29,6 +25,16 @@ namespace BarberTech.Domain.Entities
             return $"{OpenTime} ~ {OpenTime.Add(WorkInterval).Add(LunchInterval)}";
         }
 
+        public double GetFeedbacksAverage()
+        {
+            if (Feedbacks.Count == 0)
+            {
+                return 0;
+            }
+
+            return Feedbacks.Average(f => f.QntStars);
+        }
+
         public Establishment()
         {
         }
@@ -36,17 +42,13 @@ namespace BarberTech.Domain.Entities
         public Establishment(
             string address, 
             Point coordinates, 
-            string imageSource, 
             TimeSpan openTime,
             TimeSpan lunchTime,
             TimeSpan workInterval,
-            TimeSpan lunchInterval,
-            string? description)
+            TimeSpan lunchInterval)
         {
             Address = address;
             Coordinates = coordinates;
-            ImageSource = imageSource;
-            Description = description;
             OpenTime = openTime;
             LunchTime = lunchTime;
             WorkInterval = workInterval;

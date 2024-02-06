@@ -33,11 +33,27 @@ namespace BarberTech.Application.Commands.Establishments.Update
                 establishment.Coordinates = coordinates;
             }
 
-            establishment.Address = request.Address ?? establishment.Address;
-            establishment.ImageSource = request.ImageSource ?? establishment.ImageSource;
-            establishment.Description = request.Description ?? establishment.Description;
+            if (request.OpenTime != null)
+            {
+                establishment.OpenTime = TimeSpan.Parse(request.OpenTime);
+            }
 
-            //TODO: colocar os outros campos de time etc
+            if (request.LunchTime != null)
+            {
+                establishment.LunchTime = TimeSpan.Parse(request.LunchTime);
+            }
+
+            if (request.WorkInterval != null)
+            {
+                establishment.WorkInterval = TimeSpan.Parse(request.WorkInterval);
+            }
+
+            if (request.LunchInterval != null)
+            {
+                establishment.LunchInterval = TimeSpan.Parse(request.LunchInterval);
+            }
+
+            establishment.Address = request.Address ?? establishment.Address;
 
             _establishmentRepository.Update(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

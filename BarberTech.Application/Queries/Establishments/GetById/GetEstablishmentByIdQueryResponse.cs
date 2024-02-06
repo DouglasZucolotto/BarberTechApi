@@ -10,11 +10,9 @@
 
         public double Longitude { get; set; }
 
-        public string ImageSource { get; set; } = string.Empty;
-
-        public string? Description { get; set; }
-
         public string BusinessTime { get; set; } = string.Empty;
+
+        public double QntStars { get; set; }
     }
 }
 
