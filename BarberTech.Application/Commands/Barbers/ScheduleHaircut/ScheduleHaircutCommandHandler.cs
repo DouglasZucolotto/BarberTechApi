@@ -3,25 +3,28 @@ using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
+using BarberTech.Infraestructure.Repositories;
 using MediatR;
-using System.Globalization;
 
 namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 {
     public class ScheduleHaircutCommandHandler : IRequestHandler<ScheduleHaircutCommand, Nothing>
     {
-        private readonly IEstablishmentRepository _establishmentRepository;
+        private readonly IBarberRepository _barberRepository;
+        private readonly IHaircutRepository _haircutRepository;
         private readonly IEventScheduleRepository _eventScheduleRepository;
         private readonly INotificationContext _notification;
         private readonly IHttpContext _httpContext;
 
         public ScheduleHaircutCommandHandler(
-            IEstablishmentRepository establishmentRepository,
+            IBarberRepository barberRepository,
+            IHaircutRepository haircutRepository,
             IEventScheduleRepository eventScheduleRepository,
             INotificationContext notification,
             IHttpContext httpContext)
         {
-            _establishmentRepository = establishmentRepository;
+            _barberRepository = barberRepository;
+            _haircutRepository = haircutRepository;
             _eventScheduleRepository = eventScheduleRepository;
             _notification = notification;
             _httpContext = httpContext;
@@ -29,15 +32,7 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
         public async Task<Nothing> Handle(ScheduleHaircutCommand request, CancellationToken cancellationToken)
         {
-            var establishment = await _establishmentRepository.GetByIdWithBarbersAsync(request.EstablishmentId);
-
-            if (establishment is null)
-            {
-                _notification.AddNotFound("Establishment does not exists");
-                return default;
-            }
-
-            var barber = establishment.Barbers.FirstOrDefault(b => b.Id == request.BarberId);
+            var barber = await _barberRepository.GetBarberByIdWithEventSchedulesAsync(request.Id);
 
             if (barber is null)
             {
@@ -45,37 +40,41 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
                 return default;
             }
 
-            var dateTime = ConverterToDateTime(request.DateTime);
+            var user = await _httpContext.GetUserAsync();
 
-            if (dateTime is null)
+            if (user is null)
             {
-                _notification.AddBadRequest("Could not convert dateTime values");
+                _notification.AddNotFound("User does not exists");
                 return default;
             }
 
-            var userId = _httpContext.GetUserId();
-            //TODO: pegar o usuario inteiro e passar request.Name ?? user.Name
+            var haircut = await _haircutRepository.GetByIdAsync(request.HaircutId);
 
-            var eventSchedule = new EventSchedule(userId, barber.Id, request.Name, establishment.Id, dateTime.Value);
+            if (haircut is null)
+            {
+                _notification.AddNotFound("Haircut does not exists");
+                return default;
+            }
+
+            var dateTime = DateTime.Parse(request.DateTime);
+            var availableTimes = barber.GetAvailableTimesByDateTime(dateTime);
+            var time = request.DateTime.Split(' ')[1];
+            var isTimeAvailable = availableTimes.Any(at => at.ToString(@"hh\:mm").Equals(time));
+
+            if (!isTimeAvailable)
+            {
+                _notification.AddBadRequest("Time is not available");
+                return default;
+            }
+
+            var dateTimeUniversal = DateTime.Parse(request.DateTime).ToUniversalTime();
+
+            var eventSchedule = new EventSchedule(user, barber, haircut, request.Name ?? user.Name, dateTimeUniversal);
 
             _eventScheduleRepository.Add(eventSchedule);
             await _eventScheduleRepository.UnitOfWork.CommitAsync();
 
             return Nothing.Value;
-        }
-
-        private DateTime? ConverterToDateTime(string dateTime)
-        {
-            var dateTimeFormat = "dd/MM/yyyy HH:mm";
-
-            var formatSuccess = DateTime.TryParseExact(
-                dateTime, 
-                dateTimeFormat, 
-                CultureInfo.InvariantCulture, 
-                DateTimeStyles.None, 
-                out var dateTimeFormatted);
-
-            return formatSuccess ? dateTimeFormatted.ToUniversalTime() : null;
         }
     }
 }

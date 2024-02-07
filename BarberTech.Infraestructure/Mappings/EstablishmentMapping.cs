@@ -20,25 +20,31 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("image_source")
                 .IsRequired();
 
-            builder.Property(e => e.Description)
-                .HasColumnName("description");
-
-            builder.Property(e => e.BusinessHours)
-                .HasColumnName("business_hours")
-                .IsRequired();
-
             builder.Property(e => e.Coordinates)
                 .HasColumnName("coordinates")
                 .HasColumnType("geometry (point)")
+                .IsRequired();
+
+            builder.Property(e => e.OpenTime)
+                .HasColumnName("open_time")
+                .IsRequired();
+
+            builder.Property(e => e.LunchTime)
+                .HasColumnName("lunch_time")
+                .IsRequired();
+
+            builder.Property(e => e.WorkInterval)
+                .HasColumnName("work_interval")
+                .IsRequired();
+
+            builder.Property(e => e.LunchInterval)
+                .HasColumnName("lunch_interval")
                 .IsRequired();
 
             builder.HasMany(e => e.Feedbacks)
                 .WithOne(f => f.Establishment);
 
             builder.HasMany(e => e.Barbers)
-                .WithOne(b => b.Establishment);
-
-            builder.HasMany(e => e.EventSchedules)
                 .WithOne(b => b.Establishment);
 
             base.Configure(builder);

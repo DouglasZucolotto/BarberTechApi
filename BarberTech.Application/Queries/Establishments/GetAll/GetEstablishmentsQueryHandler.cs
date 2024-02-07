@@ -14,18 +14,18 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
 
         public async Task<IEnumerable<GetEstablishmentsQueryResponse>> Handle(GetEstablishmentsQuery request, CancellationToken cancellationToken)
         {
-            var establishments = await _establishmentRepository.GetAllAsync();
+            var establishments = await _establishmentRepository.GetAllWithFeedbacksAsync();
 
             return establishments
                 .Select(establishment => new GetEstablishmentsQueryResponse
                 {
                     Id = establishment.Id,
                     Address = establishment.Address,
+                    ImageSource = establishment.ImageSource,
                     Latitude = establishment.Coordinates.Y,
                     Longitude = establishment.Coordinates.X,
-                    ImageSource = establishment.ImageSource,
-                    Description = establishment.Description,
-                    BusinessHours = establishment.BusinessHours
+                    BusinessTime = establishment.GetBusinessTime(),
+                    QntStars = establishment.GetFeedbacksAverage(),
                 });
         }
     }

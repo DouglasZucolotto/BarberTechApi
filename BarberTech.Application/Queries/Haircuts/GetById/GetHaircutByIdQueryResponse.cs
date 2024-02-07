@@ -11,5 +11,7 @@
         public decimal Price { get; set; }
 
         public string ImageSource { get; set; } = string.Empty;
+
+        public double QntStars { get; set; }
     }
 }

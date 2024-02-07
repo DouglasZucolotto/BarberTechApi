@@ -10,11 +10,20 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public Task<Establishment> GetByIdWithBarbersAsync(Guid id)
+        public Task<List<Establishment>> GetAllWithFeedbacksAsync()
         {
             return Query
-                .Include(e => e.Barbers)
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .Include(h => h.Feedbacks)
+                    .ThenInclude(f => f.User)
+                .ToListAsync();
+        }
+
+        public Task<Establishment?> GetByIdWithFeedbacksAsync(Guid id)
+        {
+            return Query
+                .Include(h => h.Feedbacks)
+                    .ThenInclude(f => f.User)
+                .FirstOrDefaultAsync(h => h.Id == id);
         }
     }
 }

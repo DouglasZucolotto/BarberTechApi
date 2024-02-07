@@ -1,6 +1,7 @@
 ﻿using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
+using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -10,57 +11,55 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
     public class CreateFeedbackCommandHandler : IRequestHandler<CreateFeedbackCommand, Nothing>
     {
         private readonly IFeedbackRepository _feedbackRepository;
-        private readonly IEstablishmentRepository _establishmentRepository;
-        private readonly IHaircutRepository _haircutRepository;
-        private readonly IBarberRepository _barberRepository;
+        private readonly IEventScheduleRepository _eventScheduleRepository;
         private readonly IHttpContext _httpContext;
         private readonly INotificationContext _notification;
 
         public CreateFeedbackCommandHandler(
             IFeedbackRepository feedbackRepository, 
-            IEstablishmentRepository establishmentRepository,
-            IHaircutRepository haircutRepository,
-            IBarberRepository barberRepository,
+            IEventScheduleRepository eventScheduleRepository,
             IHttpContext httpContext,
             INotificationContext notification)
         {
             _feedbackRepository = feedbackRepository;
-            _establishmentRepository =establishmentRepository;
-            _barberRepository = barberRepository;
-            _haircutRepository = haircutRepository;
+            _eventScheduleRepository = eventScheduleRepository;
             _httpContext = httpContext;
             _notification = notification;
         }
 
         public async Task<Nothing> Handle(CreateFeedbackCommand request, CancellationToken cancellationToken)
         {
-            var userId = _httpContext.GetUserId();
+            var user = await _httpContext.GetUserAsync();
 
-            var establishment = await _establishmentRepository.GetByIdAsync(request.EstablishmentId);
-
-            if (establishment == null)
+            if (user == null)
             {
-                _notification.AddNotFound("Establishment does not exists");
+                _notification.AddNotFound("User does not exists");
                 return default;
             }
 
-            var haircut = await _haircutRepository.GetByIdAsync(request.HaircutId);
+            var eventSchedule = await _eventScheduleRepository.GetByIdWithEstablishment(request.EventScheduleId);
 
-            if (haircut == null)
+            if (eventSchedule == null)
             {
-                _notification.AddNotFound("Haircut does not exists");
+                _notification.AddNotFound("Event Schedule does not exists");
                 return default;
             }
 
-            var barber = await _barberRepository.GetByIdAsync(request.BarberId);
-
-            if (barber == null)
+            if (eventSchedule.EventStatus != EventStatus.Completed)
             {
-                _notification.AddNotFound("Barber does not exists");
+                _notification.AddNotFound("Event Schedule should be completed");
                 return default;
             }
 
-            var feedback = new Feedback(userId, request.Comment, request.QntStars, establishment.Id, haircut.Id, barber.Id);
+            var feedback = new Feedback(
+                user, 
+                eventSchedule.Barber,
+                eventSchedule.Haircut,
+                eventSchedule.Barber.Establishment,
+                request.QntStarsBarber,
+                request.QntStarsHaircut,
+                request.QntStarsEstablishment,
+                request.Comment);
 
             _feedbackRepository.Add(feedback);
             await _feedbackRepository.UnitOfWork.CommitAsync();

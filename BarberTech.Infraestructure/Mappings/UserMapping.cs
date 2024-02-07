@@ -22,16 +22,13 @@ namespace BarberTech.Infraestructure.Mappings
                .HasColumnName("name")
                .IsRequired();
 
-            builder.Property(u => u.ImageSource)
-               .HasColumnName("image_source");
-
             builder.HasMany(u => u.Permissions)
                 .WithOne(p => p.User);
 
             builder.HasOne(u => u.Barber)
                 .WithOne(b => b.User);
 
-            builder.HasOne(u => u.EventSchedule)
+            builder.HasMany(u => u.EventSchedules)
                 .WithOne(es => es.User);
 
             base.Configure(builder);

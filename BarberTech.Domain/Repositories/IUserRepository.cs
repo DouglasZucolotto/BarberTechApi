@@ -9,5 +9,9 @@ namespace BarberTech.Domain.Repositories
         Task<bool> UserEmailExistsAsync(string email);
 
         Task<User?> GetWithPermissionsAsync(Guid id);
+
+        Task<List<User>> GetAllWithEventSchedulesAsync();
+
+        Task<User?> GetByIdWithEventSchedulesAsync(Guid id);
     }
 }

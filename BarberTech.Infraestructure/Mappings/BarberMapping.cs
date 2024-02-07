@@ -22,7 +22,12 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("about");
 
             builder.Property(b => b.Contact)
-                .HasColumnName("contact");
+                .HasColumnName("contact")
+                .IsRequired();
+
+            builder.Property(b => b.ImageSource)
+                .HasColumnName("image_source")
+                .IsRequired();
 
             builder.Property(b => b.EstablishmentId)
                 .HasColumnName("establishment_id")
