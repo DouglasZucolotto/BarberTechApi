@@ -12,6 +12,10 @@ namespace BarberTech.Domain.Entities
 
         public Barber Barber { get; set; }
 
+        public Guid HaircutId { get; set; }
+
+        public Haircut Haircut { get; set; }
+
         public string Name { get; set; }
         
         public DateTime DateTime { get; set; }
@@ -22,12 +26,14 @@ namespace BarberTech.Domain.Entities
         {
         }
 
-        public EventSchedule(User user, Barber barber, string name, DateTime dateTime)
+        public EventSchedule(User user, Barber barber, Haircut haircut, string name, DateTime dateTime)
         {
             User = user;
             UserId = user.Id;
             Barber = barber;
             BarberId = barber.Id;
+            Haircut = haircut;
+            HaircutId = haircut.Id;
             Name = name;
             DateTime = dateTime;
             EventStatus = EventStatus.Active;

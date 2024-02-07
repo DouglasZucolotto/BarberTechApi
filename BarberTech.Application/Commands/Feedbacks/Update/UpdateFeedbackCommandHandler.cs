@@ -27,7 +27,9 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
             }
 
             feedback.Comment = request.Comment ?? feedback.Comment;
-            feedback.QntStars = request.QntStars ?? feedback.QntStars;
+            feedback.QntStarsBarber = request.QntStarsBarber ?? feedback.QntStarsEstablishment;
+            feedback.QntStarsHaircut = request.QntStarsHaircut ?? feedback.QntStarsHaircut;
+            feedback.QntStarsEstablishment = request.QntStarsEstablishment ?? feedback.QntStarsEstablishment;
 
             _feedbackRepository.Update(feedback);
             await _feedbackRepository.UnitOfWork.CommitAsync();

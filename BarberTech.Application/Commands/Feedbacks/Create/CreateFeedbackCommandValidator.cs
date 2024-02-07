@@ -6,17 +6,19 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
     {
         public CreateFeedbackCommandValidator()
         {
-            RuleFor(f => f.QntStars)
-                .ExclusiveBetween(1, 5)
+            RuleFor(f => f.QntStarsBarber)
+                .ExclusiveBetween(0, 6)
                 .NotNull();
 
-            RuleFor(f => f.EstablishmentId)
-                .NotEmpty();
+            RuleFor(f => f.QntStarsEstablishment)
+                .ExclusiveBetween(0, 6)
+                .NotNull();
 
-            RuleFor(f => f.HaircutId)
-                .NotEmpty();
+            RuleFor(f => f.QntStarsHaircut)
+                .ExclusiveBetween(0, 6)
+                .NotNull();
 
-            RuleFor(f => f.BarberId)
+            RuleFor(f => f.EventScheduleId)
                 .NotEmpty();
         }
     }

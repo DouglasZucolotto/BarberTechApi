@@ -26,6 +26,14 @@ namespace BarberTech.Infraestructure.Mappings
                 .WithMany(b => b.EventSchedules)
                 .HasForeignKey(es => es.BarberId);
 
+            builder.Property(es => es.HaircutId)
+                .HasColumnName("haircut_id")
+                .IsRequired();
+
+            builder.HasOne(es => es.Haircut)
+                .WithMany(h => h.EventSchedules)
+                .HasForeignKey(es => es.HaircutId);
+
             builder.Property(es => es.Name)
                .HasColumnName("name")
                .IsRequired();

@@ -9,6 +9,9 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
             RuleFor(sh => sh.Id)
                 .NotEmpty();
 
+            RuleFor(sh => sh.HaircutId)
+                .NotEmpty();
+
             RuleFor(sh => sh.DateTime)
                 .NotEmpty()
                 .Matches(@"^\d{2}/\d{2}/\d{4} \d{2}:\d{2}$")

@@ -14,7 +14,7 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
 
         public async Task<IEnumerable<GetEstablishmentsQueryResponse>> Handle(GetEstablishmentsQuery request, CancellationToken cancellationToken)
         {
-            var establishments = await _establishmentRepository.GetAllAsync();
+            var establishments = await _establishmentRepository.GetAllWithFeedbacksAsync();
 
             return establishments
                 .Select(establishment => new GetEstablishmentsQueryResponse

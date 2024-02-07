@@ -11,7 +11,11 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
 
         public string? Comment { get; set; }
 
-        public int? QntStars { get; set; }
+        public int? QntStarsBarber { get; set; }
+
+        public int? QntStarsHaircut { get; set; }
+
+        public int? QntStarsEstablishment { get; set; }
 
         public UpdateFeedbackCommand WithId(Guid id)
         {

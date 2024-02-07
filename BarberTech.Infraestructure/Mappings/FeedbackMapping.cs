@@ -21,8 +21,16 @@ namespace BarberTech.Infraestructure.Mappings
             builder.Property(f => f.Comment)
                 .HasColumnName("comment");
 
-            builder.Property(f => f.QntStars)
-                .HasColumnName("qnt_stars")
+            builder.Property(f => f.QntStarsBarber)
+                .HasColumnName("qnt_stars_barber")
+                .IsRequired();
+
+            builder.Property(f => f.QntStarsEstablishment)
+                .HasColumnName("qnt_stars_establishment")
+                .IsRequired();
+
+            builder.Property(f => f.QntStarsHaircut)
+                .HasColumnName("qnt_stars_haircut")
                 .IsRequired();
 
             builder.Property(f => f.HaircutId)

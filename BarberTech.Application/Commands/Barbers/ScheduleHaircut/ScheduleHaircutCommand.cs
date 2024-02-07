@@ -9,6 +9,8 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
         [JsonIgnore]
         public Guid Id { get; set; }
 
+        public Guid HaircutId { get; set; }
+
         public string? Name { get; set; }
 
         public string DateTime { get; set; } = string.Empty;

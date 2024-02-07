@@ -5,14 +5,14 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
 {
     public class CreateFeedbackCommand : IRequest<Nothing>
     {
-        public string? Comment { get; set; }  
-
-        public int QntStars { get; set; } // TODO: um pra cada um
-
-        public Guid HaircutId { get; set; }
+        public string? Comment { get; set; }
         
-        public Guid BarberId { get; set; }
+        public Guid EventScheduleId { get; set; }
 
-        public Guid EstablishmentId { get; set; }
+        public int QntStarsBarber { get; set; }
+
+        public int QntStarsHaircut { get; set; }
+
+        public int QntStarsEstablishment { get; set; }
     }
 }

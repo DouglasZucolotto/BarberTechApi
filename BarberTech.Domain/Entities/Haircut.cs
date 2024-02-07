@@ -12,6 +12,8 @@
 
         public ICollection<Feedback> Feedbacks { get; set; }
 
+        public ICollection<EventSchedule> EventSchedules { get; set; }
+
         public Haircut(string name, string? description, string imageSource, decimal price)
         {
             Name = name;
@@ -27,7 +29,7 @@
                 return 0; 
             }
 
-            return Feedbacks.Average(f => f.QntStars);
+            return Feedbacks.Average(f => f.QntStarsHaircut);
         }
     }
 }
