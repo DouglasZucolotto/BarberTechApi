@@ -14,7 +14,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
 
         public async Task<IEnumerable<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
         {
-            var haircuts = await _haircutRepository.GetAllAsync();
+            var haircuts = await _haircutRepository.GetAllWithFeedbacksAsync();
 
             return haircuts.Select(haircut => new GetHaircutsQueryResponse
             {
@@ -23,6 +23,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
                 Description = haircut.Description,
                 ImageSource = haircut.ImageSource,
                 Price = haircut.Price,
+                QntStars = haircut.GetFeedbacksAverage(),
             });
         }
     }

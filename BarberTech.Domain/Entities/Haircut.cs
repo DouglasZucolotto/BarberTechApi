@@ -12,12 +12,24 @@
 
         public ICollection<Feedback> Feedbacks { get; set; }
 
+        public ICollection<EventSchedule> EventSchedules { get; set; }
+
         public Haircut(string name, string? description, string imageSource, decimal price)
         {
             Name = name;
             Description = description;
             ImageSource = imageSource;
             Price = price;
+        }
+
+        public double GetFeedbacksAverage()
+        {
+            if (Feedbacks.Count == 0) 
+            { 
+                return 0; 
+            }
+
+            return Feedbacks.Average(f => f.QntStarsHaircut);
         }
     }
 }

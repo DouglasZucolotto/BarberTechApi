@@ -19,7 +19,14 @@ namespace BarberTech.Application.Commands.Establishments.Create
         {
             var coordinates = new Point(request.Longitude, request.Latitude);
 
-            var establishment = new Establishment(request.Address, coordinates, request.ImageSource, request.Description, request.BusinessHours);
+            var establishment = new Establishment(
+                request.Address, 
+                coordinates,
+                request.ImageSource,
+                TimeSpan.Parse(request.OpenTime),
+                TimeSpan.Parse(request.LunchTime),
+                TimeSpan.Parse(request.WorkInterval),
+                TimeSpan.Parse(request.LunchInterval));
 
             _establishmentRepository.Add(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

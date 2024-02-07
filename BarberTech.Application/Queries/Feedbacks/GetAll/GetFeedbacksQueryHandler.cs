@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Application.Queries.Establishments.GetAll;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Feedbacks.GetAll
@@ -14,17 +15,17 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
 
         public async Task<IEnumerable<GetFeedbacksQueryResponse>> Handle(GetFeedbacksQuery request, CancellationToken cancellationToken)
         {
-            var feedbacks = await _feedbackRepository.GetAllAsync();
+            var feedbacks = await _feedbackRepository.GetAllWithUserAsync();
 
-            return feedbacks.Select(feedback => new GetFeedbacksQueryResponse
-            {
-                Id = feedback.Id,
-                Comment = feedback.Comment,
-                QntStars = feedback.QntStars,
-                EstablishmentId = feedback.EstablishmentId,
-                HaircutId = feedback.HaircutId,
-                BarberId = feedback.BarberId,
-            });
+            return feedbacks
+                .Select(feedback => new GetFeedbacksQueryResponse
+                {
+                    Id = feedback.Id,
+                    Comment = feedback.Comment,
+                    At = feedback.CreatedAt,
+                    QntStarsAverage = feedback.GetStarsAverage(),
+                    UserName = feedback.User.Name
+                });
         }
     }
 }

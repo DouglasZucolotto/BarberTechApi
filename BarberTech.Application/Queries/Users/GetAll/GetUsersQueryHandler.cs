@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Application.Queries.Users.Dtos;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Users.GetAll
@@ -14,14 +15,20 @@ namespace BarberTech.Application.Queries.Users.GetAll
 
         public async Task<IEnumerable<GetUsersQueryResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAllAsync();
+            var user = await _userRepository.GetAllWithEventSchedulesAsync();
 
             return user.Select(user => new GetUsersQueryResponse
             {
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                ImageSource = user.ImageSource,
+                EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
+                {
+                    Id = es.Id,
+                    Name = es.Name,
+                    DateTime = es.DateTime,
+                    Status = es.EventStatus.ToString(),
+                })
             });
         }
     }

@@ -6,13 +6,10 @@
 
         public string? Comment { get; set; }
 
-        public int QntStars { get; set; }
+        public double QntStarsAverage { get; set; }
+        
+        public string UserName { get; set; } = string.Empty;
 
-        public Guid EstablishmentId { get; set; }
-
-        public Guid HaircutId { get; set; }
-
-        public Guid BarberId { get; set; }
+        public DateTime At { get; set; }
     }
 }
-

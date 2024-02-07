@@ -8,14 +8,12 @@ namespace BarberTech.Application.Commands.Users.Delete
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Nothing>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IPermissionRepository _permissionRepository;
         private readonly INotificationContext _notification;
 
-        public DeleteUserCommandHandler(IUserRepository userRepository, INotificationContext notification, IPermissionRepository permissionRepository)
+        public DeleteUserCommandHandler(IUserRepository userRepository, INotificationContext notification)
         {
             _userRepository = userRepository;
             _notification = notification;
-            _permissionRepository = permissionRepository;
         }
 
         public async Task<Nothing> Handle(DeleteUserCommand request, CancellationToken cancellationToken)

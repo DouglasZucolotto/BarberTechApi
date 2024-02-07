@@ -7,17 +7,17 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
     public class ScheduleHaircutCommand : IRequest<Nothing>
     {
         [JsonIgnore]
-        public Guid BarberId { get; set; }
+        public Guid Id { get; set; }
+
+        public Guid HaircutId { get; set; }
 
         public string? Name { get; set; }
 
-        public Guid EstablishmentId { get; set; }
+        public string DateTime { get; set; } = string.Empty;
 
-        public string DateTime { get; set; }
-
-        public ScheduleHaircutCommand WithId(Guid barberId)
+        public ScheduleHaircutCommand WithId(Guid id)
         {
-            BarberId = barberId;
+            Id = id;
             return this;
         }
     }

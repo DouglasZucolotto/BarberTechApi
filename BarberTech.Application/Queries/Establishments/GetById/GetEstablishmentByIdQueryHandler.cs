@@ -17,7 +17,7 @@ namespace BarberTech.Application.Queries.Establishments.GetById
 
         public async Task<GetEstablishmentByIdQueryResponse?> Handle(GetEstablishmentByIdQuery request, CancellationToken cancellationToken)
         {
-            var establishment = await _establishmentRepository.GetByIdAsync(request.Id);
+            var establishment = await _establishmentRepository.GetByIdWithFeedbacksAsync(request.Id);
 
             if (establishment is null)
             {
@@ -29,11 +29,11 @@ namespace BarberTech.Application.Queries.Establishments.GetById
             {
                 Id = establishment.Id,
                 Address = establishment.Address,
+                ImageSource = establishment.ImageSource,
                 Latitude = establishment.Coordinates.Y,
                 Longitude = establishment.Coordinates.X,
-                ImageSource = establishment.ImageSource,
-                Description = establishment.Description,
-                BusinessHours = establishment.BusinessHours
+                BusinessTime = establishment.GetBusinessTime(),
+                QntStars = establishment.GetFeedbacksAverage(),
             };
         }
     }

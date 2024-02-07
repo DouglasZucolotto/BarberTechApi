@@ -7,11 +7,11 @@ namespace BarberTech.Application.Commands.Users.Login
         public LoginCommandValidator()
         {
             RuleFor(l => l.Email)
-                //.EmailAddress() TODO: futuramente colocar essa verificação
-                .NotEmpty();
+                .NotEmpty()
+                .EmailAddress().WithMessage("Email must be in a valid format");
 
             RuleFor(l => l.Password)
-                .NotNull();
+                .NotEmpty();
         }
     }
 }

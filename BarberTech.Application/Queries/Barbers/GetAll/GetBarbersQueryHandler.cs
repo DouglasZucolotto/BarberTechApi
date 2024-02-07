@@ -1,4 +1,4 @@
-﻿using BarberTech.Domain.Entities;
+﻿using BarberTech.Application.Queries.Barbers.Dtos;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
@@ -23,10 +23,17 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                     Id = barber.Id,
                     Name = barber.User.Name,
                     About = barber.About,
-                    Photo = barber.User.ImageSource,
+                    ImageSource = barber.ImageSource,
                     Contact = barber.Contact,
-                    FeedbackAverage = barber.GetFeedbackAverage(),
+                    QntStars = barber.GetFeedbacksAverage(),
                     EstablishmentAddress = barber.Establishment.Address,
+                    EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
+                    {
+                        Id = es.Id,
+                        Name = es.Name,
+                        DateTime = es.DateTime,
+                        Status = es.EventStatus.ToString(),
+                    })
                 });
         }
     }

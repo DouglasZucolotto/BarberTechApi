@@ -28,6 +28,9 @@ namespace BarberTech.Infraestructure.Mappings
             builder.HasMany(h => h.Feedbacks)
                 .WithOne(f => f.Haircut);
 
+            builder.HasMany(h => h.EventSchedules)
+                .WithOne(es => es.Haircut);
+
             base.Configure(builder);
         }
     }

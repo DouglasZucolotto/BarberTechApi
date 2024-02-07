@@ -1,4 +1,6 @@
-﻿namespace BarberTech.Domain.Entities
+﻿using BarberTech.Domain.Entities.Enums;
+
+namespace BarberTech.Domain.Entities
 {
     public class Barber : Entity
     {
@@ -10,6 +12,8 @@
 
         public string Contact { get; set; }
 
+        public string ImageSource { get; set; }
+
         public Guid EstablishmentId { get; set; }
 
         public Establishment Establishment { get; set; }
@@ -18,29 +22,55 @@
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
-        public double GetFeedbackAverage()
+        public Barber(
+            User user, 
+            Establishment establishment, 
+            string contact, 
+            string? about, 
+            string imageSource)
+        {
+            User = user;
+            Establishment = establishment;
+            Contact = contact;
+            About = about;
+            ImageSource = imageSource;
+        }
+
+        public Barber()
+        {
+        }
+
+        public double GetFeedbacksAverage()
         {
             if (Feedbacks.Count == 0)
             {
                 return 0;
             }
 
-            double allStars = Feedbacks.Sum(f => f.QntStars);
-            var average = allStars / Feedbacks.Count;
-
-            return Math.Round(average, 2);
+            return Feedbacks.Average(f => f.QntStarsBarber);
         }
 
-        public Barber(Guid userId, Establishment establishment, string contact, string? about)
+        public IEnumerable<TimeSpan> GetAvailableTimesByDateTime(DateTime dateTime)
         {
-            UserId = userId;
-            Establishment = establishment;
-            Contact = contact;
-            About = about;
-        }
+            var eventTimes = EventSchedules
+                .Where(es => es.DateTime.Date == dateTime.Date && es.EventStatus == EventStatus.Active)
+                .Select(es => es.DateTime.ToLocalTime());
 
-        public Barber()
-        {
+            var closeTime = Establishment.OpenTime.Add(Establishment.WorkInterval + Establishment.LunchInterval);
+            var availableTimes = new List<TimeSpan>();
+
+            for (var time = Establishment.OpenTime; time < closeTime; time += TimeSpan.FromMinutes(30))
+            {
+                var isLunchInterval = time >= Establishment.LunchTime && time < Establishment.LunchTime.Add(Establishment.LunchInterval);
+                var anyEvent = eventTimes.Any(e => e.TimeOfDay == time);
+
+                if (!anyEvent && !isLunchInterval)
+                {
+                    availableTimes.Add(time);
+                }
+            }
+
+            return availableTimes;
         }
     }
 }

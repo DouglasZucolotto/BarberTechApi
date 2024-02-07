@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Queries.Haircuts.GetById;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace BarberTech.Application.Queries.Users.GetById
 {

@@ -1,24 +1,25 @@
 ﻿using BarberTech.Domain;
-using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Infraestructure.Mappings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Security.Claims;
 
 namespace BarberTech.Infraestructure
 {
     public class DataContext : DbContext, IUnitOfWork
     {
-        private readonly IHttpContext _userContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ConnectionOptions _connectionOptions;
 
         public DataContext(
-            DbContextOptions<DataContext> options, 
-            IHttpContext userContext,
+            DbContextOptions<DataContext> options,
+            IHttpContextAccessor httpContextAccessor,
             IOptions<ConnectionOptions> connectionOptions) 
             : base(options)
         {
-            _userContext = userContext;
+            _httpContextAccessor = httpContextAccessor;
             _connectionOptions = connectionOptions.Value;
         }
 
@@ -49,7 +50,8 @@ namespace BarberTech.Infraestructure
                 .Where(e => e.State is EntityState.Added or EntityState.Modified)
                 .Where(e => e.Entity is Entity);
 
-            var userId = _userContext.GetUserId();
+            var userId = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userIdConverted = userId != null ? Guid.Parse(userId) : Guid.Empty;
 
             foreach (var entry in modifiedEntries)
             {
@@ -58,19 +60,32 @@ namespace BarberTech.Infraestructure
                 if (entry.State == EntityState.Added)
                 {
                     entity.CreatedAt = DateTime.UtcNow;
-                    entity.CreatedBy = userId;
-                }
-
-                if (entry.State == EntityState.Modified)
-                {
-                    entity.CreatedAt = entity.CreatedAt.ToUniversalTime();
+                    entity.CreatedBy = userIdConverted;
                 }
 
                 entity.ModifiedAt = DateTime.UtcNow;
-                entity.ModifiedBy = userId;
+                entity.ModifiedBy = userIdConverted;
+
+                ConvertDatesToUtc(entity);
             }
 
             await SaveChangesAsync();
+        }
+
+        private void ConvertDatesToUtc(Entity entity)
+        {
+            var properties = entity.GetType().GetProperties()
+                .Where(prop => prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?));
+
+            foreach (var prop in properties)
+            {
+                var value = (DateTime?)prop.GetValue(entity);
+
+                if (value != null)
+                {
+                    prop.SetValue(entity, value.Value.ToUniversalTime());
+                }
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

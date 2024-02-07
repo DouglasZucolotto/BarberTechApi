@@ -33,10 +33,28 @@ namespace BarberTech.Application.Commands.Establishments.Update
                 establishment.Coordinates = coordinates;
             }
 
+            if (request.OpenTime != null)
+            {
+                establishment.OpenTime = TimeSpan.Parse(request.OpenTime);
+            }
+
+            if (request.LunchTime != null)
+            {
+                establishment.LunchTime = TimeSpan.Parse(request.LunchTime);
+            }
+
+            if (request.WorkInterval != null)
+            {
+                establishment.WorkInterval = TimeSpan.Parse(request.WorkInterval);
+            }
+
+            if (request.LunchInterval != null)
+            {
+                establishment.LunchInterval = TimeSpan.Parse(request.LunchInterval);
+            }
+
             establishment.Address = request.Address ?? establishment.Address;
             establishment.ImageSource = request.ImageSource ?? establishment.ImageSource;
-            establishment.Description = request.Description ?? establishment.Description;
-            establishment.BusinessHours = request.BusinessHours ?? establishment.BusinessHours;
 
             _establishmentRepository.Update(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

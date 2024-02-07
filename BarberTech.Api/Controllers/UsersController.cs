@@ -60,9 +60,8 @@ namespace BarberTech.Api.Controllers
             return NoContent();
         }
 
-        [HasPermission(Permissions.Users.Edit)]
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterUserAsync([FromBody] CreateCommand command)
+        public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserCommand command)
         {
             await _mediator.Send(command);
             return NoContent();
