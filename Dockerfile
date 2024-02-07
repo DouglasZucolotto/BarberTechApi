@@ -18,7 +18,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out/BarberTech.Api ./BarberTech.Api/BarberTech.Api.csproj
 RUN dotnet publish -c Release -o out/BarberTech.Application ./BarberTech.Application/BarberTech.Application.csproj
 RUN dotnet publish -c Release -o out/BarberTech.Domain ./BarberTech.Domain/BarberTech.Domain.csproj
-RUN dotnet publish -c Release -o out/BarberTech.Infraestructure ./BarberTech.Infrastructure/BarberTech.Infraestructure.csproj
+RUN dotnet publish -c Release -o out/BarberTech.Infraestructure ./BarberTech.Infraestructure/BarberTech.Infraestructure.csproj
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
