@@ -26,4 +26,4 @@ COPY --from=build /app/out/BarberTech.Api ./
 COPY --from=build /app/out/BarberTech.Application ./
 COPY --from=build /app/out/BarberTech.Domain ./
 COPY --from=build /app/out/BarberTech.Infraestructure ./
-ENTRYPOINT ["dotnet", "BarberTech.Api/BarberTech.Api.dll"]
+ENTRYPOINT ["dotnet", "BarberTech.Api/bin/Debug/net7.0/BarberTech.Api.dll"]
