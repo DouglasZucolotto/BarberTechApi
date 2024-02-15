@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BarberTech.Application.Commands.Users.Register
 {
-    public class RegisterUserCommand : IRequest<User>
+    public class RegisterUserCommand : IRequest<RegisterUserCommandResponse?>
     {
         public string Email { get; set; } = string.Empty;
 

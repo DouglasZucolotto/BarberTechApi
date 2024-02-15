@@ -40,8 +40,8 @@ namespace BarberTech.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginUserAsync([FromBody] LoginCommand command)
         {
-            var token = await _mediator.Send(command);
-            return Ok(token);
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HasPermission(Permissions.Users.Edit)]
@@ -63,8 +63,8 @@ namespace BarberTech.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserCommand command)
         {
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace BarberTech.Services.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet()]
         public async Task<IActionResult> GetHaircutsAsync()
         {
             var haircuts = await _mediator.Send(new GetHaircutsQuery());

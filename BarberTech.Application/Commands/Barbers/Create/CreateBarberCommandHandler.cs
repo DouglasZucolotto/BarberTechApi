@@ -37,9 +37,9 @@ namespace BarberTech.Application.Commands.Barbers.Create
             }
 
             var command = new RegisterUserCommand(request.Email, request.Password, request.Name);
-            var user = await _mediator.Send(command);
+            var response = await _mediator.Send(command);
 
-            var barber = new Barber(user, establishment, request.Contact, request.About, request.ImageSource);
+            var barber = new Barber(establishment, response.UserId, request.Contact, request.About, request.ImageSource);
 
             _barberRepository.Add(barber);
             await _barberRepository.UnitOfWork.CommitAsync();

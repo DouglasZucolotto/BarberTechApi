@@ -23,13 +23,13 @@ namespace BarberTech.Domain.Entities
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
         public Barber(
-            User user, 
-            Establishment establishment, 
+            Establishment establishment,
+            Guid userId,
             string contact, 
             string? about, 
             string imageSource)
         {
-            User = user;
+            UserId = userId;
             Establishment = establishment;
             Contact = contact;
             About = about;

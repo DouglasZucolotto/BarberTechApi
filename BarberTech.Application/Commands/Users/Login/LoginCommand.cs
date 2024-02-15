@@ -2,7 +2,7 @@
 
 namespace BarberTech.Application.Commands.Users.Login
 {
-    public class LoginCommand : IRequest<string>
+    public class LoginCommand : IRequest<LoginCommandResponse?>
     {
         public string Email { get; set; } = string.Empty;
 

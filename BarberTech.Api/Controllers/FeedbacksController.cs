@@ -20,7 +20,6 @@ namespace BarberTech.Services.Controllers
             _mediator = mediator;
         }
 
-        [HasPermission(Permissions.Feedbacks.View)]
         [HttpGet]
         public async Task<IActionResult> GetFeedbacksAsync()
         {

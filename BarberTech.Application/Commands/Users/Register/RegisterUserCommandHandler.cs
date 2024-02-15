@@ -7,23 +7,26 @@ using MediatR;
 
 namespace BarberTech.Application.Commands.Users.Register
 {
-    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, User?>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserCommandResponse?>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly INotificationContext _notification;
+        private readonly IJwtProvider _jwtProvider;
 
         public RegisterUserCommandHandler(
             IUserRepository userRepository,
             IPasswordHasher passwordHasher, 
-            INotificationContext notification)
+            INotificationContext notification,
+            IJwtProvider jwtProvider)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _notification = notification;
+            _jwtProvider = jwtProvider;
         }
 
-        public async Task<User?> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<RegisterUserCommandResponse?> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var emailExists = await _userRepository.UserEmailExistsAsync(request.Email);
 
@@ -40,7 +43,13 @@ namespace BarberTech.Application.Commands.Users.Register
             _userRepository.Add(user);
             await _userRepository.UnitOfWork.CommitAsync();
 
-            return user;
+            var token = _jwtProvider.Generate(user);
+
+            return new RegisterUserCommandResponse()
+            {
+                Token = token,
+                UserId = user.Id
+            };
         }
     }
 }
