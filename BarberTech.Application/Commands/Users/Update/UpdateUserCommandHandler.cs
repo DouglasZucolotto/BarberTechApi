@@ -31,6 +31,7 @@ namespace BarberTech.Application.Commands.Users.Update
 
             user.Name = request.Name ?? user.Name;
             user.Email = request.Email ?? user.Email;
+            user.ImageSource = request.ImageSource ?? user.ImageSource;
 
             if (request.Password != null)
             {

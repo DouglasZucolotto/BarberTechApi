@@ -25,10 +25,6 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("contact")
                 .IsRequired();
 
-            builder.Property(b => b.ImageSource)
-                .HasColumnName("image_source")
-                .IsRequired();
-
             builder.Property(b => b.EstablishmentId)
                 .HasColumnName("establishment_id")
                 .IsRequired();

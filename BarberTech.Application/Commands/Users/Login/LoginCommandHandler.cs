@@ -1,4 +1,4 @@
-﻿using BarberTech.Domain;
+﻿using BarberTech.Application.Commands.Users.Dtos;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
@@ -48,7 +48,20 @@ namespace BarberTech.Application.Commands.Users.Login
             return new LoginCommandResponse()
             {
                 Token = token,
-                UserId = user.Id,
+                User = new UserDto
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Name = user.Name,
+                    ImageSource = user.ImageSource,
+                    EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
+                    {
+                        DateTime = es.DateTime,
+                        Id = es.Id,
+                        Name = es.Name,
+                        Status = es.EventStatus.ToString(),
+                    })
+                },
             };
         }
     }

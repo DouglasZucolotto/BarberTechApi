@@ -1,4 +1,4 @@
-﻿using BarberTech.Domain;
+﻿using BarberTech.Application.Commands.Users.Dtos;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
@@ -38,7 +38,7 @@ namespace BarberTech.Application.Commands.Users.Register
 
             var hashedPassword = _passwordHasher.Generate(request.Password);
 
-            var user = new User(request.Email, hashedPassword, request.Name);
+            var user = new User(request.Email, hashedPassword, request.Name, request.ImageSource).WithPermissions();
 
             _userRepository.Add(user);
             await _userRepository.UnitOfWork.CommitAsync();
@@ -48,7 +48,20 @@ namespace BarberTech.Application.Commands.Users.Register
             return new RegisterUserCommandResponse()
             {
                 Token = token,
-                UserId = user.Id
+                User = new UserDto
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Name = user.Name,
+                    ImageSource = user.ImageSource,
+                    EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
+                    {
+                        DateTime = es.DateTime,
+                        Id = es.Id,
+                        Name = es.Name,
+                        Status = es.EventStatus.ToString(),
+                    })
+                }
             };
         }
     }

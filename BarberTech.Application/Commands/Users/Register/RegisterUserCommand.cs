@@ -1,5 +1,4 @@
-﻿using BarberTech.Domain.Entities;
-using MediatR;
+﻿using MediatR;
 
 namespace BarberTech.Application.Commands.Users.Register
 {
@@ -11,11 +10,14 @@ namespace BarberTech.Application.Commands.Users.Register
 
         public string Name { get; set; } = string.Empty;
 
-        public RegisterUserCommand(string email, string password, string name)
+        public string? ImageSource { get; set; }
+
+        public RegisterUserCommand(string email, string password, string name, string? imageSource)
         {
             Email = email;
             Password = password;
             Name = name;
+            ImageSource = imageSource;
         }
     }
 }

@@ -49,15 +49,14 @@ namespace BarberTech.Application.Commands.Barbers.Update
                 barber.EstablishmentId = establishment.Id;
             }
 
-            if (request.Email != null || request.Password != null || request.Name != null)
+            if (request.Email != null || request.Password != null || request.Name != null || request.ImageSource != null)
             {
-                var command = new UpdateUserCommand(request.Email, request.Password, request.Name);
+                var command = new UpdateUserCommand(request.Email, request.Password, request.Name, request.ImageSource);
                 await _mediator.Send(command.WithId(barber.UserId));
             }
 
             barber.About = request.About ?? barber.About;
             barber.Contact = request.Contact ?? barber.Contact;
-            barber.ImageSource = request.ImageSource ?? barber.ImageSource;
 
             _barberRepository.Update(barber);
             await _barberRepository.UnitOfWork.CommitAsync();

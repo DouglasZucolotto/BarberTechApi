@@ -1,8 +1,6 @@
-﻿using BarberTech.Application.Queries.Users.Dtos;
-
-namespace BarberTech.Application.Queries.Users.GetAll
+﻿namespace BarberTech.Application.Commands.Users.Dtos
 {
-    public class GetUsersQueryResponse
+    public class UserDto
     {
         public Guid Id { get; set; }
 

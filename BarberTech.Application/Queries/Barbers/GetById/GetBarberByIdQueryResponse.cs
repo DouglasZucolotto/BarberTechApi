@@ -10,7 +10,7 @@ namespace BarberTech.Application.Queries.Barbers.GetById
 
         public string? About { get; set; }
 
-        public string ImageSource { get; set; } = string.Empty;
+        public string? ImageSource { get; set; } = string.Empty;
 
         public string Contact { get; set; } = string.Empty;
 

@@ -12,8 +12,6 @@ namespace BarberTech.Domain.Entities
 
         public string Contact { get; set; }
 
-        public string ImageSource { get; set; }
-
         public Guid EstablishmentId { get; set; }
 
         public Establishment Establishment { get; set; }
@@ -24,16 +22,15 @@ namespace BarberTech.Domain.Entities
 
         public Barber(
             Establishment establishment,
-            Guid userId,
-            string contact, 
-            string? about, 
-            string imageSource)
+            User user,
+            string contact,
+            string? about)
         {
-            UserId = userId;
+            User = user;
+            UserId = user.Id;
             Establishment = establishment;
             Contact = contact;
             About = about;
-            ImageSource = imageSource;
         }
 
         public Barber()

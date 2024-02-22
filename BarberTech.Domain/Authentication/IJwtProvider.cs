@@ -1,6 +1,6 @@
 ﻿using BarberTech.Domain.Entities;
 
-namespace BarberTech.Domain
+namespace BarberTech.Domain.Authentication
 {
     public interface IJwtProvider
     {

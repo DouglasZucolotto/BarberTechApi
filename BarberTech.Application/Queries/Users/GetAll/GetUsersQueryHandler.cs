@@ -22,6 +22,7 @@ namespace BarberTech.Application.Queries.Users.GetAll
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
+                ImageSource = user.ImageSource,
                 EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
                 {
                     Id = es.Id,

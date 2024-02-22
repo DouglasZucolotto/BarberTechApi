@@ -7,7 +7,7 @@ using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BarberTech.Services.Controllers
+namespace BarberTech.Api.Controllers
 {
     [ApiController]
     [Route("api/haircuts")]

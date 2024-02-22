@@ -31,7 +31,7 @@ namespace BarberTech.Application.Queries.Barbers.GetById
                 Id = barber.Id,
                 Name = barber.User.Name,
                 About = barber.About,
-                ImageSource = barber.ImageSource,
+                ImageSource = barber.User.ImageSource,
                 Contact = barber.Contact,
                 QntStars = barber.GetFeedbacksAverage(),
                 EstablishmentAddress = barber.Establishment.Address,

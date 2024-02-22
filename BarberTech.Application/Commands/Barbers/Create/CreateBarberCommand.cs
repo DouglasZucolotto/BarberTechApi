@@ -11,7 +11,7 @@ namespace BarberTech.Application.Commands.Barbers.Create
 
         public string Contact { get; set; } = string.Empty;
 
-        public string ImageSource { get; set; } = string.Empty;
+        public string? ImageSource { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
 

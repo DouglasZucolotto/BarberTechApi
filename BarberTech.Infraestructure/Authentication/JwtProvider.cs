@@ -1,4 +1,4 @@
-﻿using BarberTech.Domain;
+﻿using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

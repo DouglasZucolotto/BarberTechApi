@@ -22,6 +22,9 @@ namespace BarberTech.Infraestructure.Mappings
                .HasColumnName("name")
                .IsRequired();
 
+            builder.Property(u => u.ImageSource)
+               .HasColumnName("image_source");
+
             builder.HasMany(u => u.Permissions)
                 .WithOne(p => p.User);
 
@@ -30,6 +33,10 @@ namespace BarberTech.Infraestructure.Mappings
 
             builder.HasMany(u => u.EventSchedules)
                 .WithOne(es => es.User);
+
+            builder.Property(u => u.Type)
+              .HasColumnName("type")
+              .IsRequired();
 
             base.Configure(builder);
         }
