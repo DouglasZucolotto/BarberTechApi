@@ -7,7 +7,7 @@ namespace BarberTech.Application.Commands.Haircuts.Create
     {
         public string Name { get; set; } = string.Empty;
 
-        public string? Description { get; set; }
+        public string? About { get; set; }
 
         public decimal Price { get; set; }
 
