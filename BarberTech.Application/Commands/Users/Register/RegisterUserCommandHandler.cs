@@ -53,14 +53,8 @@ namespace BarberTech.Application.Commands.Users.Register
                     Id = user.Id,
                     Email = user.Email,
                     Name = user.Name,
+                    Type = user.Type.ToString(),
                     ImageSource = user.ImageSource,
-                    EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
-                    {
-                        DateTime = es.DateTime,
-                        Id = es.Id,
-                        Name = es.Name,
-                        Status = es.EventStatus.ToString(),
-                    })
                 }
             };
         }

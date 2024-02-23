@@ -14,7 +14,7 @@ namespace BarberTech.Application.Queries.Barbers.BarberOptions
 
         public async Task<IEnumerable<GetBarberOptionsQueryResponse>> Handle(GetBarberOptionsQuery request, CancellationToken cancellationToken)
         {
-            var barbers = await _barberRepository.GetAllBarbersAsync();
+            var barbers = await _barberRepository.GetAllWithUserAsync();
 
             return barbers.Select(b => new GetBarberOptionsQueryResponse()
             {

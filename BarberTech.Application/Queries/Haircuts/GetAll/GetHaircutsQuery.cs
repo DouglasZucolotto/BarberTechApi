@@ -2,7 +2,10 @@
 
 namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
-    public class GetHaircutsQuery : IRequest<IEnumerable<GetHaircutsQueryResponse>>
+    public class GetHaircutsQuery : IRequest<PagedResponse<GetHaircutsQueryResponse>>
     {
+        public int Page { get; set; }
+
+        public int PageSize { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace BarberTech.Application.Queries.Users.GetById
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
+                Type = user.Type.ToString(),
                 ImageSource = user.ImageSource,
                 EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
                 {

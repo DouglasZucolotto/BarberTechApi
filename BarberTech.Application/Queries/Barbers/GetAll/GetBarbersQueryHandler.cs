@@ -1,10 +1,11 @@
 ﻿using BarberTech.Application.Queries.Barbers.Dtos;
+using BarberTech.Domain.Entities;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Barbers.GetAll
 {
-    public class GetBarbersQueryHandler : IRequestHandler<GetBarbersQuery, IEnumerable<GetBarbersQueryResponse>>
+    public class GetBarbersQueryHandler : IRequestHandler<GetBarbersQuery, PagedResponse<GetBarbersQueryResponse>>
     {
         private readonly IBarberRepository _barberRepository;
 
@@ -13,11 +14,11 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
             _barberRepository = barberRepository;
         }
 
-        public async Task<IEnumerable<GetBarbersQueryResponse>> Handle(GetBarbersQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResponse<GetBarbersQueryResponse>> Handle(GetBarbersQuery request, CancellationToken cancellationToken)
         {
-            var barbers = await _barberRepository.GetAllBarbersAsync();
+            var queryResponse = await _barberRepository.GetAllBarbersPagedAsync(request.Page, request.PageSize);
 
-            return barbers
+            var barbers = queryResponse.Barbers
                 .Select(barber => new GetBarbersQueryResponse
                 {
                     Id = barber.Id,
@@ -35,6 +36,12 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                         Status = es.EventStatus.ToString(),
                     })
                 });
+
+            return new PagedResponse<GetBarbersQueryResponse>(
+                barbers,
+                request.Page, 
+                request.PageSize, 
+                queryResponse.Count);
         }
     }
 }

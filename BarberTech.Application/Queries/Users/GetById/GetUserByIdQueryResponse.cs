@@ -10,6 +10,8 @@ namespace BarberTech.Application.Queries.Users.GetById
 
         public string Name { get; set; } = string.Empty;
 
+        public string Type { get; set; } = string.Empty;
+
         public string? ImageSource { get; set; }
 
         public IEnumerable<EventScheduleDto> EventSchedules { get; set; } = Enumerable.Empty<EventScheduleDto>();

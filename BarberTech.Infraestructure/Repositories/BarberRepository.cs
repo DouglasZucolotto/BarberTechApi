@@ -11,15 +11,28 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public Task<List<Barber>> GetAllBarbersAsync()
+        public async Task<(int Count, List<Barber> Barbers)> GetAllBarbersPagedAsync(int page, int pageSize)
         {
-            return Query
+            var count = await Query.CountAsync();
+
+            var barbers = await Query
                 .Include(b => b.User)
                 .Include(b => b.Feedbacks)
                 .Include(b => b.Establishment)
                 .Include(b => b.EventSchedules
                     .Where(es => es.EventStatus != EventStatus.Canceled))
                 .AsNoTracking()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (count, barbers);
+        }
+
+        public Task<List<Barber>> GetAllWithUserAsync()
+        {
+            return Query
+                .Include(b => b.User)
                 .ToListAsync();
         }
 

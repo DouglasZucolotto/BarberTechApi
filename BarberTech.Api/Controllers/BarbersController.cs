@@ -25,9 +25,9 @@ namespace BarberTech.Api.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetBarbersAsync()
+        public async Task<IActionResult> GetBarbersAsync([FromQuery] GetBarbersQuery query)
         {
-            var barbers = await _mediator.Send(new GetBarbersQuery());
+            var barbers = await _mediator.Send(query);
             return Ok(barbers);
         }
 

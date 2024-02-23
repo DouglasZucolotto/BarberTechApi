@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
-    public class GetHaircutsQueryHandler : IRequestHandler<GetHaircutsQuery, IEnumerable<GetHaircutsQueryResponse>>
+    public class GetHaircutsQueryHandler : IRequestHandler<GetHaircutsQuery, PagedResponse<GetHaircutsQueryResponse>>
     {
         private readonly IHaircutRepository _haircutRepository;
 
@@ -12,19 +12,26 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
             _haircutRepository = haircutRepository;
         }
 
-        public async Task<IEnumerable<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResponse<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
         {
-            var haircuts = await _haircutRepository.GetAllWithFeedbacksAsync();
+            var queryResponse = await _haircutRepository.GetAllWithFeedbacksPagedAsync(request.Page, request.PageSize);
 
-            return haircuts.Select(haircut => new GetHaircutsQueryResponse
-            {
-                Id = haircut.Id,
-                Name = haircut.Name,
-                Description = haircut.Description,
-                ImageSource = haircut.ImageSource,
-                Price = haircut.Price,
-                QntStars = haircut.GetFeedbacksAverage(),
-            });
+            var haircuts = queryResponse.Haircuts
+                .Select(haircut => new GetHaircutsQueryResponse
+                {
+                    Id = haircut.Id,
+                    Name = haircut.Name,
+                    Description = haircut.Description,
+                    ImageSource = haircut.ImageSource,
+                    Price = haircut.Price,
+                    QntStars = haircut.GetFeedbacksAverage(),
+                });
+
+            return new PagedResponse<GetHaircutsQueryResponse>(
+                haircuts,
+                request.Page,
+                request.PageSize,
+                queryResponse.Count);
         }
     }
 }

@@ -4,10 +4,12 @@ namespace BarberTech.Domain.Repositories
 {
     public interface IBarberRepository : IRepository<Barber>
     {
-        public Task<List<Barber>> GetAllBarbersAsync();
+        Task<(int Count, List<Barber> Barbers)> GetAllBarbersPagedAsync(int page, int pageSize);
 
-        public Task<Barber?> GetBarberWithUserByIdAsync(Guid id);
+        Task<Barber?> GetBarberWithUserByIdAsync(Guid id);
 
-        public Task<Barber?> GetBarberByIdWithEventSchedulesAsync(Guid id);
+        Task<Barber?> GetBarberByIdWithEventSchedulesAsync(Guid id);
+
+        Task<List<Barber>> GetAllWithUserAsync();
     }
 }

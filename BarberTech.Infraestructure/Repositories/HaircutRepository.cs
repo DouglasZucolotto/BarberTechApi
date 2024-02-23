@@ -10,12 +10,18 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public Task<List<Haircut>> GetAllWithFeedbacksAsync()
+        public async Task<(int Count, List<Haircut> Haircuts)> GetAllWithFeedbacksPagedAsync(int page, int pageSize)
         {
-            return Query
+            var count = await Query.CountAsync();
+
+            var haircuts = await Query
                 .Include(h => h.Feedbacks)
                     .ThenInclude(f => f.User)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
+
+            return (count, haircuts);
         }
 
         public Task<Haircut?> GetByIdWithFeedbacksAsync(Guid id)

@@ -4,7 +4,7 @@ namespace BarberTech.Domain.Repositories
 {
     public interface IHaircutRepository : IRepository<Haircut>
     {
-        Task<List<Haircut>> GetAllWithFeedbacksAsync();
+        Task<(int Count, List<Haircut> Haircuts)> GetAllWithFeedbacksPagedAsync(int page, int pageSize);
 
         Task<Haircut?> GetByIdWithFeedbacksAsync(Guid id);
     }

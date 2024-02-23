@@ -8,8 +8,8 @@
 
         public string Name { get; set; } = string.Empty;
 
-        public string? ImageSource { get; set; }
+        public string Type { get; set; } = string.Empty;
 
-        public IEnumerable<EventScheduleDto> EventSchedules { get; set; } = Enumerable.Empty<EventScheduleDto>();
+        public string? ImageSource { get; set; }
     }
 }
