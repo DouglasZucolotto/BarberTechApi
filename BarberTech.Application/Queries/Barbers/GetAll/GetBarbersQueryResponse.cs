@@ -14,7 +14,7 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
 
         public string Contact { get; set; } = string.Empty;
 
-        public double QntStars { get; set; }
+        public double Rating { get; set; }
 
         public string EstablishmentAddress { get; set; } = string.Empty; 
 

@@ -6,15 +6,15 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
     {
         public CreateFeedbackCommandValidator()
         {
-            RuleFor(f => f.QntStarsBarber)
+            RuleFor(f => f.RatingBarber)
                 .ExclusiveBetween(0, 6)
                 .NotNull();
 
-            RuleFor(f => f.QntStarsEstablishment)
+            RuleFor(f => f.RatingEstablishment)
                 .ExclusiveBetween(0, 6)
                 .NotNull();
 
-            RuleFor(f => f.QntStarsHaircut)
+            RuleFor(f => f.RatingHaircut)
                 .ExclusiveBetween(0, 6)
                 .NotNull();
 

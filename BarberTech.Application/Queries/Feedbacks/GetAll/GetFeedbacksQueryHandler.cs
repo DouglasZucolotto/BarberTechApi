@@ -23,7 +23,7 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
                     Id = feedback.Id,
                     Comment = feedback.Comment,
                     At = feedback.CreatedAt,
-                    QntStarsAverage = feedback.GetStarsAverage(),
+                    RatingAverage = feedback.GetStarsAverage(),
                     UserName = feedback.User.Name
                 });
         }

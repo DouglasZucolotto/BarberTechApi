@@ -9,10 +9,10 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
         
         public Guid EventScheduleId { get; set; }
 
-        public int QntStarsBarber { get; set; }
+        public int RatingBarber { get; set; }
 
-        public int QntStarsHaircut { get; set; }
+        public int RatingHaircut { get; set; }
 
-        public int QntStarsEstablishment { get; set; }
+        public int RatingEstablishment { get; set; }
     }
 }

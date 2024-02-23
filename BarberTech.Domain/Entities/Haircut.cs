@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
 
-        public string? Description { get; set; }
+        public string? About { get; set; }
 
         public string ImageSource { get; set; }
 
@@ -14,10 +14,10 @@
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
-        public Haircut(string name, string? description, string imageSource, decimal price)
+        public Haircut(string name, string? about, string imageSource, decimal price)
         {
             Name = name;
-            Description = description;
+            About = about;
             ImageSource = imageSource;
             Price = price;
         }
@@ -29,7 +29,7 @@
                 return 0; 
             }
 
-            return Feedbacks.Average(f => f.QntStarsHaircut);
+            return Feedbacks.Average(f => f.RatingHaircut);
         }
     }
 }

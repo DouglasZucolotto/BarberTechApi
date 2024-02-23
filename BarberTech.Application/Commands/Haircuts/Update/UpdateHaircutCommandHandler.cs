@@ -27,7 +27,7 @@ namespace BarberTech.Application.Commands.Haircuts.Update
             }
 
             haircut.Name = request.Name ?? haircut.Name;
-            haircut.Description = request.Description ?? haircut.Description;
+            haircut.About = request.About ?? haircut.About;
             haircut.Price = request.Price ?? haircut.Price;
             haircut.ImageSource = request.ImageSource ?? haircut.ImageSource;
 

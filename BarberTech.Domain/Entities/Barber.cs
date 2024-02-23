@@ -44,7 +44,7 @@ namespace BarberTech.Domain.Entities
                 return 0;
             }
 
-            return Feedbacks.Average(f => f.QntStarsBarber);
+            return Feedbacks.Average(f => f.RatingBarber);
         }
 
         public IEnumerable<TimeSpan> GetAvailableTimesByDateTime(DateTime dateTime)

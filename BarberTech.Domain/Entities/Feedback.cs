@@ -18,11 +18,11 @@
 
         public Establishment Establishment { get; set; }
 
-        public int QntStarsBarber { get; set; }
+        public int RatingBarber { get; set; }
 
-        public int QntStarsHaircut { get; set; }
+        public int RatingHaircut { get; set; }
 
-        public int QntStarsEstablishment { get; set; }
+        public int RatingEstablishment { get; set; }
 
         public string? Comment { get; set; }
 
@@ -31,9 +31,9 @@
             Barber barber,
             Haircut haircut,
             Establishment establishment,
-            int qntStarsBarber,
-            int qntStarsHaircut,
-            int qntStarsEstablishment,
+            int ratingBarber,
+            int ratingHaircut,
+            int ratingEstablishment,
             string? comment)
         {
             User = user;
@@ -44,9 +44,9 @@
             HaircutId = haircut.Id;
             Establishment= establishment;
             EstablishmentId = establishment.Id;
-            QntStarsBarber = qntStarsBarber;
-            QntStarsHaircut = qntStarsHaircut;
-            QntStarsEstablishment = qntStarsEstablishment;
+            RatingBarber = ratingBarber;
+            RatingHaircut = ratingHaircut;
+            RatingEstablishment = ratingEstablishment;
             Comment = comment;
         }
 
@@ -56,7 +56,7 @@
 
         public double GetStarsAverage()
         {
-            return (QntStarsBarber + QntStarsHaircut + QntStarsEstablishment) / 3;
+            return (RatingBarber + RatingHaircut + RatingEstablishment) / 3;
         }
     }
 }

@@ -6,7 +6,7 @@
 
         public string? Comment { get; set; }
 
-        public double QntStarsAverage { get; set; }
+        public double RatingAverage { get; set; }
         
         public string UserName { get; set; } = string.Empty;
 

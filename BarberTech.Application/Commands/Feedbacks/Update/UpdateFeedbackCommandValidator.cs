@@ -9,13 +9,13 @@ namespace BarberTech.Application.Commands.Feedbacks.Update
             RuleFor(f => f.Id)
                 .NotEmpty();
 
-            RuleFor(f => f.QntStarsBarber)
+            RuleFor(f => f.RatingBarber)
                 .ExclusiveBetween(0, 6);
 
-            RuleFor(f => f.QntStarsEstablishment)
+            RuleFor(f => f.RatingEstablishment)
                 .ExclusiveBetween(0, 6);
 
-            RuleFor(f => f.QntStarsHaircut)
+            RuleFor(f => f.RatingHaircut)
                 .ExclusiveBetween(0, 6);
         }
     }

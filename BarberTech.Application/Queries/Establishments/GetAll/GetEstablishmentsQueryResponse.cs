@@ -14,6 +14,6 @@
 
         public string BusinessTime { get; set; } = string.Empty;
 
-        public double QntStars { get; set; }
+        public double Rating { get; set; }
     }
 }

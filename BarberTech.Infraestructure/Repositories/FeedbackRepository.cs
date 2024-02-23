@@ -16,5 +16,10 @@ namespace BarberTech.Infraestructure.Repositories
                 .Include(f => f.User)
                 .ToListAsync();
         }
+
+        public Task<bool> UserAlreadyGaveFeedbackAsync(Guid id)
+        {
+            return Query.AnyAsync(f => f.User.Id == id);
+        }
     }
 }

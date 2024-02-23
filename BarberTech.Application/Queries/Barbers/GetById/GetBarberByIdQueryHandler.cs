@@ -33,7 +33,7 @@ namespace BarberTech.Application.Queries.Barbers.GetById
                 About = barber.About,
                 ImageSource = barber.User.ImageSource,
                 Contact = barber.Contact,
-                QntStars = barber.GetFeedbacksAverage(),
+                Rating = barber.GetFeedbacksAverage(),
                 EstablishmentAddress = barber.Establishment.Address,
                 EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
                 {

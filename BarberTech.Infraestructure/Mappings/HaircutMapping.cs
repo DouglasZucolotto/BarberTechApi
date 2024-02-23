@@ -18,8 +18,8 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("price")
                 .IsRequired();
 
-            builder.Property(h => h.Description)
-                .HasColumnName("description");
+            builder.Property(h => h.About)
+                .HasColumnName("about");
 
             builder.Property(h => h.ImageSource)
                 .HasColumnName("image_source")

@@ -34,7 +34,7 @@ namespace BarberTech.Domain.Entities
                 return 0;
             }
 
-            return Feedbacks.Average(f => f.QntStarsEstablishment);
+            return Feedbacks.Average(f => f.RatingEstablishment);
         }
 
         public Establishment()

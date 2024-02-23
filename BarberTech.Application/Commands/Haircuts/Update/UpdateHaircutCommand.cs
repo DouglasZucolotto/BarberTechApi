@@ -11,7 +11,7 @@ namespace BarberTech.Application.Commands.Haircuts.Update
 
         public string? Name { get; set; }
 
-        public string? Description { get; set; }
+        public string? About { get; set; }
 
         public decimal? Price { get; set; }
 

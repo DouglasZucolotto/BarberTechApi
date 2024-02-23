@@ -51,14 +51,22 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
                 return default;
             }
 
+            var userAlreadyGaveFeedback = await _feedbackRepository.UserAlreadyGaveFeedbackAsync(user.Id);
+
+            if (userAlreadyGaveFeedback)
+            {
+                _notification.AddBadRequest("User already gave feedback");
+                return default;
+            }
+
             var feedback = new Feedback(
                 user, 
                 eventSchedule.Barber,
                 eventSchedule.Haircut,
                 eventSchedule.Barber.Establishment,
-                request.QntStarsBarber,
-                request.QntStarsHaircut,
-                request.QntStarsEstablishment,
+                request.RatingBarber,
+                request.RatingHaircut,
+                request.RatingEstablishment,
                 request.Comment);
 
             _feedbackRepository.Add(feedback);

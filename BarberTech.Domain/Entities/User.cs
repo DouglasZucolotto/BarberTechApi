@@ -19,7 +19,7 @@ namespace BarberTech.Domain.Entities
 
         public ICollection<EventSchedule> EventSchedules { get; set; } = new Collection<EventSchedule>();
 
-        public Barber? Barber { get; set; }
+        public Barber Barber { get; set; }
 
         public UserType Type { get; set; } = UserType.Client;
 

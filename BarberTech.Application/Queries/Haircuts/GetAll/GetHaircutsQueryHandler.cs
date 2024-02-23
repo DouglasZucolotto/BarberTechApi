@@ -21,10 +21,10 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
                 {
                     Id = haircut.Id,
                     Name = haircut.Name,
-                    Description = haircut.Description,
+                    About = haircut.About,
                     ImageSource = haircut.ImageSource,
                     Price = haircut.Price,
-                    QntStars = haircut.GetFeedbacksAverage(),
+                    Rating = haircut.GetFeedbacksAverage(),
                 });
 
             return new PagedResponse<GetHaircutsQueryResponse>(
