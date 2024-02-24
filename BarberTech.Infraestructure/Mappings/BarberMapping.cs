@@ -29,6 +29,15 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("establishment_id")
                 .IsRequired();
 
+            builder.Property(b => b.Facebook)
+                .HasColumnName("facebook");
+
+            builder.Property(b => b.Instagram)
+                .HasColumnName("instagram");
+
+            builder.Property(b => b.Twitter)
+               .HasColumnName("twitter");
+
             builder.HasOne(b => b.Establishment)
                 .WithMany(e => e.Barbers)
                 .HasForeignKey(b => b.EstablishmentId);

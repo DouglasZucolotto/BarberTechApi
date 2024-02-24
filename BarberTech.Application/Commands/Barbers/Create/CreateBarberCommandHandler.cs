@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain;
+﻿using BarberTech.Application.Commands.Barbers.Dtos;
+using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Entities.Enums;
@@ -54,7 +55,14 @@ namespace BarberTech.Application.Commands.Barbers.Create
                 .WithType(UserType.Barber)
                 .WithPermissions();
 
-            var barber = new Barber(establishment, user, request.Contact, request.About);
+            var barber = new Barber(
+                establishment, 
+                user, 
+                request.Contact, 
+                request.About,
+                request.Social.Facebook,
+                request.Social.Instagram,
+                request.Social.Twitter);
 
             _barberRepository.Add(barber);
             await _barberRepository.UnitOfWork.CommitAsync();

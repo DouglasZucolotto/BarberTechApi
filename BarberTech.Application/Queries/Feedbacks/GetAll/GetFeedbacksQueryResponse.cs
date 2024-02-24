@@ -10,6 +10,6 @@
         
         public string UserName { get; set; } = string.Empty;
 
-        public DateTime At { get; set; }
+        public string At { get; set; } = string.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain;
+﻿using BarberTech.Application.Commands.Barbers.Dtos;
+using BarberTech.Domain;
 using MediatR;
 
 namespace BarberTech.Application.Commands.Barbers.Create
@@ -8,6 +9,8 @@ namespace BarberTech.Application.Commands.Barbers.Create
         public Guid EstablishmentId { get; set; }
 
         public string? About { get; set; }
+
+        public SocialDto Social { get; set; }
 
         public string Contact { get; set; } = string.Empty;
 

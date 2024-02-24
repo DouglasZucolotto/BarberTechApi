@@ -26,8 +26,14 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                     About = barber.About,
                     ImageSource = barber.User.ImageSource,
                     Contact = barber.Contact,
-                    Rating = barber.GetFeedbacksAverage(),
+                    Rating = barber.GetRating(),
                     EstablishmentAddress = barber.Establishment.Address,
+                    Social = new SocialDto
+                    {
+                        Facebook = barber.Facebook,
+                        Instagram = barber.Instagram,
+                        Twitter = barber.Twitter,
+                    },
                     EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
                     {
                         Id = es.Id,
@@ -35,7 +41,8 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                         DateTime = es.DateTime,
                         Status = es.EventStatus.ToString(),
                     })
-                });
+                })
+                .OrderByDescending(barber => barber.Rating);
 
             return new PagedResponse<GetBarbersQueryResponse>(
                 barbers,

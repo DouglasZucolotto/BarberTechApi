@@ -33,7 +33,7 @@ namespace BarberTech.Application.Queries.Establishments.GetById
                 Latitude = establishment.Coordinates.Y,
                 Longitude = establishment.Coordinates.X,
                 BusinessTime = establishment.GetBusinessTime(),
-                Rating = establishment.GetFeedbacksAverage(),
+                Rating = establishment.GetRating(),
             };
         }
     }

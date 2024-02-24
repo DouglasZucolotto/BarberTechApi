@@ -32,7 +32,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
                 About = haircut.About,
                 ImageSource = haircut.ImageSource,
                 Price = haircut.Price,
-                Rating = haircut.GetFeedbacksAverage(),
+                Rating = haircut.GetRating(),
             };
         }
     }

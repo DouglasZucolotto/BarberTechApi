@@ -28,7 +28,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
             var requestDate = DateTime.Parse(request.Date);
             var availableTimes = barber.GetAvailableTimesByDateTime(requestDate);
 
-            return availableTimes.Select(time => time.ToString());
+            return availableTimes.Select(time => time.ToString()[..5]);
         }
     }
 }

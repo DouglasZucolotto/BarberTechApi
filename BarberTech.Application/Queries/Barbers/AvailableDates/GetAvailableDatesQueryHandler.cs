@@ -28,7 +28,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableDates
             var availableDates = new List<DateTime>();
             var initialDate = DateTime.UtcNow;
 
-            for (var date = DateTime.UtcNow; date < initialDate.AddDays(30); date = date.AddDays(1))
+            for (var date = DateTime.UtcNow; date < initialDate.AddDays(15); date = date.AddDays(1))
             {
                 var availableTimes = barber.GetAvailableTimesByDateTime(date);
 
@@ -38,7 +38,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableDates
                 }
             }
 
-            return availableDates.Select(date => date.ToShortDateString());
+            return availableDates.Select(date => date.ToString("dd/MM/yyyy"));
         }
     }
 }

@@ -20,24 +20,36 @@ namespace BarberTech.Domain.Entities
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
+        public string? Facebook { get; set; }
+
+        public string? Instagram { get; set; }
+
+        public string? Twitter { get; set; }
+
         public Barber(
             Establishment establishment,
             User user,
             string contact,
-            string? about)
+            string? about,
+            string? facebook,
+            string? intagram,
+            string? twitter)
         {
             User = user;
             UserId = user.Id;
             Establishment = establishment;
             Contact = contact;
             About = about;
+            Facebook= facebook;
+            Instagram = intagram;
+            Twitter = twitter;
         }
 
         public Barber()
         {
         }
 
-        public double GetFeedbacksAverage()
+        public double GetRating()
         {
             if (Feedbacks.Count == 0)
             {

@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain;
+﻿using BarberTech.Application.Commands.Barbers.Dtos;
+using BarberTech.Domain;
 using MediatR;
 using System.Text.Json.Serialization;
 
@@ -22,6 +23,8 @@ namespace BarberTech.Application.Commands.Barbers.Update
         public string? Password { get; set; }
 
         public string? Name { get; set; }
+
+        public SocialDto Social { get; set; }
 
         public UpdateBarberCommand WithId(Guid id)
         {

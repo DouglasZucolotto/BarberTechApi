@@ -33,8 +33,14 @@ namespace BarberTech.Application.Queries.Barbers.GetById
                 About = barber.About,
                 ImageSource = barber.User.ImageSource,
                 Contact = barber.Contact,
-                Rating = barber.GetFeedbacksAverage(),
+                Rating = barber.GetRating(),
                 EstablishmentAddress = barber.Establishment.Address,
+                Social = new SocialDto
+                {
+                    Facebook = barber.Facebook,
+                    Instagram = barber.Instagram,
+                    Twitter = barber.Twitter,
+                },
                 EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
                 {
                     Id = es.Id,

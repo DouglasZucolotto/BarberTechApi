@@ -25,8 +25,9 @@ namespace BarberTech.Application.Queries.Establishments.GetAll
                     Latitude = establishment.Coordinates.Y,
                     Longitude = establishment.Coordinates.X,
                     BusinessTime = establishment.GetBusinessTime(),
-                    Rating = establishment.GetFeedbacksAverage(),
-                });
+                    Rating = establishment.GetRating(),
+                })
+                .OrderByDescending(establishment => establishment.Rating); ;
 
 
             return new PagedResponse<GetEstablishmentsQueryResponse>(

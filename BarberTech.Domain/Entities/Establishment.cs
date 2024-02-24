@@ -27,7 +27,7 @@ namespace BarberTech.Domain.Entities
             return $"{OpenTime} ~ {OpenTime.Add(WorkInterval).Add(LunchInterval)}";
         }
 
-        public double GetFeedbacksAverage()
+        public double GetRating()
         {
             if (Feedbacks.Count == 0)
             {

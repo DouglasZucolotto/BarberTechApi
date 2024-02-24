@@ -14,6 +14,9 @@ namespace BarberTech.Infraestructure.Repositories
         {
             return Query
                 .Include(f => f.User)
+                .Where(f => f.Comment != null)
+                .Where(f => ((f.RatingHaircut + f.RatingEstablishment + f.RatingBarber) / 3) > 4)
+                .OrderByDescending(f => f.CreatedAt)
                 .ToListAsync();
         }
 

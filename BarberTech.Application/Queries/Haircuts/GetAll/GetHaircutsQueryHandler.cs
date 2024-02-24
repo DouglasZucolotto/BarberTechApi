@@ -24,7 +24,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
                     About = haircut.About,
                     ImageSource = haircut.ImageSource,
                     Price = haircut.Price,
-                    Rating = haircut.GetFeedbacksAverage(),
+                    Rating = haircut.GetRating(),
                 });
 
             return new PagedResponse<GetHaircutsQueryResponse>(

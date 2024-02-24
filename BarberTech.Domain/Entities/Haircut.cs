@@ -22,7 +22,7 @@
             Price = price;
         }
 
-        public double GetFeedbacksAverage()
+        public double GetRating()
         {
             if (Feedbacks.Count == 0) 
             { 
