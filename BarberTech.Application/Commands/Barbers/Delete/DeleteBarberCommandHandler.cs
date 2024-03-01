@@ -32,8 +32,9 @@ namespace BarberTech.Application.Commands.Barbers.Delete
             _barberRepository.Remove(barber);
             await _barberRepository.UnitOfWork.CommitAsync();
 
-            var command = new DeleteUserCommand(barber.UserId);
-            await _mediator.Send(command);
+            // TODO: precisa?
+            //var command = new DeleteUserCommand(barber.UserId);
+            //await _mediator.Send(command);
 
             return Nothing.Value;
         }

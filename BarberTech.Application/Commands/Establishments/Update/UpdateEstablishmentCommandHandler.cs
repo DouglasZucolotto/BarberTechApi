@@ -27,12 +27,6 @@ namespace BarberTech.Application.Commands.Establishments.Update
                 return default;
             }
 
-            if (request.Latitude != null && request.Longitude != null)
-            {
-                var coordinates = new Point(request.Longitude.Value, request.Latitude.Value);
-                establishment.Coordinates = coordinates;
-            }
-
             if (request.OpenTime != null)
             {
                 establishment.OpenTime = TimeSpan.Parse(request.OpenTime);

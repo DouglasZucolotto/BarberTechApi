@@ -60,6 +60,7 @@
         {
             double sum = RatingBarber + RatingHaircut + RatingEstablishment;
             double average = sum / 3;
+
             return Math.Round(average, 1);
         }
     }

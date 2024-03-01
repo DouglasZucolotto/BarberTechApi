@@ -1,5 +1,4 @@
 ﻿using BarberTech.Application.Queries.Barbers.Dtos;
-using BarberTech.Domain.Entities;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
@@ -25,22 +24,13 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                     Name = barber.User.Name,
                     About = barber.About,
                     ImageSource = barber.User.ImageSource,
-                    Contact = barber.Contact,
                     Rating = barber.GetRating(),
-                    EstablishmentAddress = barber.Establishment.Address,
                     Social = new SocialDto
                     {
                         Facebook = barber.Facebook,
                         Instagram = barber.Instagram,
                         Twitter = barber.Twitter,
                     },
-                    EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
-                    {
-                        Id = es.Id,
-                        Name = es.Name,
-                        DateTime = es.DateTime,
-                        Status = es.EventStatus.ToString(),
-                    })
                 })
                 .OrderByDescending(barber => barber.Rating);
 

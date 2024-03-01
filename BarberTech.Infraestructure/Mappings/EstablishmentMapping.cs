@@ -20,11 +20,6 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("image_source")
                 .IsRequired();
 
-            builder.Property(e => e.Coordinates)
-                .HasColumnName("coordinates")
-                .HasColumnType("geometry (point)")
-                .IsRequired();
-
             builder.Property(e => e.OpenTime)
                 .HasColumnName("open_time")
                 .IsRequired();

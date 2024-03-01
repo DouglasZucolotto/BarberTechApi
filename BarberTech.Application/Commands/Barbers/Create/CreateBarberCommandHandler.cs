@@ -1,5 +1,4 @@
 ﻿using BarberTech.Domain;
-using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Notifications;
@@ -14,18 +13,15 @@ namespace BarberTech.Application.Commands.Barbers.Create
         private readonly IUserRepository _userRepository;
         private readonly IEstablishmentRepository _establishmentRepository;
         private readonly INotificationContext _notification;
-        private readonly IPasswordHasher _passwordHasher;
 
         public CreateBarberCommandHandler(
             IBarberRepository barberRepository, 
             IUserRepository userRepository,
-            IPasswordHasher passwordHasher,
             IEstablishmentRepository establishmentRepository, 
             INotificationContext notification)
         {
             _barberRepository = barberRepository;
             _userRepository = userRepository;
-            _passwordHasher = passwordHasher;
             _establishmentRepository = establishmentRepository;
             _notification = notification;
         }
@@ -40,7 +36,7 @@ namespace BarberTech.Application.Commands.Barbers.Create
                 return default;
             }
 
-            user.Type == UserType.Barber;
+            user.Type = UserType.Barber;
 
             var establishment = await _establishmentRepository.GetByIdAsync(request.EstablishmentId);
 

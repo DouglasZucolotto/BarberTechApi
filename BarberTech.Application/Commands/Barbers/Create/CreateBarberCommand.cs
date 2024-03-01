@@ -12,7 +12,7 @@ namespace BarberTech.Application.Commands.Barbers.Create
 
         public string? About { get; set; }
 
-        public SocialDto Social { get; set; }
+        public SocialDto Social { get; set; } = new SocialDto();
 
         public string Contact { get; set; } = string.Empty;
     }

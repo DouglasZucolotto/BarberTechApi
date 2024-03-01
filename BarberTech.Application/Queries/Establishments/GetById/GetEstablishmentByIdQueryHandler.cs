@@ -30,10 +30,10 @@ namespace BarberTech.Application.Queries.Establishments.GetById
                 Id = establishment.Id,
                 Address = establishment.Address,
                 ImageSource = establishment.ImageSource,
-                Latitude = establishment.Coordinates.Y,
-                Longitude = establishment.Coordinates.X,
-                BusinessTime = establishment.GetBusinessTime(),
-                Rating = establishment.GetRating(),
+                OpenTime = establishment.OpenTime.ToString()[..5],
+                LunchTime = establishment.LunchTime.ToString()[..5],
+                WorkInterval = establishment.WorkInterval.ToString()[..5],
+                LunchInterval = establishment.LunchInterval.ToString()[..5]
             };
         }
     }

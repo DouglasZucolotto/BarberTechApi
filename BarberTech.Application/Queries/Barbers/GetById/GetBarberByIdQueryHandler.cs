@@ -29,25 +29,15 @@ namespace BarberTech.Application.Queries.Barbers.GetById
             return new GetBarberByIdQueryResponse
             {
                 Id = barber.Id,
-                Name = barber.User.Name,
                 About = barber.About,
-                ImageSource = barber.User.ImageSource,
                 Contact = barber.Contact,
-                Rating = barber.GetRating(),
-                EstablishmentAddress = barber.Establishment.Address,
+                EstablishmentId = barber.EstablishmentId,
                 Social = new SocialDto
                 {
                     Facebook = barber.Facebook,
                     Instagram = barber.Instagram,
                     Twitter = barber.Twitter,
                 },
-                EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
-                {
-                    Id = es.Id,
-                    Name = es.Name,
-                    DateTime = es.DateTime,
-                    Status = es.EventStatus.ToString(),
-                })
             };
         }
     }

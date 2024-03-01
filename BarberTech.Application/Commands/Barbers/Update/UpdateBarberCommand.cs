@@ -16,7 +16,7 @@ namespace BarberTech.Application.Commands.Barbers.Update
 
         public string? Contact { get; set; }
 
-        public SocialDto Social { get; set; }
+        public SocialDto Social { get; set; } = new SocialDto();
 
         public UpdateBarberCommand WithId(Guid id)
         {
