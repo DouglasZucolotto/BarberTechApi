@@ -24,13 +24,6 @@ namespace BarberTech.Application.Queries.Users.GetAll
                 Email = user.Email,
                 Type = user.Type.ToString(),
                 ImageSource = user.ImageSource,
-                EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
-                {
-                    Id = es.Id,
-                    Name = es.Name,
-                    DateTime = es.DateTime,
-                    Status = es.EventStatus.ToString(),
-                })
             });
         }
     }

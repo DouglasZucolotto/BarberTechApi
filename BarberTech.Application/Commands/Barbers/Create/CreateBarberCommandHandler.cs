@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Commands.Barbers.Dtos;
-using BarberTech.Domain;
+﻿using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Entities.Enums;

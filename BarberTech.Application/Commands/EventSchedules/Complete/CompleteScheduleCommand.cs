@@ -1,6 +1,5 @@
 ﻿using BarberTech.Domain;
 using MediatR;
-using System.Text.Json.Serialization;
 
 namespace BarberTech.Application.Commands.EventSchedules.Complete
 {
