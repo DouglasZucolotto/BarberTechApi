@@ -16,14 +16,6 @@ namespace BarberTech.Application.Commands.Barbers.Update
 
         public string? Contact { get; set; }
 
-        public string? ImageSource { get; set; }
-
-        public string? Email { get; set; }
-
-        public string? Password { get; set; }
-
-        public string? Name { get; set; }
-
         public SocialDto Social { get; set; }
 
         public UpdateBarberCommand WithId(Guid id)

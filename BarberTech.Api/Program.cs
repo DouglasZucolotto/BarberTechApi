@@ -15,6 +15,8 @@ using MediatR;
 using BarberTech.Application.Commands.Haircuts.Create;
 using BarberTech.Application.Commands.Users.Login;
 using BarberTech.Application.Commands.Barbers.ScheduleHaircut;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 

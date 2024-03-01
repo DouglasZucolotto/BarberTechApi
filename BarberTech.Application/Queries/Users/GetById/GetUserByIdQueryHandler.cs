@@ -36,7 +36,8 @@ namespace BarberTech.Application.Queries.Users.GetById
                 EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
                 {
                     Id = es.Id,
-                    Name = es.Name,
+                    UserName = es.Name ?? es.User.Name,
+                    BarberName = es.Barber.User.Name,
                     DateTime = es.DateTime,
                     Status = es.EventStatus.ToString(),
                 })

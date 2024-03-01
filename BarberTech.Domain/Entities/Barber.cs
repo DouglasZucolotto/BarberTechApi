@@ -40,7 +40,7 @@ namespace BarberTech.Domain.Entities
             Establishment = establishment;
             Contact = contact;
             About = about;
-            Facebook= facebook;
+            Facebook = facebook;
             Instagram = intagram;
             Twitter = twitter;
         }
