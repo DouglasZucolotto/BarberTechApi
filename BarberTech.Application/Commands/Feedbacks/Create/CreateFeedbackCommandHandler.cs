@@ -8,7 +8,7 @@ using MediatR;
 
 namespace BarberTech.Application.Commands.Feedbacks.Create
 {
-    public class CreateFeedbackCommandHandler : IRequestHandler<CreateFeedbackCommand, Nothing>
+    public class CreateFeedbackCommandHandler : IRequestHandler<CreateFeedbackCommand, CreateFeedbackCommandResponse?>
     {
         private readonly IFeedbackRepository _feedbackRepository;
         private readonly IEventScheduleRepository _eventScheduleRepository;
@@ -27,7 +27,7 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
             _notification = notification;
         }
 
-        public async Task<Nothing> Handle(CreateFeedbackCommand request, CancellationToken cancellationToken)
+        public async Task<CreateFeedbackCommandResponse?> Handle(CreateFeedbackCommand request, CancellationToken cancellationToken)
         {
             var user = await _httpContext.GetUserAsync();
 
@@ -51,11 +51,15 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
                 return default;
             }
 
-            var userAlreadyGaveFeedback = await _feedbackRepository.UserAlreadyGaveFeedbackAsync(user.Id);
-
-            if (userAlreadyGaveFeedback)
+            if (eventSchedule.UserId != user.Id)
             {
-                _notification.AddBadRequest("User already gave feedback");
+                _notification.AddNotFound("Only the user who started the event can rate");
+                return default;
+            }
+
+            if (eventSchedule.FeedbackId != null)
+            {
+                _notification.AddBadRequest("Event already have a feedback");
                 return default;
             }
 
@@ -69,10 +73,16 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
                 request.RatingEstablishment,
                 request.Comment);
 
+            eventSchedule.Feedback = feedback;
+            eventSchedule.FeedbackId = feedback.Id;
+
             _feedbackRepository.Add(feedback);
             await _feedbackRepository.UnitOfWork.CommitAsync();
 
-            return Nothing.Value;
+            return new CreateFeedbackCommandResponse
+            {
+                RatingAvarege = feedback.GetRatingAverage()
+            };
         }
     }
 }

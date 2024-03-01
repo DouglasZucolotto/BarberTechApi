@@ -16,6 +16,10 @@ namespace BarberTech.Domain.Entities
 
         public Haircut Haircut { get; set; }
 
+        public Guid? FeedbackId { get; set; }
+
+        public Feedback? Feedback { get; set; }
+
         public string Name { get; set; }
         
         public DateTime DateTime { get; set; }

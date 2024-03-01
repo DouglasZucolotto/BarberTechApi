@@ -31,8 +31,8 @@ namespace BarberTech.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateFeedbackAsync([FromBody] CreateFeedbackCommand command)
         {
-            await _mediator.Send(command);
-            return NoContent();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
         [HasPermission(Permissions.Feedbacks.Edit)]

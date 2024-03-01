@@ -18,6 +18,8 @@
 
         public Establishment Establishment { get; set; }
 
+        public EventSchedule EventSchedule { get; set; }
+
         public int RatingBarber { get; set; }
 
         public int RatingHaircut { get; set; }
@@ -54,9 +56,11 @@
         {
         }
 
-        public double GetStarsAverage()
+        public double GetRatingAverage()
         {
-            return (RatingBarber + RatingHaircut + RatingEstablishment) / 3;
+            double sum = RatingBarber + RatingHaircut + RatingEstablishment;
+            double average = sum / 3;
+            return Math.Round(average, 1);
         }
     }
 }

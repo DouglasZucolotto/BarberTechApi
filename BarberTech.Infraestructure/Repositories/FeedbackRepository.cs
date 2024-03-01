@@ -19,10 +19,5 @@ namespace BarberTech.Infraestructure.Repositories
                 .OrderByDescending(f => f.CreatedAt)
                 .ToListAsync();
         }
-
-        public Task<bool> UserAlreadyGaveFeedbackAsync(Guid id)
-        {
-            return Query.AnyAsync(f => f.User.Id == id);
-        }
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BarberTech.Application.Commands.Feedbacks.Create
 {
-    public class CreateFeedbackCommand : IRequest<Nothing>
+    public class CreateFeedbackCommand : IRequest<CreateFeedbackCommandResponse>
     {
         public string? Comment { get; set; }
         

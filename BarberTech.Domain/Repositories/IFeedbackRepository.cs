@@ -5,7 +5,5 @@ namespace BarberTech.Domain.Repositories
     public interface IFeedbackRepository : IRepository<Feedback>
     {
         Task<List<Feedback>> GetAllWithUserAsync();
-
-        Task<bool> UserAlreadyGaveFeedbackAsync(Guid id);
     }
 }
