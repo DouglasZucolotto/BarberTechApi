@@ -18,13 +18,13 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
         {
             var filterProps = new string[] { "Name", "Contact", "Instagram", "Facebook", "Twitter" };
 
-            var response = await _barberRepository.GetAllPagedAsync(
+            var (items, totalCount) = await _barberRepository.GetAllPagedAsync(
                 request.Page,
                 request.PageSize,
                 request.SearchTerm,
                 filterProps);
 
-            var barbers = response.Items
+            var barbers = items
                 .Select(barber => new GetBarbersQueryResponse
                 {
                     Id = barber.Id,
@@ -41,7 +41,7 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                 })
                 .OrderByDescending(barber => barber.Rating);
 
-            return new Paged<GetBarbersQueryResponse>(barbers, request.Page, request.PageSize, response.TotalCount);
+            return new Paged<GetBarbersQueryResponse>(barbers, request.Page, request.PageSize, totalCount);
         }
     }
 }

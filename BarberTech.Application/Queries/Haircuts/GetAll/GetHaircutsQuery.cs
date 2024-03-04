@@ -8,5 +8,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
         public int Page { get; set; }
 
         public int PageSize { get; set; }
+
+        public string? SearchTerm { get; set; }
     }
 }

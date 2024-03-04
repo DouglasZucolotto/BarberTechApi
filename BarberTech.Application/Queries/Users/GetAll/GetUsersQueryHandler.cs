@@ -17,19 +17,19 @@ namespace BarberTech.Application.Queries.Users.GetAll
         {
             var filterProps = new string[] { "Name", "Email" };
 
-            var response = await _userRepository.GetAllPagedAsync(
+            var (items, totalCount) = await _userRepository.GetAllPagedAsync(
                 request.Page, 
                 request.PageSize, 
                 request.SearchTerm,
                 filterProps);
 
-            var users = response.Items.Select(user => new GetUsersQueryResponse
+            var users = items.Select(user => new GetUsersQueryResponse
             {
                 Id = user.Id,
                 Name = user.Name
             });
 
-            return new Paged<GetUsersQueryResponse>(users, request.Page, request.PageSize, response.TotalCount);
+            return new Paged<GetUsersQueryResponse>(users, request.Page, request.PageSize, totalCount);
         }
     }
 }

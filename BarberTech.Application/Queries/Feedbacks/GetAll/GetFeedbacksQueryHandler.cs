@@ -1,10 +1,11 @@
 ﻿using BarberTech.Application.Queries.Establishments.GetAll;
+using BarberTech.Domain;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Feedbacks.GetAll
 {
-    public class GetFeedbacksQueryHandler : IRequestHandler<GetFeedbacksQuery, IEnumerable<GetFeedbacksQueryResponse>>
+    public class GetFeedbacksQueryHandler : IRequestHandler<GetFeedbacksQuery, Paged<GetFeedbacksQueryResponse>>
     {
         private readonly IFeedbackRepository _feedbackRepository;
 
@@ -13,11 +14,13 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
             _feedbackRepository = feedbackRepository;
         }
 
-        public async Task<IEnumerable<GetFeedbacksQueryResponse>> Handle(GetFeedbacksQuery request, CancellationToken cancellationToken)
+        public async Task<Paged<GetFeedbacksQueryResponse>> Handle(GetFeedbacksQuery request, CancellationToken cancellationToken)
         {
-            var feedbacks = await _feedbackRepository.GetAllWithUserAsync();
+            var filterProps = new string[] { "Comment" };
 
-            return feedbacks
+            var (items, totalCount) = await _feedbackRepository.GetAllPagedAsync(request.Page, request.PageSize, request.SearchTerm, filterProps);
+
+            var feedbacks = items
                 .Select(feedback => new GetFeedbacksQueryResponse
                 {
                     Id = feedback.Id,
@@ -26,6 +29,8 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
                     RatingAverage = feedback.GetRatingAverage(),
                     UserName = feedback.User.Name
                 });
+
+            return new Paged<GetFeedbacksQueryResponse>(feedbacks, request.Page, request.PageSize, totalCount); 
         }
     }
 }

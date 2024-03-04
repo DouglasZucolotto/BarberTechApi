@@ -1,9 +1,10 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
-    public class GetHaircutsQueryHandler : IRequestHandler<GetHaircutsQuery, PagedResponse<GetHaircutsQueryResponse>>
+    public class GetHaircutsQueryHandler : IRequestHandler<GetHaircutsQuery, Paged<GetHaircutsQueryResponse>>
     {
         private readonly IHaircutRepository _haircutRepository;
 
@@ -12,11 +13,13 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
             _haircutRepository = haircutRepository;
         }
 
-        public async Task<PagedResponse<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
+        public async Task<Paged<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
         {
-            var queryResponse = await _haircutRepository.GetAllWithFeedbacksPagedAsync(request.Page, request.PageSize);
+            var filterProps = new string[] { "Name", "Price" };
 
-            var haircuts = queryResponse.Haircuts
+            var (items, totalCount) = await _haircutRepository.GetAllPagedAsync(request.Page, request.PageSize, request.SearchTerm, filterProps);
+
+            var haircuts = items
                 .Select(haircut => new GetHaircutsQueryResponse
                 {
                     Id = haircut.Id,
@@ -27,11 +30,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
                     Rating = haircut.GetRating(),
                 });
 
-            return new PagedResponse<GetHaircutsQueryResponse>(
-                haircuts,
-                request.Page,
-                request.PageSize,
-                queryResponse.Count);
+            return new Paged<GetHaircutsQueryResponse>(haircuts, request.Page, request.PageSize, totalCount);
         }
     }
 }
