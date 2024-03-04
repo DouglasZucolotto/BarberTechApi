@@ -1,5 +1,4 @@
-﻿using BarberTech.Domain;
-using BarberTech.Domain.Entities;
+﻿using BarberTech.Domain.Entities;
 using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -12,23 +11,21 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public async override Task<(List<Barber> Items, int TotalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties)
+        public async override Task<(List<Barber> items, int totalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties)
         {
-            var filter = Query
-                .Include(b => b.User)
-                .Include(b => b.Feedbacks)
-                .Filter(searchTerm, properties);
-
+            var filter = Query.Filter(searchTerm, properties);
             var totalCount = filter.Count();
 
             var items = await filter
+                .Include(b => b.User)
+                .Include(b => b.Feedbacks)
                 .Paginate(page, pageSize)
                 .ToListAsync();
 
             return (items, totalCount);
         }
 
-        public Task<Barber?> GetBarberByIdWithEventSchedulesAsync(Guid id)
+        public Task<Barber?> GetByIdWithSchedulesAsync(Guid id)
         {
             return Query
                 .Include(b => b.EventSchedules

@@ -11,16 +11,6 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public Task<List<User>> GetAllWithEventSchedulesAsync()
-        {
-            return Query
-                .Include(u => u.EventSchedules
-                    .Where(es => es.EventStatus != EventStatus.Canceled))
-                .Include(u => u.Barber)
-                    .ThenInclude(b => b.Establishment)
-                .ToListAsync();
-        }
-
         public Task<User?> GetByIdWithEventSchedulesAsync(Guid id)
         {
             return Query
@@ -28,19 +18,12 @@ namespace BarberTech.Infraestructure.Repositories
                     .Where(es => es.EventStatus != EventStatus.Canceled))
                     .ThenInclude(es => es.Barber)
                         .ThenInclude(b => b.User)
-                //.Include(u => u.Barber)
-                    //.ThenInclude(b => b.User)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public Task<User?> GetByEmailAsync(string email)
         {
             return Query.FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-        public Task<User?> GetWithPermissionsAsync(Guid id)
-        {
-            return Query.Include(u => u.Permissions).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public Task<bool> UserEmailExistsAsync(string email)

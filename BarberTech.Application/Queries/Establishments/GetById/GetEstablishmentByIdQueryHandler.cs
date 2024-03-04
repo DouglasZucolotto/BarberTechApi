@@ -17,7 +17,7 @@ namespace BarberTech.Application.Queries.Establishments.GetById
 
         public async Task<GetEstablishmentByIdQueryResponse?> Handle(GetEstablishmentByIdQuery request, CancellationToken cancellationToken)
         {
-            var establishment = await _establishmentRepository.GetByIdWithFeedbacksAsync(request.Id);
+            var establishment = await _establishmentRepository.GetByIdAsync(request.Id);
 
             if (establishment is null)
             {

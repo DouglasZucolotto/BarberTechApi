@@ -9,15 +9,5 @@ namespace BarberTech.Infraestructure.Repositories
         public FeedbackRepository(DataContext context) : base(context)
         {
         }
-
-        public Task<List<Feedback>> GetAllWithUserAsync()
-        {
-            return Query
-                .Include(f => f.User)
-                .Where(f => f.Comment != null)
-                .Where(f => ((f.RatingHaircut + f.RatingEstablishment + f.RatingBarber) / 3) > 4)
-                .OrderByDescending(f => f.CreatedAt)
-                .ToListAsync();
-        }
     }
 }

@@ -6,6 +6,11 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
     {
         public GetHaircutsQueryValidator()
         {
+            RuleFor(h => h.Page)
+                .NotNull();
+
+            RuleFor(h => h.PageSize)
+                .NotNull();
         }
     }
 }

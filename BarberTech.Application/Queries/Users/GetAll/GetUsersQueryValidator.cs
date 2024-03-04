@@ -6,6 +6,11 @@ namespace BarberTech.Application.Queries.Users.GetAll
     {
         public GetUsersQueryValidator()
         {
+            RuleFor(u => u.Page)
+                .NotNull();
+
+            RuleFor(u => u.PageSize)
+                .NotNull();
         }
     }
 }

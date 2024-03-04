@@ -32,7 +32,7 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
 
         public async Task<Nothing> Handle(ScheduleHaircutCommand request, CancellationToken cancellationToken)
         {
-            var barber = await _barberRepository.GetBarberByIdWithEventSchedulesAsync(request.Id);
+            var barber = await _barberRepository.GetByIdWithSchedulesAsync(request.Id);
 
             if (barber is null)
             {
