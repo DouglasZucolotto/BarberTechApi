@@ -8,6 +8,8 @@ namespace BarberTech.Domain.Repositories
 
         Task<List<TEntity>> GetAllAsync();
 
+        Task<(List<TEntity> Items, int TotalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties);
+
         Task<TEntity?> GetByIdAsync(Guid id);
 
         void Add(TEntity entity);

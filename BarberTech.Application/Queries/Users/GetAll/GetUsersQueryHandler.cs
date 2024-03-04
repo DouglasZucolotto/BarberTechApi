@@ -1,9 +1,10 @@
-﻿using BarberTech.Domain.Repositories;
+﻿using BarberTech.Domain;
+using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Users.GetAll
 {
-    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IEnumerable<GetUsersQueryResponse>>
+    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Paged<GetUsersQueryResponse>>
     {
         private readonly IUserRepository _userRepository;
 
@@ -12,15 +13,23 @@ namespace BarberTech.Application.Queries.Users.GetAll
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<GetUsersQueryResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public async Task<Paged<GetUsersQueryResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetAllWithEventSchedulesAsync();
+            var filterProps = new string[] { "Name", "Email" };
 
-            return user.Select(user => new GetUsersQueryResponse
+            var response = await _userRepository.GetAllPagedAsync(
+                request.Page, 
+                request.PageSize, 
+                request.SearchTerm,
+                filterProps);
+
+            var users = response.Items.Select(user => new GetUsersQueryResponse
             {
                 Id = user.Id,
-                Name = user.Name,
+                Name = user.Name
             });
+
+            return new Paged<GetUsersQueryResponse>(users, request.Page, request.PageSize, response.TotalCount);
         }
     }
 }

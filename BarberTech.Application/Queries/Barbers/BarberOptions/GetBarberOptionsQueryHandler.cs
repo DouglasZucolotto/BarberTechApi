@@ -14,12 +14,12 @@ namespace BarberTech.Application.Queries.Barbers.BarberOptions
 
         public async Task<IEnumerable<GetBarberOptionsQueryResponse>> Handle(GetBarberOptionsQuery request, CancellationToken cancellationToken)
         {
-            var barbers = await _barberRepository.GetAllWithUserAsync();
+            var barbers = await _barberRepository.GetAllAsync();
 
             return barbers.Select(b => new GetBarberOptionsQueryResponse()
             {
                 Id = b.Id,
-                Name = b.User.Name,
+                Name = b.Name,
             });
         }
     }

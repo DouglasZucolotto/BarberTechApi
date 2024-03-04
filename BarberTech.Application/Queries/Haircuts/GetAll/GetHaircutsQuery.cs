@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using BarberTech.Domain;
+using MediatR;
 
 namespace BarberTech.Application.Queries.Haircuts.GetAll
 {
-    public class GetHaircutsQuery : IRequest<PagedResponse<GetHaircutsQueryResponse>>
+    public class GetHaircutsQuery : IRequest<Paged<GetHaircutsQueryResponse>>
     {
         public int Page { get; set; }
 

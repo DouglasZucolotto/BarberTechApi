@@ -1,6 +1,7 @@
 ﻿using BarberTech.Application.Commands.Establishments.Create;
 using BarberTech.Application.Commands.Establishments.Delete;
 using BarberTech.Application.Commands.Establishments.Update;
+using BarberTech.Application.Queries.Establishments.EstablishmentOptions;
 using BarberTech.Application.Queries.Establishments.GetAll;
 using BarberTech.Application.Queries.Establishments.GetById;
 using BarberTech.Infraestructure.Authentication;
@@ -18,6 +19,14 @@ namespace BarberTech.Api.Controllers
         public EstablishmentsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HasPermission(Permissions.Establishments.View)]
+        [HttpGet("options")]
+        public async Task<IActionResult> GetEstablishmentOptionsAsync()
+        {
+            var options = await _mediator.Send(new GetEstablishmentOptionsQuery());
+            return Ok(options);
         }
 
         [HttpGet()]

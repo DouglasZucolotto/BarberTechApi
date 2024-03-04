@@ -20,6 +20,8 @@ namespace BarberTech.Domain.Entities
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
 
+        public string Name { get; set; }
+
         public string? Facebook { get; set; }
 
         public string? Instagram { get; set; }
@@ -37,6 +39,7 @@ namespace BarberTech.Domain.Entities
         {
             User = user;
             UserId = user.Id;
+            Name = user.Name;
             Establishment = establishment;
             Contact = contact;
             About = about;

@@ -1,4 +1,5 @@
-﻿using BarberTech.Domain.Entities;
+﻿using BarberTech.Domain;
+using BarberTech.Domain.Entities;
 using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -11,40 +12,20 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public async Task<(int Count, List<Barber> Barbers)> GetAllBarbersPagedAsync(int page, int pageSize)
+        public async override Task<(List<Barber> Items, int TotalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties)
         {
-            var count = await Query.CountAsync();
-
-            var barbers = await Query
+            var filter = Query
                 .Include(b => b.User)
                 .Include(b => b.Feedbacks)
-                .Include(b => b.Establishment)
-                .Include(b => b.EventSchedules
-                    .Where(es => es.EventStatus != EventStatus.Canceled))
-                .AsNoTracking()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Filter(searchTerm, properties);
+
+            var totalCount = filter.Count();
+
+            var items = await filter
+                .Paginate(page, pageSize)
                 .ToListAsync();
 
-            return (count, barbers);
-        }
-
-        public Task<List<Barber>> GetAllWithUserAsync()
-        {
-            return Query
-                .Include(b => b.User)
-                .ToListAsync();
-        }
-
-        public Task<Barber?> GetBarberWithUserByIdAsync(Guid id)
-        {
-            return Query
-                .Include(b => b.User)
-                .Include(b => b.Feedbacks)
-                .Include(b => b.Establishment)
-                .Include(b => b.EventSchedules
-                    .Where(es => es.EventStatus != EventStatus.Canceled))
-                .FirstOrDefaultAsync(b => b.Id == id);
+            return (items, totalCount);
         }
 
         public Task<Barber?> GetBarberByIdWithEventSchedulesAsync(Guid id)

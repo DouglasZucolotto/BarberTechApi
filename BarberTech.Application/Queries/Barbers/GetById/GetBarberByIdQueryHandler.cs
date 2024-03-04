@@ -18,7 +18,7 @@ namespace BarberTech.Application.Queries.Barbers.GetById
 
         public async Task<GetBarberByIdQueryResponse?> Handle(GetBarberByIdQuery request, CancellationToken cancellationToken)
         {
-            var barber = await _barberRepository.GetBarberWithUserByIdAsync(request.Id);
+            var barber = await _barberRepository.GetByIdAsync(request.Id);
 
             if (barber is null)
             {

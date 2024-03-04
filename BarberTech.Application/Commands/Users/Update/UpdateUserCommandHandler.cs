@@ -1,5 +1,6 @@
 ﻿using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
+using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -32,6 +33,11 @@ namespace BarberTech.Application.Commands.Users.Update
             user.Name = request.Name ?? user.Name;
             user.Email = request.Email ?? user.Email;
             user.ImageSource = request.ImageSource ?? user.ImageSource;
+
+            if (user.Type == UserType.Barber && user.Barber != null)
+            {
+                user.Barber.Name = request.Name ?? user.Barber.Name;
+            }
 
             if (request.Password != null)
             {

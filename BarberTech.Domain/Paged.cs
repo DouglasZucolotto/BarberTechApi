@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace BarberTech.Application
+﻿namespace BarberTech.Domain
 {
-    public class PagedResponse<T>
+    public class Paged<T>
     {
-        public PagedResponse(IEnumerable<T> items, int page, int pageSize, int totalCount)
+        public Paged(IEnumerable<T> items, int page, int pageSize, int totalCount)
         {
             Items = items;
             Page = page;
