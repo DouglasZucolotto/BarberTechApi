@@ -34,11 +34,6 @@ namespace BarberTech.Application.Commands.Users.Update
             user.Email = request.Email ?? user.Email;
             user.ImageSource = request.ImageSource ?? user.ImageSource;
 
-            if (user.Type == UserType.Barber && user.Barber != null)
-            {
-                user.Barber.Name = request.Name ?? user.Barber.Name;
-            }
-
             if (request.Password != null)
             {
                 user.Password = _passwordHasher.Generate(request.Password);

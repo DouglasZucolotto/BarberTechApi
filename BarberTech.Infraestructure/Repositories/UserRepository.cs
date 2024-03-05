@@ -11,13 +11,23 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public Task<User?> GetByIdWithEventSchedulesAsync(Guid id)
+        public override Task<User?> GetByIdAsync(Guid id)
         {
             return Query
                 .Include(u => u.EventSchedules
                     .Where(es => es.EventStatus != EventStatus.Canceled))
-                    .ThenInclude(es => es.Barber)
-                        .ThenInclude(b => b.User)
+                .Include(u => u.EventSchedules).ThenInclude(es => es.Barber).ThenInclude(b => b.User)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public Task<User?> GetByIdToDelete(Guid id)
+        {
+            return Query
+                .Include(u => u.EventSchedules)
+                .Include(u => u.Barber).ThenInclude(b => b.Feedbacks).ThenInclude(f => f.EventSchedule)
+                .Include(u => u.Barber).ThenInclude(b => b.EventSchedules)
+                .Include(u => u.Permissions)
+                .Include(u => u.Feedbacks)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 

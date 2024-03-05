@@ -31,7 +31,7 @@ namespace BarberTech.Infraestructure.Repositories
             return (items, totalCount);
         }
 
-        public Task<TEntity?> GetByIdAsync(Guid id) => Query.FirstOrDefaultAsync(x => x.Id == id);
+        public virtual Task<TEntity?> GetByIdAsync(Guid id) => Query.FirstOrDefaultAsync(x => x.Id == id);
 
         public void Add(TEntity entity) => Context.Add(entity);
 

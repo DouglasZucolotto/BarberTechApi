@@ -18,7 +18,7 @@ namespace BarberTech.Application.Queries.Users.GetById
 
         public async Task<GetUserByIdQueryResponse?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdWithEventSchedulesAsync(request.Id);
+            var user = await _userRepository.GetByIdAsync(request.Id);
 
             if (user is null)
             {
@@ -40,6 +40,7 @@ namespace BarberTech.Application.Queries.Users.GetById
                     BarberName = es.Barber.User.Name,
                     DateTime = es.DateTime,
                     Status = es.EventStatus.ToString(),
+                    FeedbackId = es.FeedbackId
                 })
             };
         }

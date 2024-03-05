@@ -8,6 +8,6 @@ namespace BarberTech.Domain.Repositories
 
         Task<bool> UserEmailExistsAsync(string email);
 
-        Task<User?> GetByIdWithEventSchedulesAsync(Guid id);
+        Task<User?> GetByIdToDelete(Guid id);
     }
 }

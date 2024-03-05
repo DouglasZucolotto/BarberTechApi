@@ -31,20 +31,6 @@ namespace BarberTech.Domain.Entities
             ImageSource = imageSource;
         }
 
-        public void RemovePermissions()
-        {
-            foreach (var permission in Permissions.ToList())
-            {
-                Permissions.Remove(permission);
-            }
-        }
-
-        public User WithType(UserType type)
-        {
-            Type = type;
-            return this;
-        }
-
         public User WithPermissions()
         {
             var permissions = GetPermissions(Type);

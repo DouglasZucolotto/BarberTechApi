@@ -14,9 +14,7 @@ using FluentValidation;
 using MediatR;
 using BarberTech.Application.Commands.Haircuts.Create;
 using BarberTech.Application.Commands.Users.Login;
-using BarberTech.Application.Commands.Barbers.ScheduleHaircut;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using BarberTech.Application.Commands.EventSchedules.Create;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,7 +62,7 @@ builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
     typeof(CreateHaircutCommandHandler).Assembly,
-    typeof(ScheduleHaircutCommandHandler).Assembly,
+    typeof(CreateEventScheduleCommandHandler).Assembly,
 }));
 builder.Services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
 

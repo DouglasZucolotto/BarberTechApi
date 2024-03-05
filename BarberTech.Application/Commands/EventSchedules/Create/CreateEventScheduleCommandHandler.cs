@@ -3,12 +3,11 @@ using BarberTech.Domain.Authentication;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
-using BarberTech.Infraestructure.Repositories;
 using MediatR;
 
-namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
+namespace BarberTech.Application.Commands.EventSchedules.Create
 {
-    public class ScheduleHaircutCommandHandler : IRequestHandler<ScheduleHaircutCommand, Nothing>
+    public class CreateEventScheduleCommandHandler : IRequestHandler<CreateEventScheduleCommand, Nothing>
     {
         private readonly IBarberRepository _barberRepository;
         private readonly IHaircutRepository _haircutRepository;
@@ -16,7 +15,7 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
         private readonly INotificationContext _notification;
         private readonly IHttpContext _httpContext;
 
-        public ScheduleHaircutCommandHandler(
+        public CreateEventScheduleCommandHandler(
             IBarberRepository barberRepository,
             IHaircutRepository haircutRepository,
             IEventScheduleRepository eventScheduleRepository,
@@ -30,9 +29,9 @@ namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
             _httpContext = httpContext;
         }
 
-        public async Task<Nothing> Handle(ScheduleHaircutCommand request, CancellationToken cancellationToken)
+        public async Task<Nothing> Handle(CreateEventScheduleCommand request, CancellationToken cancellationToken)
         {
-            var barber = await _barberRepository.GetByIdWithSchedulesAsync(request.Id);
+            var barber = await _barberRepository.GetByIdWithSchedulesAsync(request.BarberId);
 
             if (barber is null)
             {

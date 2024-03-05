@@ -1,5 +1,6 @@
 ﻿using BarberTech.Application.Commands.EventSchedules.Cancel;
 using BarberTech.Application.Commands.EventSchedules.Complete;
+using BarberTech.Application.Commands.EventSchedules.Create;
 using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,14 @@ namespace BarberTech.Api.Controllers
         public async Task<IActionResult> CompleteScheduleAsync([FromRoute] Guid id)
         {
             await _mediator.Send(new CompleteScheduleCommand(id));
+            return NoContent();
+        }
+
+        [HasPermission(Permissions.EventSchedules.Edit)]
+        [HttpPost()]
+        public async Task<IActionResult> CreateEventScheduleAsync([FromBody] CreateEventScheduleCommand command)
+        {
+            await _mediator.Send(command);
             return NoContent();
         }
     }

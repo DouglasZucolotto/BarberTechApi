@@ -38,6 +38,15 @@ namespace BarberTech.Application.Queries.Barbers.GetById
                     Instagram = barber.Instagram,
                     Twitter = barber.Twitter,
                 },
+                EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
+                {
+                    BarberName = es.Barber.User.Name,
+                    DateTime = es.DateTime,
+                    FeedbackId = es.FeedbackId,
+                    Id = es.Id,
+                    Status = es.EventStatus.ToString(),
+                    UserName = es.User.Name
+                })
             };
         }
     }
