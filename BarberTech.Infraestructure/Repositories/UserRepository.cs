@@ -20,7 +20,7 @@ namespace BarberTech.Infraestructure.Repositories
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public Task<User?> GetByIdToDelete(Guid id)
+        public Task<User?> GetByIdToDeleteAsync(Guid id)
         {
             return Query
                 .Include(u => u.EventSchedules)

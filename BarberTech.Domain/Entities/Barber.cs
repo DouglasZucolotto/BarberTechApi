@@ -12,9 +12,9 @@ namespace BarberTech.Domain.Entities
 
         public string Contact { get; set; }
 
-        public Guid EstablishmentId { get; set; }
+        public Guid? EstablishmentId { get; set; }
 
-        public Establishment Establishment { get; set; }
+        public Establishment? Establishment { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; }
 

@@ -29,10 +29,6 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("contact")
                 .IsRequired();
 
-            builder.Property(b => b.EstablishmentId)
-                .HasColumnName("establishment_id")
-                .IsRequired();
-
             builder.Property(b => b.Facebook)
                 .HasColumnName("facebook");
 
@@ -41,6 +37,9 @@ namespace BarberTech.Infraestructure.Mappings
 
             builder.Property(b => b.Twitter)
                .HasColumnName("twitter");
+
+            builder.Property(b => b.EstablishmentId)
+                .HasColumnName("establishment_id");
 
             builder.HasOne(b => b.Establishment)
                 .WithMany(e => e.Barbers)

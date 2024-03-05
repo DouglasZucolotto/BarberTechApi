@@ -18,7 +18,7 @@ namespace BarberTech.Application.Commands.Haircuts.Delete
 
         public async Task<Nothing> Handle(DeleteHaircutCommand request, CancellationToken cancellationToken)
         {
-            var haircut = await _haircutRepository.GetByIdAsync(request.Id);
+            var haircut = await _haircutRepository.GetByIdToDeleteAsync(request.Id);
 
             if (haircut is null)
             {

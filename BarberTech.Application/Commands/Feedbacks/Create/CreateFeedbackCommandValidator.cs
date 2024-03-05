@@ -11,11 +11,11 @@ namespace BarberTech.Application.Commands.Feedbacks.Create
                 .NotNull();
 
             RuleFor(f => f.RatingEstablishment)
-                .ExclusiveBetween(0, 6)
+                .InclusiveBetween(0, 5)
                 .NotNull();
 
             RuleFor(f => f.RatingHaircut)
-                .ExclusiveBetween(0, 6)
+                .InclusiveBetween(0, 5)
                 .NotNull();
 
             RuleFor(f => f.EventScheduleId)

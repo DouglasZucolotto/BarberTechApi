@@ -6,7 +6,7 @@ namespace BarberTech.Application.Queries.Barbers.GetById
     {
         public Guid Id { get; set; }
 
-        public Guid EstablishmentId { get; set; }
+        public Guid? EstablishmentId { get; set; }
 
         public string? About { get; set; }
 

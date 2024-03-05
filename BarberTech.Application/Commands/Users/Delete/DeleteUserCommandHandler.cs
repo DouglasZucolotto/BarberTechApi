@@ -18,7 +18,7 @@ namespace BarberTech.Application.Commands.Users.Delete
 
         public async Task<Nothing> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdToDelete(request.Id);
+            var user = await _userRepository.GetByIdToDeleteAsync(request.Id);
 
             if (user is null)
             {

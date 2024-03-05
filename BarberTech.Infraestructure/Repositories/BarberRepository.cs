@@ -25,6 +25,16 @@ namespace BarberTech.Infraestructure.Repositories
             return (items, totalCount);
         }
 
+        public override Task<Barber?> GetByIdAsync(Guid id)
+        {
+            return Query
+                .Include(b => b.User)
+                .Include(u => u.EventSchedules
+                    .Where(es => es.EventStatus != EventStatus.Canceled))
+                .Include(u => u.EventSchedules).ThenInclude(es => es.User)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         public Task<Barber?> GetByIdWithSchedulesAsync(Guid id)
         {
             return Query

@@ -18,12 +18,18 @@ namespace BarberTech.Application.Commands.Establishments.Delete
 
         public async Task<Nothing> Handle(DeleteEstablishmentCommand request, CancellationToken cancellationToken)
         {
-            var establishment = await _establishmentRepository.GetByIdAsync(request.Id);
+            var establishment = await _establishmentRepository.GetByIdToDeleteAsync(request.Id);
 
             if (establishment is null)
             {
                 _notification.AddNotFound("Establishment does not exists");
                 return default;
+            }
+
+            foreach(var barber in establishment.Barbers)
+            {
+                barber.Establishment = null;
+                barber.EstablishmentId = null;
             }
 
             _establishmentRepository.Remove(establishment);
