@@ -38,7 +38,8 @@ namespace BarberTech.Application.Commands.Users.Register
 
             var hashedPassword = _passwordHasher.Generate(request.Password);
 
-            var user = new User(request.Email, hashedPassword, request.Name, request.ImageSource).WithPermissions();
+            var user = new User(request.Email, hashedPassword, request.Name, request.ImageSource)
+                .WithPermissions();
 
             _userRepository.Add(user);
             await _userRepository.UnitOfWork.CommitAsync();

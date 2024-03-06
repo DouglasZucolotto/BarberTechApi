@@ -14,7 +14,7 @@ using FluentValidation;
 using MediatR;
 using BarberTech.Application.Commands.Haircuts.Create;
 using BarberTech.Application.Commands.Users.Login;
-using BarberTech.Application.Commands.Barbers.ScheduleHaircut;
+using BarberTech.Application.Commands.EventSchedules.Create;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,7 +62,7 @@ builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("
 
 builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblies(new[] {
     typeof(CreateHaircutCommandHandler).Assembly,
-    typeof(ScheduleHaircutCommandHandler).Assembly,
+    typeof(CreateEventScheduleCommandHandler).Assembly,
 }));
 builder.Services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();
 
@@ -124,6 +124,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("users:edit", policy => policy.RequireClaim("permissions", "users:edit"));
     options.AddPolicy("barbers:view", policy => policy.RequireClaim("permissions", "barbers:view"));
     options.AddPolicy("barbers:edit", policy => policy.RequireClaim("permissions", "barbers:edit"));
+    options.AddPolicy("schedules:view", policy => policy.RequireClaim("permissions", "schedules:view"));
     options.AddPolicy("schedules:edit", policy => policy.RequireClaim("permissions", "schedules:edit"));
 });
 

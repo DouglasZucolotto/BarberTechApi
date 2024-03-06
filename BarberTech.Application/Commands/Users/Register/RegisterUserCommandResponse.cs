@@ -6,6 +6,6 @@ namespace BarberTech.Application.Commands.Users.Register
     {
         public string Token { get; set; } = string.Empty;
 
-        public UserDto User { get; set; }
+        public UserDto User { get; set; } = new UserDto();
     }
 }

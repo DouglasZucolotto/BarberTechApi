@@ -9,14 +9,6 @@ namespace BarberTech.Application.Commands.Establishments.Update
             RuleFor(e => e.Id)
                 .NotEmpty();
 
-            RuleFor(e => e.Latitude)
-                .NotNull()
-                .When(e => e.Longitude.HasValue);
-
-            RuleFor(e => e.Longitude)
-                .NotNull()
-                .When(e => e.Latitude.HasValue);
-
             RuleFor(e => e.OpenTime)
                 .Matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$").WithMessage("Open time must be in the format hh:mm.");
 

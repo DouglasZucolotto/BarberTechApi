@@ -9,11 +9,14 @@ namespace BarberTech.Application.Commands.Barbers.Create
             RuleFor(b => b.EstablishmentId)
                 .NotEmpty();
 
+            RuleFor(b => b.UserId)
+                .NotEmpty();
+
             RuleFor(b => b.Contact)
                 .NotEmpty();
 
-            RuleFor(b => b.ImageSource)
-                .NotEmpty();
+            RuleFor(b => b.Social)
+                .NotNull();
         }
     }
 }

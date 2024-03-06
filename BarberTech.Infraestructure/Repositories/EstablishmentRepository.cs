@@ -10,26 +10,25 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public async Task<(int Count, List<Establishment> Establishments)> GetAllWithFeedbacksPagedAsync(int page, int pageSize)
+        public async override Task<(List<Establishment> items, int totalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties)
         {
-            var count = await Query.CountAsync();
+            var filter = Query.Filter(searchTerm, properties);
+            var totalCount = filter.Count();
 
-            var establishments = await Query
-                .Include(h => h.Feedbacks)
-                    .ThenInclude(f => f.User)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+            var items = await filter
+                .Include(e => e.Feedbacks)
+                .Paginate(page, pageSize)
                 .ToListAsync();
 
-            return (count, establishments);
+            return (items, totalCount);
         }
 
-        public Task<Establishment?> GetByIdWithFeedbacksAsync(Guid id)
+        public Task<Establishment?> GetByIdToDeleteAsync(Guid id)
         {
             return Query
-                .Include(h => h.Feedbacks)
-                    .ThenInclude(f => f.User)
-                .FirstOrDefaultAsync(h => h.Id == id);
+                .Include(e => e.Feedbacks).ThenInclude(f => f.EventSchedule)
+                .Include(e => e.Barbers)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
     }
 }

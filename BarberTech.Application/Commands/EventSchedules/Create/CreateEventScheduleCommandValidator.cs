@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
 
-namespace BarberTech.Application.Commands.Barbers.ScheduleHaircut
+namespace BarberTech.Application.Commands.EventSchedules.Create
 {
-    public class ScheduleHaircutCommandValidator : AbstractValidator<ScheduleHaircutCommand>
+    public class CreateEventScheduleCommandValidator : AbstractValidator<CreateEventScheduleCommand>
     {
-        public ScheduleHaircutCommandValidator()
+        public CreateEventScheduleCommandValidator()
         {
-            RuleFor(sh => sh.Id)
+            RuleFor(sh => sh.BarberId)
                 .NotEmpty();
 
             RuleFor(sh => sh.HaircutId)

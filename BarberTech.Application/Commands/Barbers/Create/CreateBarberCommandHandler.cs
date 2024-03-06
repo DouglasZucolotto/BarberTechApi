@@ -1,6 +1,4 @@
-﻿using BarberTech.Application.Commands.Barbers.Dtos;
-using BarberTech.Domain;
-using BarberTech.Domain.Authentication;
+﻿using BarberTech.Domain;
 using BarberTech.Domain.Entities;
 using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Notifications;
@@ -15,31 +13,31 @@ namespace BarberTech.Application.Commands.Barbers.Create
         private readonly IUserRepository _userRepository;
         private readonly IEstablishmentRepository _establishmentRepository;
         private readonly INotificationContext _notification;
-        private readonly IPasswordHasher _passwordHasher;
 
         public CreateBarberCommandHandler(
             IBarberRepository barberRepository, 
             IUserRepository userRepository,
-            IPasswordHasher passwordHasher,
             IEstablishmentRepository establishmentRepository, 
             INotificationContext notification)
         {
             _barberRepository = barberRepository;
             _userRepository = userRepository;
-            _passwordHasher = passwordHasher;
             _establishmentRepository = establishmentRepository;
             _notification = notification;
         }
 
         public async Task<Nothing> Handle(CreateBarberCommand request, CancellationToken cancellationToken)
         {
-            var emailExists = await _userRepository.UserEmailExistsAsync(request.Email);
+            var user = await _userRepository.GetByIdAsync(request.UserId);
 
-            if (emailExists)
+            if (user == null)
             {
-                _notification.AddBadRequest("Email already registered.");
+                _notification.AddNotFound("User does not exists");
                 return default;
             }
+            
+            user.Type = UserType.Barber;
+            user.WithPermissions();
 
             var establishment = await _establishmentRepository.GetByIdAsync(request.EstablishmentId);
 
@@ -48,12 +46,6 @@ namespace BarberTech.Application.Commands.Barbers.Create
                 _notification.AddNotFound("Establishment does not exists");
                 return default;
             }
-
-            var hashedPassword = _passwordHasher.Generate(request.Password);
-
-            var user = new User(request.Email, hashedPassword, request.Name, request.ImageSource)
-                .WithType(UserType.Barber)
-                .WithPermissions();
 
             var barber = new Barber(
                 establishment, 

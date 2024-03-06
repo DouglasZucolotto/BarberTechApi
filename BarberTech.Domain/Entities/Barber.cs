@@ -12,13 +12,15 @@ namespace BarberTech.Domain.Entities
 
         public string Contact { get; set; }
 
-        public Guid EstablishmentId { get; set; }
+        public Guid? EstablishmentId { get; set; }
 
-        public Establishment Establishment { get; set; }
+        public Establishment? Establishment { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; }
 
         public ICollection<EventSchedule> EventSchedules { get; set; }
+
+        public string Name { get; set; }
 
         public string? Facebook { get; set; }
 
@@ -37,10 +39,11 @@ namespace BarberTech.Domain.Entities
         {
             User = user;
             UserId = user.Id;
+            Name = user.Name;
             Establishment = establishment;
             Contact = contact;
             About = about;
-            Facebook= facebook;
+            Facebook = facebook;
             Instagram = intagram;
             Twitter = twitter;
         }
@@ -56,7 +59,9 @@ namespace BarberTech.Domain.Entities
                 return 0;
             }
 
-            return Feedbacks.Average(f => f.RatingBarber);
+            var average = Feedbacks.Average(f => f.RatingBarber);
+
+            return Math.Round(average, 1);
         }
 
         public IEnumerable<TimeSpan> GetAvailableTimesByDateTime(DateTime dateTime)

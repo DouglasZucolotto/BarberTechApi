@@ -1,10 +1,9 @@
 ﻿using BarberTech.Application.Commands.Barbers.Create;
-using BarberTech.Application.Commands.Barbers.Delete;
-using BarberTech.Application.Commands.Barbers.ScheduleHaircut;
 using BarberTech.Application.Commands.Barbers.Update;
 using BarberTech.Application.Queries.Barbers.AvailableDates;
 using BarberTech.Application.Queries.Barbers.AvailableTimes;
 using BarberTech.Application.Queries.Barbers.BarberOptions;
+using BarberTech.Application.Queries.Barbers.Calendar;
 using BarberTech.Application.Queries.Barbers.GetAll;
 using BarberTech.Application.Queries.Barbers.GetById;
 using BarberTech.Infraestructure.Authentication;
@@ -57,10 +56,18 @@ namespace BarberTech.Api.Controllers
 
         [HasPermission(Permissions.Barbers.View)]
         [HttpGet("{id}/avaliable-times")]
-        public async Task<IActionResult> GetAvailableTimesAsync([FromRoute] Guid id, [FromQuery] GetAvailableTimesQuery query)
+        public async Task<IActionResult> GetAvailableTimesAsync([FromRoute] Guid id, [FromQuery] string date)
         {
-            var times = await _mediator.Send(query.WithId(id));
+            var times = await _mediator.Send(new GetAvailableTimesQuery(id, date));
             return Ok(times);
+        }
+
+        [HasPermission(Permissions.Barbers.View)]
+        [HttpGet("{id}/calendar")]
+        public async Task<IActionResult> GetCalendarAsync([FromRoute] Guid id)
+        {
+            var calendar = await _mediator.Send(new GetCalendarQuery(id));
+            return Ok(calendar);
         }
 
         [HasPermission(Permissions.Barbers.Edit)]
@@ -74,22 +81,6 @@ namespace BarberTech.Api.Controllers
         [HasPermission(Permissions.Barbers.Edit)]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBarberAsync([FromRoute] Guid id, [FromBody] UpdateBarberCommand command)
-        {
-            await _mediator.Send(command.WithId(id));
-            return NoContent();
-        }
-
-        [HasPermission(Permissions.Barbers.Edit)]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBarberAsync([FromRoute] Guid id)
-        {
-            await _mediator.Send(new DeleteBarberCommand(id));
-            return NoContent();
-        }
-
-        [HasPermission(Permissions.Barbers.Edit)]
-        [HttpPost("{id}/schedule-haircut")]
-        public async Task<IActionResult> ScheduleHaircutAsync([FromRoute] Guid id, [FromBody] ScheduleHaircutCommand command)
         {
             await _mediator.Send(command.WithId(id));
             return NoContent();

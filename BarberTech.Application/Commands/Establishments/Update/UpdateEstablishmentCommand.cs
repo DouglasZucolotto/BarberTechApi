@@ -13,10 +13,6 @@ namespace BarberTech.Application.Commands.Establishments.Update
 
         public string? ImageSource { get; set; }
 
-        public double? Latitude { get; set; }
-
-        public double? Longitude { get; set; }
-
         public string? OpenTime { get; set; }
 
         public string? LunchTime { get; set; }

@@ -11,43 +11,31 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
-        public async Task<(int Count, List<Barber> Barbers)> GetAllBarbersPagedAsync(int page, int pageSize)
+        public async override Task<(List<Barber> items, int totalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties)
         {
-            var count = await Query.CountAsync();
+            var filter = Query.Filter(searchTerm, properties);
+            var totalCount = filter.Count();
 
-            var barbers = await Query
+            var items = await filter
                 .Include(b => b.User)
                 .Include(b => b.Feedbacks)
-                .Include(b => b.Establishment)
-                .Include(b => b.EventSchedules
-                    .Where(es => es.EventStatus != EventStatus.Canceled))
-                .AsNoTracking()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Paginate(page, pageSize)
                 .ToListAsync();
 
-            return (count, barbers);
+            return (items, totalCount);
         }
 
-        public Task<List<Barber>> GetAllWithUserAsync()
+        public override Task<Barber?> GetByIdAsync(Guid id)
         {
             return Query
                 .Include(b => b.User)
-                .ToListAsync();
-        }
-
-        public Task<Barber?> GetBarberWithUserByIdAsync(Guid id)
-        {
-            return Query
-                .Include(b => b.User)
-                .Include(b => b.Feedbacks)
-                .Include(b => b.Establishment)
-                .Include(b => b.EventSchedules
+                .Include(u => u.EventSchedules
                     .Where(es => es.EventStatus != EventStatus.Canceled))
-                .FirstOrDefaultAsync(b => b.Id == id);
+                .Include(u => u.EventSchedules).ThenInclude(es => es.User)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public Task<Barber?> GetBarberByIdWithEventSchedulesAsync(Guid id)
+        public Task<Barber?> GetByIdWithSchedulesAsync(Guid id)
         {
             return Query
                 .Include(b => b.EventSchedules

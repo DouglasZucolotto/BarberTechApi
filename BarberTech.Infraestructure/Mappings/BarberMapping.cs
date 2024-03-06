@@ -21,12 +21,12 @@ namespace BarberTech.Infraestructure.Mappings
             builder.Property(b => b.About)
                 .HasColumnName("about");
 
-            builder.Property(b => b.Contact)
-                .HasColumnName("contact")
+            builder.Property(b => b.Name)
+                .HasColumnName("name")
                 .IsRequired();
 
-            builder.Property(b => b.EstablishmentId)
-                .HasColumnName("establishment_id")
+            builder.Property(b => b.Contact)
+                .HasColumnName("contact")
                 .IsRequired();
 
             builder.Property(b => b.Facebook)
@@ -37,6 +37,9 @@ namespace BarberTech.Infraestructure.Mappings
 
             builder.Property(b => b.Twitter)
                .HasColumnName("twitter");
+
+            builder.Property(b => b.EstablishmentId)
+                .HasColumnName("establishment_id");
 
             builder.HasOne(b => b.Establishment)
                 .WithMany(e => e.Barbers)

@@ -6,8 +6,6 @@ namespace BarberTech.Domain.Entities
     {
         public string Address { get; set; }
 
-        public Point Coordinates { get; set; }
-
         public string ImageSource { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
@@ -34,7 +32,9 @@ namespace BarberTech.Domain.Entities
                 return 0;
             }
 
-            return Feedbacks.Average(f => f.RatingEstablishment);
+            var average = Feedbacks.Average(f => f.RatingEstablishment);
+
+            return Math.Round(average, 1);
         }
 
         public Establishment()
@@ -42,8 +42,7 @@ namespace BarberTech.Domain.Entities
         }
 
         public Establishment(
-            string address, 
-            Point coordinates,
+            string address,
             string imageSource,
             TimeSpan openTime,
             TimeSpan lunchTime,
@@ -51,7 +50,6 @@ namespace BarberTech.Domain.Entities
             TimeSpan lunchInterval)
         {
             Address = address;
-            Coordinates = coordinates;
             ImageSource = imageSource;
             OpenTime = openTime;
             LunchTime = lunchTime;

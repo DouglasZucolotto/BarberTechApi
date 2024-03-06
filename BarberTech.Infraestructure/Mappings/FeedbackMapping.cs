@@ -53,6 +53,9 @@ namespace BarberTech.Infraestructure.Mappings
                 .HasColumnName("establishment_id")
                 .IsRequired();
 
+            builder.HasOne(f => f.EventSchedule)
+                .WithOne(es => es.Feedback);
+
             builder.HasOne(f => f.Establishment)
                 .WithMany(e => e.Feedbacks)
                 .HasForeignKey(f => f.EstablishmentId);

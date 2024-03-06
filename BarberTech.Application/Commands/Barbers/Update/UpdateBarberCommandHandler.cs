@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Commands.Users.Update;
-using BarberTech.Domain;
+﻿using BarberTech.Domain;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -8,18 +7,15 @@ namespace BarberTech.Application.Commands.Barbers.Update
 {
     public class UpdateBarberCommandHandler : IRequestHandler<UpdateBarberCommand, Nothing>
     {
-        private readonly IMediator _mediator;
         private readonly IBarberRepository _barberRepository;
         private readonly IEstablishmentRepository _establishmentRepository;
         private readonly INotificationContext _notification;
 
         public UpdateBarberCommandHandler(
-            IMediator mediator,
             IBarberRepository barberRepository, 
             IEstablishmentRepository establishmentRepository, 
             INotificationContext notification)
         {
-            _mediator = mediator;
             _barberRepository = barberRepository;
             _establishmentRepository = establishmentRepository;
             _notification = notification;
@@ -47,12 +43,6 @@ namespace BarberTech.Application.Commands.Barbers.Update
 
                 barber.Establishment = establishment;
                 barber.EstablishmentId = establishment.Id;
-            }
-
-            if (request.Email != null || request.Password != null || request.Name != null || request.ImageSource != null)
-            {
-                var command = new UpdateUserCommand(request.Email, request.Password, request.Name, request.ImageSource);
-                await _mediator.Send(command.WithId(barber.UserId));
             }
 
             barber.About = request.About ?? barber.About;

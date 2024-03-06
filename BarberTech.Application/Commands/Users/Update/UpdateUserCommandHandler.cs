@@ -1,5 +1,6 @@
 ﻿using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
+using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;

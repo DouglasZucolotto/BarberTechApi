@@ -6,6 +6,11 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
     {
         public GetBarbersQueryValidator()
         {
+            RuleFor(b => b.Page)
+                .NotNull();
+
+            RuleFor(b => b.PageSize)
+                .NotNull();
         }
     }
 }

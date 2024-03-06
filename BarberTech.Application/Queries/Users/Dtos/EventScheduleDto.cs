@@ -6,8 +6,12 @@
 
         public DateTime DateTime { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+
+        public string BarberName { get; set; } = string.Empty;
 
         public string Status { get; set; } = string.Empty;
+
+        public Guid? FeedbackId { get; set; }
     }
 }

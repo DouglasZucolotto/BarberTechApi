@@ -29,7 +29,9 @@
                 return 0; 
             }
 
-            return Feedbacks.Average(f => f.RatingHaircut);
+            var average = Feedbacks.Average(f => f.RatingHaircut);
+
+            return Math.Round(average, 1);
         }
     }
 }

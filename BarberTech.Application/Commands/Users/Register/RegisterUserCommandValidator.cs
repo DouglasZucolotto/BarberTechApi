@@ -10,7 +10,6 @@ namespace BarberTech.Application.Commands.Users.Register
                 .NotEmpty()
                 .EmailAddress().WithMessage("Email must be in a valid format");
 
-
             RuleFor(r => r.Password)
                 .NotEmpty()
                 .MinimumLength(8).WithMessage("Password must be at least 8 characters long.")

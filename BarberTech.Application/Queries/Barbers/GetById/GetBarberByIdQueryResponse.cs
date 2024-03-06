@@ -6,21 +6,13 @@ namespace BarberTech.Application.Queries.Barbers.GetById
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
-
-        public string Contact { get; set; } = string.Empty;
-
-        public string EstablishmentAddress { get; set; } = string.Empty;
+        public Guid? EstablishmentId { get; set; }
 
         public string? About { get; set; }
 
-        public string? ImageSource { get; set; }   
+        public SocialDto Social { get; set; } = new SocialDto();
 
-        public double Rating { get; set; }
-
-        public SocialDto Social { get; set; }
-
-        public IEnumerable<EventScheduleDto> EventSchedules { get; set; } = Enumerable.Empty<EventScheduleDto>();
+        public string Contact { get; set; } = string.Empty;
     }
 }
 

@@ -23,9 +23,9 @@ namespace BarberTech.Api.Controllers
 
         [HasPermission(Permissions.Users.View)]
         [HttpGet]
-        public async Task<IActionResult> GetUsersAsync()
+        public async Task<IActionResult> GetUsersAsync([FromQuery] GetUsersQuery query)
         {
-            var user = await _mediator.Send(new GetUsersQuery());
+            var user = await _mediator.Send(query);
             return Ok(user);
         }
 

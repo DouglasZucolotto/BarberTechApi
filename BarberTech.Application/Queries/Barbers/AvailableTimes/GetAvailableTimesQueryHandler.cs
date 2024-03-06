@@ -17,7 +17,7 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
 
         public async Task<IEnumerable<string>?> Handle(GetAvailableTimesQuery request, CancellationToken cancellationToken)
         {
-            var barber = await _barberRepository.GetBarberByIdWithEventSchedulesAsync(request.Id);
+            var barber = await _barberRepository.GetByIdWithSchedulesAsync(request.Id);
 
             if (barber == null)
             {

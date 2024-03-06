@@ -8,13 +8,13 @@
 
         public string ImageSource { get; set; } = string.Empty;
 
-        public double Latitude { get; set; }
+        public string OpenTime { get; set; } = string.Empty;
 
-        public double Longitude { get; set; }
+        public string LunchTime { get; set; } = string.Empty;
 
-        public string BusinessTime { get; set; } = string.Empty;
+        public string WorkInterval { get; set; } = string.Empty;
 
-        public double Rating { get; set; }
+        public string LunchInterval { get; set; } = string.Empty;
     }
 }
 

@@ -1,11 +1,11 @@
 ﻿using BarberTech.Application.Queries.Barbers.Dtos;
-using BarberTech.Domain.Entities;
+using BarberTech.Domain;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
 namespace BarberTech.Application.Queries.Barbers.GetAll
 {
-    public class GetBarbersQueryHandler : IRequestHandler<GetBarbersQuery, PagedResponse<GetBarbersQueryResponse>>
+    public class GetBarbersQueryHandler : IRequestHandler<GetBarbersQuery, Paged<GetBarbersQueryResponse>>
     {
         private readonly IBarberRepository _barberRepository;
 
@@ -14,41 +14,34 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
             _barberRepository = barberRepository;
         }
 
-        public async Task<PagedResponse<GetBarbersQueryResponse>> Handle(GetBarbersQuery request, CancellationToken cancellationToken)
+        public async Task<Paged<GetBarbersQueryResponse>> Handle(GetBarbersQuery request, CancellationToken cancellationToken)
         {
-            var queryResponse = await _barberRepository.GetAllBarbersPagedAsync(request.Page, request.PageSize);
+            var filterProps = new string[] { "Name", "Contact", "Instagram", "Facebook", "Twitter" };
 
-            var barbers = queryResponse.Barbers
+            var (items, totalCount) = await _barberRepository.GetAllPagedAsync(
+                request.Page,
+                request.PageSize,
+                request.SearchTerm,
+                filterProps);
+
+            var barbers = items
                 .Select(barber => new GetBarbersQueryResponse
                 {
                     Id = barber.Id,
-                    Name = barber.User.Name,
+                    Name = barber.Name,
                     About = barber.About,
                     ImageSource = barber.User.ImageSource,
-                    Contact = barber.Contact,
                     Rating = barber.GetRating(),
-                    EstablishmentAddress = barber.Establishment.Address,
                     Social = new SocialDto
                     {
                         Facebook = barber.Facebook,
                         Instagram = barber.Instagram,
                         Twitter = barber.Twitter,
                     },
-                    EventSchedules = barber.EventSchedules.Select(es => new EventScheduleDto
-                    {
-                        Id = es.Id,
-                        Name = es.Name,
-                        DateTime = es.DateTime,
-                        Status = es.EventStatus.ToString(),
-                    })
                 })
                 .OrderByDescending(barber => barber.Rating);
 
-            return new PagedResponse<GetBarbersQueryResponse>(
-                barbers,
-                request.Page, 
-                request.PageSize, 
-                queryResponse.Count);
+            return new Paged<GetBarbersQueryResponse>(barbers, request.Page, request.PageSize, totalCount);
         }
     }
 }

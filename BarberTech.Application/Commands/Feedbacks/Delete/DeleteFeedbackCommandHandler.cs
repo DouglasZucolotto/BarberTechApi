@@ -18,13 +18,19 @@ namespace BarberTech.Application.Commands.Feedbacks.Delete
 
         public async Task<Nothing> Handle(DeleteFeedbackCommand request, CancellationToken cancellationToken)
         {
-            var feedback = await _feedbackRepository.GetByIdAsync(request.Id);
+            var feedback = await _feedbackRepository.GetByIdToDeleteAsync(request.Id);
 
             if (feedback is null)
             {
                 _notification.AddNotFound("Feedback does not exists");
                 return default;
             }
+
+            feedback.EventSchedule.Feedback = null;
+            feedback.Establishment.Feedbacks.Remove(feedback);
+            feedback.User.Feedbacks.Remove(feedback);
+            feedback.Barber.Feedbacks.Remove(feedback);
+            feedback.Haircut.Feedbacks.Remove(feedback);
 
             _feedbackRepository.Remove(feedback);
             await _feedbackRepository.UnitOfWork.CommitAsync();

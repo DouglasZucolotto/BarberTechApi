@@ -17,7 +17,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
 
         public async Task<GetHaircutByIdQueryResponse?> Handle(GetHaircutByIdQuery request, CancellationToken cancellationToken)
         {
-            var haircut = await _haircutRepository.GetByIdWithFeedbacksAsync(request.Id);
+            var haircut = await _haircutRepository.GetByIdAsync(request.Id);
 
             if (haircut is null)
             {
@@ -32,7 +32,6 @@ namespace BarberTech.Application.Queries.Haircuts.GetById
                 About = haircut.About,
                 ImageSource = haircut.ImageSource,
                 Price = haircut.Price,
-                Rating = haircut.GetRating(),
             };
         }
     }

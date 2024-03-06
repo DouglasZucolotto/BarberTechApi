@@ -31,27 +31,10 @@ namespace BarberTech.Domain.Entities
             ImageSource = imageSource;
         }
 
-        public void RemovePermissions()
-        {
-            foreach (var permission in Permissions.ToList())
-            {
-                Permissions.Remove(permission);
-            }
-        }
-
-        public User WithType(UserType type)
-        {
-            Type = type;
-            return this;
-        }
-
         public User WithPermissions()
         {
             var permissions = GetPermissions(Type);
-
-            Permissions = permissions
-                .Select(permission => new Permission(this, permission)).ToList();
-
+            Permissions = permissions.Select(permission => new Permission(this, permission)).ToList();
             return this;
         }
 
@@ -62,6 +45,7 @@ namespace BarberTech.Domain.Entities
                 "users:view",
                 "users:edit",
                 "haircuts:view",
+                "schedules:view",
                 "schedules:edit",
                 "feedbacks:view"
             };

@@ -8,10 +8,10 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
 
         public string Date { get; set; } = string.Empty;
 
-        public GetAvailableTimesQuery WithId(Guid id)
+        public GetAvailableTimesQuery(Guid id, string date)
         {
             Id = id;
-            return this;
+            Date = date;
         }
     }
 }

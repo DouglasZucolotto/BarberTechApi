@@ -1,11 +1,14 @@
-﻿using MediatR;
+﻿using BarberTech.Domain;
+using MediatR;
 
 namespace BarberTech.Application.Queries.Establishments.GetAll
 {
-    public class GetEstablishmentsQuery : IRequest<PagedResponse<GetEstablishmentsQueryResponse>>
+    public class GetEstablishmentsQuery : IRequest<Paged<GetEstablishmentsQueryResponse>>
     {
         public int Page { get; set; }
 
         public int PageSize { get; set; }
+
+        public string? SearchTerm { get; set; }
     }
 }
