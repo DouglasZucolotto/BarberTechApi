@@ -1,4 +1,5 @@
 ﻿using BarberTech.Application.Queries.Users.Dtos;
+using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -26,6 +27,10 @@ namespace BarberTech.Application.Queries.Users.GetById
                 return default;
             }
 
+            var schedules = user.Type == UserType.Barber
+                ? user.Barber.EventSchedules
+                : user.EventSchedules;
+
             return new GetUserByIdQueryResponse
             {
                 Id = user.Id,
@@ -33,7 +38,7 @@ namespace BarberTech.Application.Queries.Users.GetById
                 Email = user.Email,
                 Type = user.Type.ToString(),
                 ImageSource = user.ImageSource,
-                EventSchedules = user.EventSchedules.Select(es => new EventScheduleDto
+                EventSchedules = schedules.Select(es => new EventScheduleDto
                 {
                     Id = es.Id,
                     UserName = es.Name ?? es.User.Name,

@@ -17,6 +17,7 @@ namespace BarberTech.Infraestructure.Repositories
                 .Include(u => u.EventSchedules
                     .Where(es => es.EventStatus != EventStatus.Canceled))
                 .Include(u => u.EventSchedules).ThenInclude(es => es.Barber).ThenInclude(b => b.User)
+                .Include(u => u.Barber).ThenInclude(b => b.EventSchedules)
                 .Include(u => u.Permissions)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }

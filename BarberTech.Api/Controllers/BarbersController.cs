@@ -3,6 +3,7 @@ using BarberTech.Application.Commands.Barbers.Update;
 using BarberTech.Application.Queries.Barbers.AvailableDates;
 using BarberTech.Application.Queries.Barbers.AvailableTimes;
 using BarberTech.Application.Queries.Barbers.BarberOptions;
+using BarberTech.Application.Queries.Barbers.Calendar;
 using BarberTech.Application.Queries.Barbers.GetAll;
 using BarberTech.Application.Queries.Barbers.GetById;
 using BarberTech.Infraestructure.Authentication;
@@ -59,6 +60,14 @@ namespace BarberTech.Api.Controllers
         {
             var times = await _mediator.Send(new GetAvailableTimesQuery(id, date));
             return Ok(times);
+        }
+
+        [HasPermission(Permissions.Barbers.View)]
+        [HttpGet("{id}/calendar")]
+        public async Task<IActionResult> GetCalendarAsync([FromRoute] Guid id)
+        {
+            var calendar = await _mediator.Send(new GetCalendarQuery(id));
+            return Ok(calendar);
         }
 
         [HasPermission(Permissions.Barbers.Edit)]

@@ -13,8 +13,6 @@ namespace BarberTech.Application.Queries.Barbers.GetById
         public SocialDto Social { get; set; } = new SocialDto();
 
         public string Contact { get; set; } = string.Empty;
-
-        public IEnumerable<EventScheduleDto> EventSchedules { get; set; } = Enumerable.Empty<EventScheduleDto>();
     }
 }
 
