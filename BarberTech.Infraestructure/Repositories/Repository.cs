@@ -17,7 +17,7 @@ namespace BarberTech.Infraestructure.Repositories
 
         protected IQueryable<TEntity> Query => Context.Set<TEntity>();
 
-        public Task<List<TEntity>> GetAllAsync() => Query.ToListAsync();
+        public virtual Task<List<TEntity>> GetAllAsync() => Query.ToListAsync();
 
         public virtual async Task<(List<TEntity> items, int totalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties)
         {

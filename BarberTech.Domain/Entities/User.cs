@@ -34,10 +34,7 @@ namespace BarberTech.Domain.Entities
         public User WithPermissions()
         {
             var permissions = GetPermissions(Type);
-
-            Permissions = permissions
-                .Select(permission => new Permission(this, permission)).ToList();
-
+            Permissions = permissions.Select(permission => new Permission(this, permission)).ToList();
             return this;
         }
 

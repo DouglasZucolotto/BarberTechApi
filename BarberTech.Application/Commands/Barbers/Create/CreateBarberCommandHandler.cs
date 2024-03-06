@@ -35,8 +35,9 @@ namespace BarberTech.Application.Commands.Barbers.Create
                 _notification.AddNotFound("User does not exists");
                 return default;
             }
-
+            
             user.Type = UserType.Barber;
+            user.WithPermissions();
 
             var establishment = await _establishmentRepository.GetByIdAsync(request.EstablishmentId);
 

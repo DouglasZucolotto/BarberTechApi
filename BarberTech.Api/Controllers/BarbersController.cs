@@ -55,9 +55,9 @@ namespace BarberTech.Api.Controllers
 
         [HasPermission(Permissions.Barbers.View)]
         [HttpGet("{id}/avaliable-times")]
-        public async Task<IActionResult> GetAvailableTimesAsync([FromRoute] Guid id, [FromQuery] GetAvailableTimesQuery query)
+        public async Task<IActionResult> GetAvailableTimesAsync([FromRoute] Guid id, [FromQuery] string date)
         {
-            var times = await _mediator.Send(query.WithId(id));
+            var times = await _mediator.Send(new GetAvailableTimesQuery(id, date));
             return Ok(times);
         }
 

@@ -15,7 +15,7 @@ namespace BarberTech.Application.Queries.Haircuts.GetAll
 
         public async Task<Paged<GetHaircutsQueryResponse>> Handle(GetHaircutsQuery request, CancellationToken cancellationToken)
         {
-            var filterProps = new string[] { "Name", "Price" };
+            var filterProps = new string[] { "Name", "About" };
 
             var (items, totalCount) = await _haircutRepository.GetAllPagedAsync(request.Page, request.PageSize, request.SearchTerm, filterProps);
 
