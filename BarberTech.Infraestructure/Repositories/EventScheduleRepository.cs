@@ -10,6 +10,20 @@ namespace BarberTech.Infraestructure.Repositories
         {
         }
 
+        public async override Task<(List<EventSchedule> items, int totalCount)> GetAllPagedAsync(int page, int pageSize, string? searchTerm, string[] properties)
+        {
+            var filter = Query.Filter(searchTerm, properties);
+            var totalCount = filter.Count();
+
+            var items = await filter
+                .Include(es => es.Haircut)
+                .Include(es => es.Barber)
+                .Paginate(page, pageSize)
+                .ToListAsync();
+
+            return (items, totalCount);
+        }
+
         public Task<EventSchedule?> GetByIdWithEstablishment(Guid id)
         {
             return Query

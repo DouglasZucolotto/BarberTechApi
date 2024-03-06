@@ -1,6 +1,7 @@
 ﻿using BarberTech.Application.Commands.EventSchedules.Cancel;
 using BarberTech.Application.Commands.EventSchedules.Complete;
 using BarberTech.Application.Commands.EventSchedules.Create;
+using BarberTech.Application.Queries.EventSchedules.GetAll;
 using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,14 @@ namespace BarberTech.Api.Controllers
         public EventSchedulesController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HasPermission(Permissions.EventSchedules.View)]
+        [HttpGet()]
+        public async Task<IActionResult> GetSchedulesAsync([FromQuery] GetSchedulesQuery query)
+        {
+            var schedules = await _mediator.Send(query);
+            return Ok(schedules);
         }
 
         [HasPermission(Permissions.EventSchedules.Edit)]

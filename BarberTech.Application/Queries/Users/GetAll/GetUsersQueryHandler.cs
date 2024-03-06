@@ -26,7 +26,9 @@ namespace BarberTech.Application.Queries.Users.GetAll
             var users = items.Select(user => new GetUsersQueryResponse
             {
                 Id = user.Id,
-                Name = user.Name
+                Name = user.Name,
+                Email = user.Email,
+                Type = user.Type.ToString(),
             });
 
             return new Paged<GetUsersQueryResponse>(users, request.Page, request.PageSize, totalCount);

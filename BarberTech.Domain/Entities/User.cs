@@ -45,6 +45,7 @@ namespace BarberTech.Domain.Entities
                 "users:view",
                 "users:edit",
                 "haircuts:view",
+                "schedules:view",
                 "schedules:edit",
                 "feedbacks:view"
             };
