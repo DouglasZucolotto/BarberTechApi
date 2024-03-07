@@ -19,7 +19,7 @@ namespace BarberTech.Application.Queries.Barbers.BarberOptions
             return barbers.Select(b => new GetBarberOptionsQueryResponse()
             {
                 Id = b.Id,
-                Name = b.Name,
+                Name = b.User.Name,
             });
         }
     }

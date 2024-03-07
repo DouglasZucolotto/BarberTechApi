@@ -10,6 +10,12 @@
         
         public string UserName { get; set; } = string.Empty;
 
+        public string BarberName { get; set; } = string.Empty;
+
+        public string HaircutName { get; set; } = string.Empty;
+
+        public string EstablishmentAddress { get; set; } = string.Empty;
+
         public string At { get; set; } = string.Empty;
     }
 }

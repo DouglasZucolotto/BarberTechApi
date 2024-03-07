@@ -15,7 +15,7 @@ namespace BarberTech.Application.Queries.EventSchedules.GetAll
 
         public async Task<Paged<GetSchedulesQueryResponse>> Handle(GetSchedulesQuery request, CancellationToken cancellationToken)
         {
-            var filterProps = new string[] { "Name" };
+            var filterProps = new string[] { "Name", "Barber", "Haircut" };
 
             var (items, totalCount) = await _eventScheduleRepository.GetAllPagedAsync(request.Page, request.PageSize, request.SearchTerm, filterProps);
 
@@ -23,7 +23,7 @@ namespace BarberTech.Application.Queries.EventSchedules.GetAll
             {
                 Id = schedule.Id,
                 Name = schedule.Name,
-                BarberName = schedule.Barber.Name,
+                BarberName = schedule.Barber.User.Name,
                 HaircutName = schedule.Haircut.Name,
                 Date = schedule.DateTime.ToString(),
                 Status = schedule.EventStatus.ToString(),

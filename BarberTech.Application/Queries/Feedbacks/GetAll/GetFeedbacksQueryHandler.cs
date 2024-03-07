@@ -1,5 +1,4 @@
-﻿using BarberTech.Application.Queries.Establishments.GetAll;
-using BarberTech.Domain;
+﻿using BarberTech.Domain;
 using BarberTech.Domain.Repositories;
 using MediatR;
 
@@ -16,7 +15,7 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
 
         public async Task<Paged<GetFeedbacksQueryResponse>> Handle(GetFeedbacksQuery request, CancellationToken cancellationToken)
         {
-            var filterProps = new string[] { "Comment" };
+            var filterProps = new string[] { "Comment", "Name", "Address", "User", "Haircut", "Barber", "Establishment" };
 
             var (items, totalCount) = await _feedbackRepository.GetAllPagedAsync(request.Page, request.PageSize, request.SearchTerm, filterProps);
 
@@ -27,7 +26,10 @@ namespace BarberTech.Application.Queries.Feedbacks.GetAll
                     Comment = feedback.Comment,
                     At = feedback.CreatedAt.ToString("dd/MM/yyyy"),
                     RatingAverage = feedback.GetRatingAverage(),
-                    UserName = feedback.User.Name
+                    UserName = feedback.User.Name,
+                    BarberName = feedback.Barber.User.Name,
+                    HaircutName = feedback.Haircut.Name,
+                    EstablishmentAddress = feedback.Establishment.Address,
                 });
 
             return new Paged<GetFeedbacksQueryResponse>(feedbacks, request.Page, request.PageSize, totalCount); 

@@ -21,10 +21,6 @@ namespace BarberTech.Infraestructure.Mappings
             builder.Property(b => b.About)
                 .HasColumnName("about");
 
-            builder.Property(b => b.Name)
-                .HasColumnName("name")
-                .IsRequired();
-
             builder.Property(b => b.Contact)
                 .HasColumnName("contact")
                 .IsRequired();

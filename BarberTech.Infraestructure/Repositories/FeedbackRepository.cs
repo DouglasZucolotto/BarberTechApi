@@ -17,6 +17,9 @@ namespace BarberTech.Infraestructure.Repositories
 
             var items = await filter
                 .Include(f => f.User)
+                .Include(f => f.Haircut)
+                .Include(f => f.Barber).ThenInclude(b => b.User)
+                .Include(f => f.Establishment)
                 .Paginate(page, pageSize)
                 .ToListAsync();
 

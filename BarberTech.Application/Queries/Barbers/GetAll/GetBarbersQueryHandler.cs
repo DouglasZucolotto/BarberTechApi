@@ -16,7 +16,7 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
 
         public async Task<Paged<GetBarbersQueryResponse>> Handle(GetBarbersQuery request, CancellationToken cancellationToken)
         {
-            var filterProps = new string[] { "Name", "Contact", "Instagram", "Facebook", "Twitter" };
+            var filterProps = new string[] { "User", "Name", "Contact", "Instagram", "Facebook", "Twitter" };
 
             var (items, totalCount) = await _barberRepository.GetAllPagedAsync(
                 request.Page,
@@ -28,7 +28,7 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                 .Select(barber => new GetBarbersQueryResponse
                 {
                     Id = barber.Id,
-                    Name = barber.Name,
+                    Name = barber.User.Name,
                     About = barber.About,
                     ImageSource = barber.User.ImageSource,
                     Rating = barber.GetRating(),
