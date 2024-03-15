@@ -38,9 +38,7 @@ namespace BarberTech.Application.Commands.Users.Register
 
             var hashedPassword = _passwordHasher.Generate(request.Password);
 
-            var imageSource = $"https://ucarecdn.com/5d8878dd-0109-4905-ace3-fa1fda031999/{request.ImageSource}";
-
-            var user = new User(request.Email, hashedPassword, request.Name, imageSource)
+            var user = new User(request.Email, hashedPassword, request.Name, request.ImageSource)
                 .WithPermissions();
 
             _userRepository.Add(user);

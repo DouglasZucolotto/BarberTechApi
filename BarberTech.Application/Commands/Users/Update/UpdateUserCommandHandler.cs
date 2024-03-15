@@ -31,12 +31,7 @@ namespace BarberTech.Application.Commands.Users.Update
 
             user.Name = request.Name ?? user.Name;
             user.Email = request.Email ?? user.Email;
-
-            if (request.ImageSource != null)
-            {
-                var imageSource = $"https://ucarecdn.com/5d8878dd-0109-4905-ace3-fa1fda031999/{request.ImageSource}";
-                user.ImageSource = imageSource;
-            }
+            user.ImageSource = request.ImageSource ?? user.ImageSource;
 
             if (request.Password != null)
             {

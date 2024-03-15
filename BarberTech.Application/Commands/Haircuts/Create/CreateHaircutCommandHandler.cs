@@ -16,9 +16,7 @@ namespace BarberTech.Application.Commands.Haircuts.Create
 
         public async Task<Nothing> Handle(CreateHaircutCommand request, CancellationToken cancellationToken)
         {
-            var imageSource = $"https://ucarecdn.com/5d8878dd-0109-4905-ace3-fa1fda031999/{request.ImageSource}";
-
-            var haircut = new Haircut(request.Name, request.About, imageSource, request.Price);
+            var haircut = new Haircut(request.Name, request.About, request.ImageSource, request.Price);
 
             _haircutRepository.Add(haircut);
             await _haircutRepository.UnitOfWork.CommitAsync();
