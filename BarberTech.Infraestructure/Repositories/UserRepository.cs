@@ -42,5 +42,12 @@ namespace BarberTech.Infraestructure.Repositories
         {
             return Query.AnyAsync(u => u.Email == email);
         }
+
+        public Task<List<User>> GetAllFilteredAsync(string? searchTerm, string[] properties)
+        {
+            return Query
+                .Filter(searchTerm, properties)
+                .ToListAsync();
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace BarberTech.Application.Queries.Barbers.GetAll
                 {
                     Id = barber.Id,
                     Name = barber.User.Name,
+                    Contact = barber.Contact,
                     About = barber.About,
                     ImageSource = barber.User.ImageSource,
                     Rating = barber.GetRating(),

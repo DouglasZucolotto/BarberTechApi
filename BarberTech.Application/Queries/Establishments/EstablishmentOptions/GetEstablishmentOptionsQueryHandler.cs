@@ -15,7 +15,9 @@ namespace BarberTech.Application.Queries.Establishments.EstablishmentOptions
 
         public async Task<IEnumerable<GetEstablishmentOptionsQueryResponse>> Handle(GetEstablishmentOptionsQuery request, CancellationToken cancellationToken)
         {
-            var establishments = await _establishmentRepository.GetAllAsync();
+            var filterProps = new string[] { "Address" };
+
+            var establishments = await _establishmentRepository.GetAllFilteredAsync(request.SearchTerm, filterProps);
 
             return establishments.Select(e => new GetEstablishmentOptionsQueryResponse()
             {

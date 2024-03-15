@@ -30,5 +30,22 @@ namespace BarberTech.Infraestructure.Repositories
                 .Include(e => e.Barbers)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
+
+        public Task<List<Barber>> GetBarbersAsync(Guid id, string? searchTerm, string[] properties)
+        {
+            return Query
+                .Where(e => e.Id == id)
+                .Include(e => e.Barbers).ThenInclude(b => b.User)
+                .SelectMany(e => e.Barbers)
+                .Filter(searchTerm, properties)
+                .ToListAsync();
+        }
+
+        public Task<List<Establishment>> GetAllFilteredAsync(string? searchTerm, string[] properties)
+        {
+            return Query
+                .Filter(searchTerm, properties)
+                .ToListAsync();
+        }
     }
 }

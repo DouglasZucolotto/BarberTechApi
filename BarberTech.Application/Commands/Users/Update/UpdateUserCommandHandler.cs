@@ -1,6 +1,5 @@
 ﻿using BarberTech.Domain;
 using BarberTech.Domain.Authentication;
-using BarberTech.Domain.Entities.Enums;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
@@ -32,7 +31,12 @@ namespace BarberTech.Application.Commands.Users.Update
 
             user.Name = request.Name ?? user.Name;
             user.Email = request.Email ?? user.Email;
-            user.ImageSource = request.ImageSource ?? user.ImageSource;
+
+            if (request.ImageSource != null)
+            {
+                var imageSource = $"https://ucarecdn.com/5d8878dd-0109-4905-ace3-fa1fda031999/{request.ImageSource}";
+                user.ImageSource = imageSource;
+            }
 
             if (request.Password != null)
             {

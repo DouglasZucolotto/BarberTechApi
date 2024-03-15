@@ -3,6 +3,7 @@ using BarberTech.Application.Commands.Establishments.Delete;
 using BarberTech.Application.Commands.Establishments.Update;
 using BarberTech.Application.Queries.Establishments.EstablishmentOptions;
 using BarberTech.Application.Queries.Establishments.GetAll;
+using BarberTech.Application.Queries.Establishments.GetBarbers;
 using BarberTech.Application.Queries.Establishments.GetById;
 using BarberTech.Infraestructure.Authentication;
 using MediatR;
@@ -23,9 +24,9 @@ namespace BarberTech.Api.Controllers
 
         [HasPermission(Permissions.Establishments.View)]
         [HttpGet("options")]
-        public async Task<IActionResult> GetEstablishmentOptionsAsync()
+        public async Task<IActionResult> GetEstablishmentOptionsAsync([FromQuery] GetEstablishmentOptionsQuery query)
         {
-            var options = await _mediator.Send(new GetEstablishmentOptionsQuery());
+            var options = await _mediator.Send(query);
             return Ok(options);
         }
 
@@ -66,6 +67,14 @@ namespace BarberTech.Api.Controllers
         {
             await _mediator.Send(new DeleteEstablishmentCommand(id));
             return NoContent();
+        }
+
+        [HasPermission(Permissions.Establishments.View)]
+        [HttpGet("{id}/barbers")]
+        public async Task<IActionResult> GetBarbersAsync([FromRoute] Guid id, [FromQuery] string searchTerm)
+        {
+            var barbers = await _mediator.Send(new GetBarbersQuery(id, searchTerm));
+            return Ok(barbers);
         }
     }
 }

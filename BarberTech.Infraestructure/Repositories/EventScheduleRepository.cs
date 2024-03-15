@@ -17,6 +17,7 @@ namespace BarberTech.Infraestructure.Repositories
             var totalCount = filter.Count();
 
             var items = await filter
+                .Where(es => es.EventStatus == EventStatus.Active)
                 .Include(es => es.Haircut)
                 .Include(es => es.Barber).ThenInclude(b => b.User)
                 .Paginate(page, pageSize)

@@ -47,8 +47,13 @@ namespace BarberTech.Application.Commands.Establishments.Update
                 establishment.LunchInterval = TimeSpan.Parse(request.LunchInterval);
             }
 
+            if (request.ImageSource != null)
+            {
+                var imageSource = $"https://ucarecdn.com/5d8878dd-0109-4905-ace3-fa1fda031999/{request.ImageSource}";
+                establishment.ImageSource = imageSource;
+            }
+
             establishment.Address = request.Address ?? establishment.Address;
-            establishment.ImageSource = request.ImageSource ?? establishment.ImageSource;
 
             _establishmentRepository.Update(establishment);
             await _establishmentRepository.UnitOfWork.CommitAsync();

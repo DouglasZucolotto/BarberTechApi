@@ -21,9 +21,19 @@ namespace BarberTech.Infraestructure
 
             var entityType = typeof(TEntity);
             var parameter = Expression.Parameter(entityType, "x");
-            
             var expressions = new List<Expression>();
+            
+            FillExpressions(expressions, entityType, parameter, props, searchTerm);
 
+            var body = expressions.Any() ? expressions.Aggregate(Expression.OrElse) : Expression.Constant(false);
+            var lambda = Expression.Lambda<Func<TEntity, bool>>(body, parameter);
+
+            return query.Where(lambda);
+        }
+
+        private static List<Expression> FillExpressions(
+            List<Expression> expressions, Type entityType, Expression parameter, IEnumerable<string> props, string searchTerm)
+        {
             foreach (var propertyName in props)
             {
                 var property = entityType.GetProperty(propertyName);
@@ -31,48 +41,33 @@ namespace BarberTech.Infraestructure
                 if (property == null) { continue; }
 
                 var propertyAccess = Expression.Property(parameter, property);
-                CallByType(property, propertyAccess, expressions, searchTerm);
+                var searchTermExpression = Expression.Constant(searchTerm.ToLower(), typeof(string));
 
+                if (property.PropertyType == typeof(string))
+                {
+                    var toLowerCall = Expression.Call(propertyAccess, "ToLower", null);
+                    var containsCall = Expression.Call(toLowerCall, "Contains", null, searchTermExpression);
+                    expressions.Add(containsCall);
+                    continue;
+                }
+                if (property.PropertyType == typeof(decimal) || property.PropertyType == typeof(int))
+                {
+                    var parsedTerm = TryParse(searchTerm, property.PropertyType);
+
+                    if (parsedTerm is null) { continue; }
+
+                    var containsCall = Expression.Call(propertyAccess, "Equals", null, parsedTerm);
+                    expressions.Add(containsCall);
+                    continue;
+                }
                 if (property.PropertyType.BaseType == typeof(Entity))
                 {
-                    var nestedProperties = property.PropertyType.GetProperties()
-                        .Where(p => props.Any(prop => prop == p.Name) && p.PropertyType == typeof(string));
-
-                    foreach (var nestedProperty in nestedProperties)
-                    {
-                        var nestedPropertyAccess = Expression.Property(propertyAccess, nestedProperty);
-                        CallByType(nestedProperty, nestedPropertyAccess, expressions, searchTerm);
-                    }
+                    var filteredProps = props.Where(p => p != propertyName);
+                    var nestedEntityType = property.PropertyType;
+                    FillExpressions(expressions, nestedEntityType, propertyAccess, filteredProps, searchTerm);
                 }
             }
-
-            var body = expressions.Any() ? expressions.Aggregate(Expression.OrElse) : Expression.Constant(false);
-            var lambda = Expression.Lambda<Func<TEntity, bool>>(body, parameter);
-
-            return query.Where(lambda);
-        }
-        
-        private static void CallByType(
-            PropertyInfo property, MemberExpression propertyAccess, List<Expression> expressions, string searchTerm)
-        {
-            var searchTermExpression = Expression.Constant(searchTerm, typeof(string));
-
-            if (property.PropertyType == typeof(string))
-            {
-                var containsCall = Expression.Call(propertyAccess, "Contains", null, searchTermExpression);
-                expressions.Add(containsCall);
-                return;
-            } 
-            if (property.PropertyType == typeof(decimal) || property.PropertyType == typeof(int))
-            {
-                var parsedTerm = TryParse(searchTerm, property.PropertyType);
-
-                if (parsedTerm is null) { return; }
-
-                var containsCall = Expression.Call(propertyAccess, "Equals", null, parsedTerm);
-                expressions.Add(containsCall);
-                return;
-            }
+            return expressions;
         }
 
         private static Expression? TryParse(string searchTerm, Type type)

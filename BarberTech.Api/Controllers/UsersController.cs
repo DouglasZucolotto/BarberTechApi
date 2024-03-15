@@ -4,6 +4,7 @@ using BarberTech.Application.Commands.Users.Register;
 using BarberTech.Application.Commands.Users.Update;
 using BarberTech.Application.Queries.Users.GetAll;
 using BarberTech.Application.Queries.Users.GetById;
+using BarberTech.Application.Queries.Users.UserOptions;
 using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,14 @@ namespace BarberTech.Api.Controllers
         {
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HasPermission(Permissions.Users.View)]
+        [HttpGet("options")]
+        public async Task<IActionResult> GetUserOptionsAsync([FromQuery] GetUserOptionsQuery query)
+        {
+            var users = await _mediator.Send(query);
+            return Ok(users);
         }
     }
 }

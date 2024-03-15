@@ -29,7 +29,12 @@ namespace BarberTech.Application.Commands.Haircuts.Update
             haircut.Name = request.Name ?? haircut.Name;
             haircut.About = request.About ?? haircut.About;
             haircut.Price = request.Price ?? haircut.Price;
-            haircut.ImageSource = request.ImageSource ?? haircut.ImageSource;
+
+            if (request.ImageSource!= null)
+            {
+                var imageSource = $"https://ucarecdn.com/5d8878dd-0109-4905-ace3-fa1fda031999/{request.ImageSource}";
+                haircut.ImageSource = imageSource;
+            }
 
             _haircutRepository.Update(haircut);
             await _haircutRepository.UnitOfWork.CommitAsync();

@@ -17,9 +17,11 @@ namespace BarberTech.Application.Commands.Establishments.Create
 
         public async Task<Nothing> Handle(CreateEstablishmentCommand request, CancellationToken cancellationToken)
         {
+            var imageSource = $"https://ucarecdn.com/5d8878dd-0109-4905-ace3-fa1fda031999/{request.ImageSource}";
+
             var establishment = new Establishment(
                 request.Address,
-                request.ImageSource,
+                imageSource,
                 TimeSpan.Parse(request.OpenTime),
                 TimeSpan.Parse(request.LunchTime),
                 TimeSpan.Parse(request.WorkInterval),
