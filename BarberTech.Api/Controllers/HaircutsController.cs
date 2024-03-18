@@ -3,6 +3,7 @@ using BarberTech.Application.Commands.Haircuts.Delete;
 using BarberTech.Application.Commands.Haircuts.Update;
 using BarberTech.Application.Queries.Haircuts.GetAll;
 using BarberTech.Application.Queries.Haircuts.GetById;
+using BarberTech.Application.Queries.Haircuts.HaircutOptions;
 using BarberTech.Infraestructure.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,14 @@ namespace BarberTech.Api.Controllers
         {
             await _mediator.Send(new DeleteHaircutCommand(id));
             return NoContent();
+        }
+
+        [HasPermission(Permissions.Haircuts.View)]
+        [HttpGet("options")]
+        public async Task<IActionResult> GetHaircutOptionsAsync([FromQuery] GetHaircutOptionsQuery query)
+        {
+            var options = await _mediator.Send(query);
+            return Ok(options);
         }
     }
 }

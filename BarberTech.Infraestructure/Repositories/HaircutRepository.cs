@@ -30,5 +30,12 @@ namespace BarberTech.Infraestructure.Repositories
                 .Include(h => h.Feedbacks)
                 .FirstOrDefaultAsync(h => h.Id == id);
         }
+
+        public Task<List<Haircut>> GetAllFilteredAsync(string? searchTerm, string[] properties)
+        {
+            return Query
+                .Filter(searchTerm, properties)
+                .ToListAsync();
+        }
     }
 }
