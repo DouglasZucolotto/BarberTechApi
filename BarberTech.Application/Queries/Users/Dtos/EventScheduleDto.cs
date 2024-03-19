@@ -13,5 +13,7 @@
         public string Status { get; set; } = string.Empty;
 
         public Guid? FeedbackId { get; set; }
+
+        public HaircutDto Haircut { get; set; }
     }
 }

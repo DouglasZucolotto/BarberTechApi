@@ -45,7 +45,13 @@ namespace BarberTech.Application.Queries.Users.GetById
                     BarberName = es.Barber.User.Name,
                     DateTime = es.DateTime,
                     Status = es.EventStatus.ToString(),
-                    FeedbackId = es.FeedbackId
+                    FeedbackId = es.FeedbackId,
+                    Haircut = new HaircutDto
+                    {
+                        Id = es.Haircut.Id,
+                        Name = es.Haircut.Name,
+                        ImageSource = es.Haircut.ImageSource
+                    }
                 })
             };
         }
