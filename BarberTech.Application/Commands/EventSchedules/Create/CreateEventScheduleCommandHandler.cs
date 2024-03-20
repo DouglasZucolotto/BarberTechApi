@@ -4,6 +4,7 @@ using BarberTech.Domain.Entities;
 using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
+using System.Globalization;
 
 namespace BarberTech.Application.Commands.EventSchedules.Create
 {
@@ -55,7 +56,8 @@ namespace BarberTech.Application.Commands.EventSchedules.Create
                 return default;
             }
 
-            var dateTime = DateTime.Parse(request.DateTime);
+            var culture = new CultureInfo("pt-BR");
+            var dateTime = DateTime.Parse(request.DateTime, culture);
             var availableTimes = barber.GetAvailableTimesByDateTime(dateTime);
             var time = request.DateTime.Split(' ')[1];
             var isTimeAvailable = availableTimes.Any(at => at.ToString(@"hh\:mm").Equals(time));
@@ -66,7 +68,7 @@ namespace BarberTech.Application.Commands.EventSchedules.Create
                 return default;
             }
 
-            var dateTimeUniversal = DateTime.Parse(request.DateTime).ToUniversalTime();
+            var dateTimeUniversal = dateTime.ToUniversalTime();
 
             var eventSchedule = new EventSchedule(user, barber, haircut, request.Name ?? user.Name, dateTimeUniversal);
 
