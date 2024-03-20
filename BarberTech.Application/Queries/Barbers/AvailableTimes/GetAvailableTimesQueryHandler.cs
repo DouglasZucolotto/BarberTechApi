@@ -1,6 +1,7 @@
 ﻿using BarberTech.Domain.Notifications;
 using BarberTech.Domain.Repositories;
 using MediatR;
+using System.Globalization;
 
 namespace BarberTech.Application.Queries.Barbers.AvailableTimes
 {
@@ -25,7 +26,8 @@ namespace BarberTech.Application.Queries.Barbers.AvailableTimes
                 return default;
             }
 
-            var requestDate = DateTime.Parse(request.Date);
+            var culture = new CultureInfo("pt-BR");
+            var requestDate = DateTime.Parse(request.Date, culture);
             var availableTimes = barber.GetAvailableTimesByDateTime(requestDate);
 
             return availableTimes.Select(time => time.ToString()[..5]);
