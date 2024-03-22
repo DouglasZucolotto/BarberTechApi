@@ -2,7 +2,7 @@
 
 namespace BarberTech.Application.Queries.Barbers.Calendar
 {
-    public class GetCalendarQuery : IRequest<Dictionary<string, GetCalendarQueryResponse>>
+    public class GetCalendarQuery : IRequest<Dictionary<string, IEnumerable<GetCalendarQueryResponse>>>
     {
         public Guid Id { get; set; }
 

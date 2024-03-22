@@ -1,11 +1,10 @@
 ﻿using BarberTech.Domain.Repositories;
 using MediatR;
 using BarberTech.Domain.Notifications;
-using BarberTech.Application.Queries.Barbers.Dtos;
 
 namespace BarberTech.Application.Queries.Barbers.Calendar
 {
-    public class GetCalendarQueryHandler : IRequestHandler<GetCalendarQuery, Dictionary<string, GetCalendarQueryResponse>>
+    public class GetCalendarQueryHandler : IRequestHandler<GetCalendarQuery, Dictionary<string, IEnumerable<GetCalendarQueryResponse>>>
     {
         private readonly IEventScheduleRepository _eventScheduleRepository;
         private readonly IBarberRepository _barberRepository;
@@ -21,7 +20,7 @@ namespace BarberTech.Application.Queries.Barbers.Calendar
             _notification = notification;
         }
 
-        public async Task<Dictionary<string, GetCalendarQueryResponse>> Handle(GetCalendarQuery request, CancellationToken cancellationToken)
+        public async Task<Dictionary<string, IEnumerable<GetCalendarQueryResponse>>> Handle(GetCalendarQuery request, CancellationToken cancellationToken)
         {
             var barber = await _barberRepository.GetByIdAsync(request.Id);
 
@@ -35,15 +34,11 @@ namespace BarberTech.Application.Queries.Barbers.Calendar
 
             return schedules.ToDictionary(
                 group => group.Key.Date.ToString("dd/MM/yyyy"),
-                group => new GetCalendarQueryResponse
+                group => group.Value.Select(es => new GetCalendarQueryResponse
                 {
-                    Date = group.Key.Date.ToString("dd/MM/yyyy"),
-                    Schedules = group.Value.Select(es => new EventScheduleDto
-                    {
-                        DateTime = es.DateTime.ToString("HH:mm"),
-                        UserName = es.Name,
-                    })
-                });
+                    Time = es.DateTime.ToString("HH:mm"),
+                    UserName = es.Name,
+                }));
         }
     }
 }

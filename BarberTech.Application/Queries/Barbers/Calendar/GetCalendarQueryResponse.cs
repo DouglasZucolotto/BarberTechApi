@@ -4,8 +4,8 @@ namespace BarberTech.Application.Queries.Barbers.Calendar
 {
     public class GetCalendarQueryResponse
     {
-        public string Date { get; set; } = string.Empty;
+        public string Time { get; set; } = string.Empty;
 
-        public IEnumerable<EventScheduleDto> Schedules { get; set; } = Enumerable.Empty<EventScheduleDto>();
+        public string UserName { get; set; } = string.Empty;
     }
 }
