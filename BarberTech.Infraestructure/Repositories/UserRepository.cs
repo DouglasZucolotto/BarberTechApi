@@ -36,7 +36,9 @@ namespace BarberTech.Infraestructure.Repositories
 
         public Task<User?> GetByEmailAsync(string email)
         {
-            return Query.FirstOrDefaultAsync(u => u.Email == email);
+            return Query
+                .Include(u => u.Barber)
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public Task<bool> UserEmailExistsAsync(string email)

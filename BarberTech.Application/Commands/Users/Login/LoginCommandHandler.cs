@@ -55,6 +55,7 @@ namespace BarberTech.Application.Commands.Users.Login
                     Name = user.Name,
                     Type = user.Type.ToString(),
                     ImageSource = user.ImageSource,
+                    BarberId = user.Barber?.Id
                 },
             };
         }

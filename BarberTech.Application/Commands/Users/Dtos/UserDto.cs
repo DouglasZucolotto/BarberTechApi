@@ -11,5 +11,7 @@
         public string Type { get; set; } = string.Empty;
 
         public string? ImageSource { get; set; }
+
+        public Guid? BarberId { get; set; }
     }
 }
