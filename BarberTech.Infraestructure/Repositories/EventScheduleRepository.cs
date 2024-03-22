@@ -33,17 +33,6 @@ namespace BarberTech.Infraestructure.Repositories
                     .ThenInclude(b => b.Establishment)
                 .Include(es => es.Haircut)
                 .FirstOrDefaultAsync(es => es.Id == id);
-        }
-
-        public Task<Dictionary<DateTime, List<EventSchedule>>> GetSchedulesByBarberId(Guid barberId)
-        {
-            return Query
-                .Where(es => es.BarberId == barberId &&
-                    es.EventStatus == EventStatus.Active &&
-                    es.DateTime >= DateTime.Today &&
-                    es.DateTime < DateTime.Today.AddDays(14))
-                .GroupBy(es => es.DateTime.Date)
-                .ToDictionaryAsync(g => g.Key, g => g.ToList());
-        }      
+        }  
     }
 }

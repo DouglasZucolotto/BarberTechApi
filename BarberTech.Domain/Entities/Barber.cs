@@ -83,5 +83,32 @@ namespace BarberTech.Domain.Entities
 
             return availableTimes;
         }
+
+        public Dictionary<string, Dictionary<string, EventSchedule?>> GetCalendar()
+        {
+            var today = DateTime.Today;
+            var twoWeeks = today.AddDays(14);
+            var calendar = new Dictionary<string, Dictionary<string, EventSchedule?>>();
+            
+            var activeTimes = EventSchedules
+                .Where(es => es.EventStatus == EventStatus.Active && es.DateTime >= today);
+
+            for (var day = today; day < twoWeeks; day = day.AddDays(1))
+            {
+                var closeTime = Establishment.OpenTime.Add(Establishment.WorkInterval + Establishment.LunchInterval);
+                var dayEvents = new Dictionary<string, EventSchedule?>();
+
+                for (var time = Establishment.OpenTime; time < closeTime; time += TimeSpan.FromMinutes(30))
+                {
+                    var dateTime = new DateTime(day.Year, day.Month, day.Day, time.Hours, time.Minutes, 0);
+                    var eventSchedule = activeTimes.FirstOrDefault(e => e.DateTime == dateTime);
+                    var convertedTime = dateTime.ToString("HH:mm");
+                    dayEvents.Add(convertedTime, eventSchedule);
+                }
+                var convertedDay = day.ToString("dd/MM/yyyy");
+                calendar.Add(convertedDay, dayEvents);
+            }
+            return calendar;
+        }
     }
 }

@@ -4,7 +4,7 @@ using BarberTech.Domain.Notifications;
 
 namespace BarberTech.Application.Queries.Barbers.Calendar
 {
-    public class GetCalendarQueryHandler : IRequestHandler<GetCalendarQuery, Dictionary<string, IEnumerable<GetCalendarQueryResponse>>>
+    public class GetCalendarQueryHandler : IRequestHandler<GetCalendarQuery, Dictionary<string, Dictionary<string, GetCalendarQueryResponse>>>
     {
         private readonly IEventScheduleRepository _eventScheduleRepository;
         private readonly IBarberRepository _barberRepository;
@@ -20,7 +20,7 @@ namespace BarberTech.Application.Queries.Barbers.Calendar
             _notification = notification;
         }
 
-        public async Task<Dictionary<string, IEnumerable<GetCalendarQueryResponse>>> Handle(GetCalendarQuery request, CancellationToken cancellationToken)
+        public async Task<Dictionary<string, Dictionary<string, GetCalendarQueryResponse>>> Handle(GetCalendarQuery request, CancellationToken cancellationToken)
         {
             var barber = await _barberRepository.GetByIdAsync(request.Id);
 
@@ -30,15 +30,19 @@ namespace BarberTech.Application.Queries.Barbers.Calendar
                 return default;
             }
 
-            var schedules = await _eventScheduleRepository.GetSchedulesByBarberId(request.Id);
+            var calendar = barber.GetCalendar();
 
-            return schedules.ToDictionary(
-                group => group.Key.Date.ToString("dd/MM/yyyy"),
-                group => group.Value.Select(es => new GetCalendarQueryResponse
-                {
-                    Time = es.DateTime.ToString("HH:mm"),
-                    UserName = es.Name,
-                }));
+            return calendar.ToDictionary(
+                outerKvp => outerKvp.Key,
+                outerKvp => outerKvp.Value.ToDictionary(
+                    innerKvp => innerKvp.Key,
+                    innerKvp => innerKvp.Value != null ? new GetCalendarQueryResponse
+                    {
+                        Time = innerKvp.Value?.DateTime.ToString("HH:mm"),
+                        UserName = innerKvp.Value?.Name
+                    } : null
+                )
+            );
         }
     }
 }
