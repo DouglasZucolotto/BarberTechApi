@@ -37,6 +37,7 @@ namespace BarberTech.Application.Commands.Barbers.Create
             }
             
             user.Type = UserType.Barber;
+            user.ImageSource = request.ImageSource;
             user.WithPermissions();
 
             var establishment = await _establishmentRepository.GetByIdAsync(request.EstablishmentId);

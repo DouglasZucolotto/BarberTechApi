@@ -32,6 +32,7 @@ namespace BarberTech.Application.Queries.Barbers.GetById
                 About = barber.About,
                 Contact = barber.Contact,
                 EstablishmentId = barber.EstablishmentId,
+                ImageSource = barber.User.ImageSource,
                 Social = new SocialDto
                 {
                     Facebook = barber.Facebook,

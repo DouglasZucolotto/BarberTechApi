@@ -17,6 +17,9 @@ namespace BarberTech.Application.Commands.Barbers.Create
 
             RuleFor(b => b.Social)
                 .NotNull();
+
+            RuleFor(b => b.ImageSource)
+                .NotNull();
         }
     }
 }

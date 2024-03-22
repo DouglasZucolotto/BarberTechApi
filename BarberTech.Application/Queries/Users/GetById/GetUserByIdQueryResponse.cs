@@ -15,5 +15,7 @@ namespace BarberTech.Application.Queries.Users.GetById
         public string? ImageSource { get; set; }
 
         public IEnumerable<EventScheduleDto> EventSchedules { get; set; } = Enumerable.Empty<EventScheduleDto>();
+
+        public Guid? BarberId { get; set; }
     }
 }

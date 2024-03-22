@@ -50,6 +50,7 @@ namespace BarberTech.Application.Commands.Barbers.Update
             barber.Facebook = request.Social.Facebook ?? barber.Facebook;
             barber.Instagram = request.Social.Instagram ?? barber.Instagram;
             barber.Twitter = request.Social.Twitter ?? barber.Twitter;
+            barber.User.ImageSource = request.ImageSource ?? barber.User.ImageSource;
 
             _barberRepository.Update(barber);
             await _barberRepository.UnitOfWork.CommitAsync();

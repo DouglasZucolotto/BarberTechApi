@@ -18,6 +18,8 @@ namespace BarberTech.Application.Commands.Barbers.Update
 
         public SocialDto Social { get; set; } = new SocialDto();
 
+        public string? ImageSource { get; set; }
+
         public UpdateBarberCommand WithId(Guid id)
         {
             Id = id;
