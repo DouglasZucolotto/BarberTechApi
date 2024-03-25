@@ -55,6 +55,7 @@ namespace BarberTech.Domain.Entities
                 return common.Concat(new string[]
                 {
                     "barbers:edit",
+                    "barbers:view",
                 });
             }
 

@@ -38,6 +38,7 @@ namespace BarberTech.Application.Queries.Barbers.Calendar
                     innerKvp => innerKvp.Key,
                     innerKvp => innerKvp.Value != null ? new GetCalendarQueryResponse
                     {
+                        Id = innerKvp.Value.Id,
                         Time = innerKvp.Value?.DateTime.ToString("HH:mm"),
                         UserName = innerKvp.Value?.Name
                     } : null

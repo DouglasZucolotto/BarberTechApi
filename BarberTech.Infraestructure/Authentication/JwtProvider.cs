@@ -46,7 +46,7 @@ namespace BarberTech.Infraestructure.Authentication
                 audience: _options.Audience,
                 claims: claims,
                 notBefore: null,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: DateTime.UtcNow.AddHours(24),
                 signingCredentials: signingCredentials);
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
